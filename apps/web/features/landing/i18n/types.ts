@@ -409,6 +409,10 @@ type IssueDetailDict = {
     subIssueOf: string;
     subIssues: string;
     parentIssue: string;
+    noTaskRunsFound: string;
+    selectTask: string;
+    agentFiles: string;
+    attachments: string;
   };
 
   // 侧边栏区块标题
@@ -474,6 +478,15 @@ type IssueDetailDict = {
   // 指派状态
   assignee: {
     unassigned: string;
+  };
+
+  // 优先级
+  priorities: {
+    urgent: string;
+    high: string;
+    medium: string;
+    low: string;
+    noPriority: string;
   };
 };
 

@@ -68,6 +68,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "@multica/core/auth";
 import { useWorkspaceStore } from "@multica/core/workspace";
 import { useActorName } from "@multica/core/workspace/hooks";
+import { useTranslation } from "@multica/core";
 import { useWorkspaceId } from "@multica/core/hooks";
 import { issueListOptions, issueDetailOptions, childIssuesOptions, issueUsageOptions } from "@multica/core/issues/queries";
 import { memberListOptions, agentListOptions } from "@multica/core/workspace/queries";
@@ -248,6 +249,8 @@ export function IssueDetail({
   highlightCommentId,
   t = (_, fallback) => fallback 
 }: IssueDetailProps) {
+  const { t: tFromHook } = useTranslation();
+  const trans = t || tFromHook;
   const id = issueId;
   const router = useNavigation();
   const user = useAuthStore((s) => s.user);
@@ -454,11 +457,11 @@ export function IssueDetail({
   if (!issue) {
     return (
       <div className="flex flex-1 min-h-0 flex-col items-center justify-center gap-3 text-sm text-muted-foreground">
-        <p>{t('issueDetail.emptyState.notFound', 'This issue does not exist or has been deleted in this workspace.')}</p>
+        <p>{trans('issueDetail.emptyState.notFound', 'This issue does not exist or has been deleted in this workspace.')}</p>
         {!onDelete && (
           <Button variant="outline" size="sm" onClick={() => router.push("/issues")}>
             <ChevronLeft className="mr-1 h-3.5 w-3.5" />
-            {t('issueDetail.actions.backToIssues', 'Back to Issues')}
+            {trans('issueDetail.actions.backToIssues', 'Back to Issues')}
           </Button>
         )}
       </div>
@@ -519,7 +522,7 @@ export function IssueDetail({
                       </Button>
                     }
                   />
-                  <TooltipContent side="bottom">{t('issueDetail.navigation.previous', 'Previous issue')}</TooltipContent>
+                  <TooltipContent side="bottom">{trans('issueDetail.navigation.previous', 'Previous issue')}</TooltipContent>
                 </Tooltip>
                 <span className="text-xs text-muted-foreground tabular-nums px-0.5">
                   {currentIndex >= 0 ? currentIndex + 1 : "?"} / {allIssues.length}
@@ -538,7 +541,7 @@ export function IssueDetail({
                       </Button>
                     }
                   />
-                  <TooltipContent side="bottom">{t('issueDetail.navigation.next', 'Next issue')}</TooltipContent>
+                  <TooltipContent side="bottom">{trans('issueDetail.navigation.next', 'Next issue')}</TooltipContent>
                 </Tooltip>
               </div>
             )}
@@ -576,7 +579,7 @@ export function IssueDetail({
                 <DropdownMenuSub>
                   <DropdownMenuSubTrigger>
                     <StatusIcon status={issue.status} className="h-3.5 w-3.5" />
-                    {t('common.status', 'Status')}
+                    {trans('common.status', 'Status')}
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent>
                     {ALL_STATUSES.map((s) => (
@@ -596,7 +599,7 @@ export function IssueDetail({
                 <DropdownMenuSub>
                   <DropdownMenuSubTrigger>
                     <PriorityIcon priority={issue.priority} />
-                    {t('common.priority', 'Priority')}
+                    {trans('common.priority', 'Priority')}
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent>
                     {PRIORITY_ORDER.map((p) => (
@@ -618,14 +621,14 @@ export function IssueDetail({
                 <DropdownMenuSub>
                   <DropdownMenuSubTrigger>
                     <UserMinus className="h-3.5 w-3.5" />
-                    {t('common.assignee', 'Assignee')}
+                    {trans('common.assignee', 'Assignee')}
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent>
                     <DropdownMenuItem
                       onClick={() => handleUpdateField({ assignee_type: null, assignee_id: null })}
                     >
                       <UserMinus className="h-3.5 w-3.5 text-muted-foreground" />
-                      {t('issueDetail.assignee.unassigned', 'Unassigned')}
+                      {trans('issueDetail.assignee.unassigned', 'Unassigned')}
                       {!issue.assignee_type && <span className="ml-auto text-xs text-muted-foreground">✓</span>}
                     </DropdownMenuItem>
                     {members.map((m) => (
@@ -655,29 +658,29 @@ export function IssueDetail({
                 <DropdownMenuSub>
                   <DropdownMenuSubTrigger>
                     <Calendar className="h-3.5 w-3.5" />
-                    {t('issueDetail.properties.dueDate', 'Due date')}
+                    {trans('issueDetail.properties.dueDate', 'Due date')}
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent>
                     <DropdownMenuItem onClick={() => handleUpdateField({ due_date: new Date().toISOString() })}>
-                      {t('issueDetail.dueDate.today', 'Today')}
+                      {trans('issueDetail.dueDate.today', 'Today')}
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => {
                       const d = new Date(); d.setDate(d.getDate() + 1);
                       handleUpdateField({ due_date: d.toISOString() });
                     }}>
-                      {t('issueDetail.dueDate.tomorrow', 'Tomorrow')}
+                      {trans('issueDetail.dueDate.tomorrow', 'Tomorrow')}
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => {
                       const d = new Date(); d.setDate(d.getDate() + 7);
                       handleUpdateField({ due_date: d.toISOString() });
                     }}>
-                      {t('issueDetail.dueDate.nextWeek', 'Next week')}
+                      {trans('issueDetail.dueDate.nextWeek', 'Next week')}
                     </DropdownMenuItem>
                     {issue.due_date && (
                       <>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={() => handleUpdateField({ due_date: null })}>
-                          {t('issueDetail.dueDate.clear', 'Clear date')}
+                          {trans('issueDetail.dueDate.clear', 'Clear date')}
                         </DropdownMenuItem>
                       </>
                     )}
@@ -694,7 +697,7 @@ export function IssueDetail({
                   });
                 }}>
                   <Plus className="h-3.5 w-3.5" />
-                  {t('issueDetail.actions.createSubIssue', 'Create sub-issue')}
+                  {trans('issueDetail.actions.createSubIssue', 'Create sub-issue')}
                 </DropdownMenuItem>
 
                 {/* Pin / Unpin */}
@@ -718,7 +721,7 @@ export function IssueDetail({
                   toast.success(t('issueDetail.toast.linkCopied', 'Link copied'));
                 }}>
                   <Link2 className="h-3.5 w-3.5" />
-                  {t('issueDetail.actions.copyLink', 'Copy link')}
+                  {trans('issueDetail.actions.copyLink', 'Copy link')}
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
@@ -729,7 +732,7 @@ export function IssueDetail({
                   onClick={() => setDeleteDialogOpen(true)}
                 >
                   <Trash2 className="h-3.5 w-3.5" />
-                  {t('issueDetail.actions.delete', 'Delete issue')}
+                  {trans('issueDetail.actions.delete', 'Delete issue')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -751,7 +754,7 @@ export function IssueDetail({
                   </Button>
                 }
               />
-              <TooltipContent side="bottom">{t('issueDetail.actions.toggleSidebar', 'Toggle sidebar')}</TooltipContent>
+              <TooltipContent side="bottom">{trans('issueDetail.actions.toggleSidebar', 'Toggle sidebar')}</TooltipContent>
             </Tooltip>
           </div>
 
@@ -759,13 +762,13 @@ export function IssueDetail({
             <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>{t('issueDetail.delete.title', 'Delete issue')}</AlertDialogTitle>
+                  <AlertDialogTitle>{trans('issueDetail.delete.title', 'Delete issue')}</AlertDialogTitle>
                   <AlertDialogDescription>
-                    {t('issueDetail.delete.description', 'This will permanently delete this issue and all its comments. This action cannot be undone.')}
+                    {trans('issueDetail.delete.description', 'This will permanently delete this issue and all its comments. This action cannot be undone.')}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>{t('common.actions.cancel', 'Cancel')}</AlertDialogCancel>
+                  <AlertDialogCancel>{trans('common.actions.cancel', 'Cancel')}</AlertDialogCancel>
                   <AlertDialogAction
                     onClick={handleDelete}
                     disabled={deleting}
@@ -784,7 +787,7 @@ export function IssueDetail({
           <TitleEditor
             key={`title-${id}`}
             defaultValue={issue.title}
-            placeholder={t('issueDetail.placeholders.title', 'Issue title')}
+            placeholder={trans('issueDetail.placeholders.title', 'Issue title')}
             className="w-full text-2xl font-bold leading-snug tracking-tight"
             onBlur={(value) => {
               const trimmed = value.trim();
@@ -797,7 +800,7 @@ export function IssueDetail({
               href={`/issues/${parentIssue.id}`}
               className="mt-2 inline-flex max-w-full items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors group/parent"
             >
-              <span className="font-medium shrink-0">{t('issueDetail.labels.subIssueOf', 'Sub-issue of')}</span>
+              <span className="font-medium shrink-0">{trans('issueDetail.labels.subIssueOf', 'Sub-issue of')}</span>
               <StatusIcon status={parentIssue.status} className="h-3.5 w-3.5 shrink-0" />
               <span className="tabular-nums shrink-0">{parentIssue.identifier}</span>
               <span className="truncate group-hover/parent:text-foreground">
@@ -822,7 +825,7 @@ export function IssueDetail({
               ref={descEditorRef}
               key={id}
               defaultValue={issue.description || ""}
-              placeholder={t('issueDetail.placeholders.description', 'Add description...')}
+              placeholder={trans('issueDetail.placeholders.description', 'Add description...')}
               onUpdate={(md) => handleUpdateField({ description: md || undefined })}
               onUploadFile={handleDescriptionUpload}
               debounceMs={1500}
@@ -866,7 +869,7 @@ export function IssueDetail({
                 }
               >
                 <Plus className="h-3.5 w-3.5" />
-                <span>{t('issueDetail.actions.addSubIssues', 'Add sub-issues')}</span>
+                <span>{trans('issueDetail.actions.addSubIssues', 'Add sub-issues')}</span>
               </button>
             </div>
           )}
@@ -887,7 +890,7 @@ export function IssueDetail({
                         subIssuesCollapsed && "-rotate-90",
                       )}
                     />
-                    <span>{t('issueDetail.labels.subIssues', 'Sub-issues')}</span>
+                    <span>{trans('issueDetail.labels.subIssues', 'Sub-issues')}</span>
                   </button>
                   <div className="inline-flex items-center gap-1.5 rounded-full bg-muted/60 px-2 py-0.5">
                     <ProgressRing done={doneCount} total={childIssues.length} size={11} />
@@ -907,13 +910,13 @@ export function IssueDetail({
                               parent_issue_identifier: issue.identifier,
                             })
                           }
-                          aria-label={t('issueDetail.actions.addSubIssue', 'Add sub-issue')}
+                          aria-label={trans('issueDetail.actions.addSubIssue', 'Add sub-issue')}
                         >
                           <Plus className="h-4 w-4" />
                         </button>
                       }
                     />
-                    <TooltipContent side="bottom">{t('issueDetail.actions.addSubIssue', 'Add sub-issue')}</TooltipContent>
+                    <TooltipContent side="bottom">{trans('issueDetail.actions.addSubIssue', 'Add sub-issue')}</TooltipContent>
                   </Tooltip>
                 </div>
 
@@ -974,7 +977,7 @@ export function IssueDetail({
           <div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <h2 className="text-base font-semibold">{t('issueDetail.activity.title', 'Activity')}</h2>
+                <h2 className="text-base font-semibold">{trans('issueDetail.activity.title', 'Activity')}</h2>
               </div>
               <div className="flex items-center gap-2">
                 {subscribersLoading ? (
@@ -1016,11 +1019,11 @@ export function IssueDetail({
                   </PopoverTrigger>
                   <PopoverContent align="end" className="w-64 p-0">
                     <Command>
-                      <CommandInput placeholder={t('issueDetail.subscribers.placeholder', 'Change subscribers...')} />
+                      <CommandInput placeholder={trans('issueDetail.subscribers.placeholder', 'Change subscribers...')} />
                       <CommandList className="max-h-64">
-                        <CommandEmpty>{t('common.noResults', 'No results found')}</CommandEmpty>
+                        <CommandEmpty>{trans('common.noResults', 'No results found')}</CommandEmpty>
                         {members.length > 0 && (
-                          <CommandGroup heading={t('issueDetail.subscribers.members', 'Members')}>
+                          <CommandGroup heading={trans('issueDetail.subscribers.members', 'Members')}>
                             {members.filter((m, i, arr) => arr.findIndex((x) => x.user_id === m.user_id) === i).map((m) => {
                               const sub = subscribers.find((s) => s.user_type === "member" && s.user_id === m.user_id);
                               const isSubbed = !!sub;
@@ -1040,7 +1043,7 @@ export function IssueDetail({
                           </CommandGroup>
                         )}
                         {agents.filter((a) => !a.archived_at).length > 0 && (
-                          <CommandGroup heading={t('issueDetail.subscribers.agents', 'Agents')}>
+                          <CommandGroup heading={trans('issueDetail.subscribers.agents', 'Agents')}>
                             {agents.filter((a) => !a.archived_at).map((a) => {
                               const sub = subscribers.find((s) => s.user_type === "agent" && s.user_id === a.id);
                               const isSubbed = !!sub;
@@ -1152,6 +1155,7 @@ export function IssueDetail({
                           onDelete={deleteComment}
                           onToggleReaction={handleToggleReaction}
                           highlightedCommentId={highlightedId}
+                          t={t}
                         />
                       </div>
                     );
@@ -1208,7 +1212,7 @@ export function IssueDetail({
 
             {/* Bottom comment input — no avatar, full width */}
             <div className="mt-4">
-              <CommentInput issueId={id} onSubmit={submitComment} />
+              <CommentInput issueId={id} placeholder={trans('issueDetail.placeholders.comment', 'Leave a comment...')} onSubmit={submitComment} />
             </div>
           </div>
         </div>
@@ -1236,21 +1240,22 @@ export function IssueDetail({
               onClick={() => setPropertiesOpen(!propertiesOpen)}
             >
               <ChevronRight className={`h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform ${propertiesOpen ? "rotate-90" : ""}`} />
-              {t('issueDetail.sections.properties', 'Properties')}
+              {trans('issueDetail.sections.properties', 'Properties')}
             </button>
 
             {propertiesOpen && <div className="space-y-0.5 pl-2">
               {/* Status */}
-              <PropRow label={t('common.status', 'Status')}>
+              <PropRow label={trans('common.status', 'Status')}>
                 <StatusPicker
                   status={issue.status}
                   onUpdate={handleUpdateField}
                   align="start"
+                  t={t}
                 />
               </PropRow>
 
               {/* Priority */}
-              <PropRow label={t('common.priority', 'Priority')}>
+              <PropRow label={trans('common.priority', 'Priority')}>
                 <PriorityPicker
                   priority={issue.priority}
                   onUpdate={handleUpdateField}
@@ -1260,7 +1265,7 @@ export function IssueDetail({
               </PropRow>
 
               {/* Assignee */}
-              <PropRow label={t('common.assignee', 'Assignee')}>
+              <PropRow label={trans('common.assignee', 'Assignee')}>
                 <AssigneePicker
                   assigneeType={issue.assignee_type}
                   assigneeId={issue.assignee_id}
@@ -1271,7 +1276,7 @@ export function IssueDetail({
               </PropRow>
 
               {/* Due date */}
-              <PropRow label={t('issueDetail.properties.dueDate', 'Due date')}>
+              <PropRow label={trans('issueDetail.properties.dueDate', 'Due date')}>
                 <DueDatePicker
                   dueDate={issue.due_date}
                   onUpdate={handleUpdateField}
@@ -1280,7 +1285,7 @@ export function IssueDetail({
               </PropRow>
 
               {/* Project */}
-              <PropRow label={t('common.project', 'Project')}>
+              <PropRow label={trans('common.project', 'Project')}>
                 <ProjectPicker
                   projectId={issue.project_id}
                   onUpdate={handleUpdateField}
@@ -1295,7 +1300,7 @@ export function IssueDetail({
             <div>
               <div className="text-xs font-medium mb-2 flex items-center gap-1">
                 <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground rotate-90" />
-                {t('issueDetail.labels.parentIssue', 'Parent issue')}
+                {trans('issueDetail.labels.parentIssue', 'Parent issue')}
               </div>
               <div className="pl-2">
                 <AppLink
@@ -1317,11 +1322,11 @@ export function IssueDetail({
               onClick={() => setDetailsOpen(!detailsOpen)}
             >
               <ChevronRight className={`h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform ${detailsOpen ? "rotate-90" : ""}`} />
-              {t('issueDetail.sections.details', 'Details')}
+              {trans('issueDetail.sections.details', 'Details')}
             </button>
 
             {detailsOpen && <div className="space-y-0.5 pl-2">
-              <PropRow label={t('issueDetail.details.createdBy', 'Created by')}>
+              <PropRow label={trans('issueDetail.details.createdBy', 'Created by')}>
                 <ActorAvatar
                   actorType={issue.creator_type}
                   actorId={issue.creator_id}
@@ -1329,10 +1334,10 @@ export function IssueDetail({
                 />
                 <span className="truncate">{getActorName(issue.creator_type, issue.creator_id)}</span>
               </PropRow>
-              <PropRow label={t('issueDetail.details.created', 'Created')}>
+              <PropRow label={trans('issueDetail.details.created', 'Created')}>
                 <span className="text-muted-foreground">{shortDate(issue.created_at)}</span>
               </PropRow>
-              <PropRow label={t('issueDetail.details.updated', 'Updated')}>
+              <PropRow label={trans('issueDetail.details.updated', 'Updated')}>
                 <span className="text-muted-foreground">{shortDate(issue.updated_at)}</span>
               </PropRow>
             </div>}
@@ -1343,23 +1348,23 @@ export function IssueDetail({
             <div>
               <div className="text-xs font-medium mb-2 flex items-center gap-1">
                 <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground rotate-90" />
-                {t('issueDetail.sections.tokenUsage', 'Token usage')}
+                {trans('issueDetail.sections.tokenUsage', 'Token usage')}
               </div>
               <div className="space-y-0.5 pl-2">
-                <PropRow label={t('issueDetail.tokenUsage.input', 'Input')}>
+                <PropRow label={trans('issueDetail.tokenUsage.input', 'Input')}>
                   <span className="text-muted-foreground">{formatTokenCount(usage.total_input_tokens)}</span>
                 </PropRow>
-                <PropRow label={t('issueDetail.tokenUsage.output', 'Output')}>
+                <PropRow label={trans('issueDetail.tokenUsage.output', 'Output')}>
                   <span className="text-muted-foreground">{formatTokenCount(usage.total_output_tokens)}</span>
                 </PropRow>
                 {(usage.total_cache_read_tokens > 0 || usage.total_cache_write_tokens > 0) && (
-                  <PropRow label={t('issueDetail.tokenUsage.cache', 'Cache')}>
+                  <PropRow label={trans('issueDetail.tokenUsage.cache', 'Cache')}>
                     <span className="text-muted-foreground">
                       {formatTokenCount(usage.total_cache_read_tokens)} read / {formatTokenCount(usage.total_cache_write_tokens)} write
                     </span>
                   </PropRow>
                 )}
-                <PropRow label={t('issueDetail.tokenUsage.runs', 'Runs')}>
+                <PropRow label={trans('issueDetail.tokenUsage.runs', 'Runs')}>
                   <span className="text-muted-foreground">{usage.task_count}</span>
                 </PropRow>
               </div>
@@ -1370,10 +1375,10 @@ export function IssueDetail({
           <div>
             <div className="text-xs font-medium mb-2 flex items-center gap-1">
               <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground rotate-90" />
-              {t('issueDetail.labels.agentFiles', 'Agent Files')}
+              {trans('issueDetail.labels.agentFiles', 'Agent Files')}
             </div>
             <div className="pl-2">
-              <WorkdirFileBrowser workspaceId={issue.workspace_id} issueId={id} />
+              <WorkdirFileBrowser workspaceId={issue.workspace_id} issueId={id} t={t} />
             </div>
           </div>
 
