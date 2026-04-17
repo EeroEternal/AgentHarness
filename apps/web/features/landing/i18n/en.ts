@@ -796,13 +796,6 @@ export const en: LandingDict = {
       dueDate: "Due date",
       description: "Description",
     },
-    priorities: {
-      urgent: "Urgent",
-      high: "High",
-      medium: "Medium",
-      low: "Low",
-      noPriority: "No priority",
-    },
   },
   inbox: {
     title: "Inbox",
@@ -933,7 +926,7 @@ export const en: LandingDict = {
       },
     },
     priorities: {
-      none: "None",
+      noPriority: "No Priority",
       urgent: "Urgent",
       high: "High",
       medium: "Medium",

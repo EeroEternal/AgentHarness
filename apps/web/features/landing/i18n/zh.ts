@@ -789,13 +789,6 @@ export const zh: LandingDict = {
       dueDate: "截止日期",
       description: "描述",
     },
-    priorities: {
-      urgent: "紧急",
-      high: "高",
-      medium: "中",
-      low: "低",
-      noPriority: "无优先级",
-    },
   },
   myIssues: {
     emptyState: {
@@ -937,7 +930,7 @@ export const zh: LandingDict = {
       },
     },
     priorities: {
-      none: "无",
+      noPriority: "无优先级",
       urgent: "紧急",
       high: "高",
       medium: "中",
