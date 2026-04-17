@@ -142,7 +142,7 @@ export const zh = {
     settings: "设置",
     tasks: "任务",
   },
-issueDetail: {
+  issueDetail: {
     assignee: {
       unassigned: "未指派",
     },
@@ -159,6 +159,39 @@ issueDetail: {
     },
     activity: {
       title: "活动",
+    },
+    labels: {
+      subIssueOf: "子任务",
+      subIssues: "子任务",
+      parentIssue: "父任务",
+      agentFiles: "代理文件",
+      attachments: "附件",
+      noTaskRunsFound: "此任务没有运行记录",
+      tasks: "任务",
+      selectTask: "选择任务:",
+    },
+    priorities: {
+      urgent: "紧急",
+      high: "高",
+      medium: "中",
+      low: "低",
+      noPriority: "无优先级",
+    },
+    sections: {
+      properties: "属性",
+      details: "详情",
+      tokenUsage: "令牌使用量",
+    },
+    details: {
+      createdBy: "创建人",
+      created: "创建时间",
+      updated: "更新时间",
+    },
+    tokenUsage: {
+      input: "输入",
+      output: "输出",
+      cache: "缓存",
+      runs: "运行次数",
     },
   },
   projects: {

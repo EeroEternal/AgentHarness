@@ -14,10 +14,13 @@ import {
   TooltipTrigger,
 } from "@multica/ui/components/ui/tooltip";
 
+type TranslateFn = (key: string, fallback: string) => string;
+
 interface WorkdirFileBrowserProps {
   workspaceId: string;
   issueId: string;
   className?: string;
+  t?: TranslateFn;
 }
 
 interface FileEntry {
@@ -30,7 +33,10 @@ export function WorkdirFileBrowser({
   workspaceId,
   issueId,
   className,
+  t,
 }: WorkdirFileBrowserProps) {
+  const defaultT = (key: string, fallback: string) => fallback;
+  const translate = t || defaultT;
   const [tasks, setTasks] = useState<AgentTask[]>([]);
   const [selectedTask, setSelectedTask] = useState<AgentTask | null>(null);
   const [files, setFiles] = useState<FileEntry[]>([]);
@@ -68,9 +74,9 @@ export function WorkdirFileBrowser({
     setFilesLoading(true);
     let taskDir = "";
     const workDir = selectedTask.work_dir;
-    if (workDir) {
+    if (workDir && workDir.length > 0) {
       const parts = workDir.split("/");
-      taskDir = parts[parts.length - 2];
+      taskDir = parts[parts.length - 2] ?? shortID(selectedTask.id);
     } else {
       taskDir = shortID(selectedTask.id);
     }
@@ -99,9 +105,9 @@ export function WorkdirFileBrowser({
     try {
       let taskDir = "";
       const workDir = selectedTask.work_dir;
-      if (workDir) {
+      if (workDir && workDir.length > 0) {
         const parts = workDir.split("/");
-        taskDir = parts[parts.length - 2];
+        taskDir = parts[parts.length - 2] ?? shortID(selectedTask.id);
       } else {
         taskDir = shortID(selectedTask.id);
       }
@@ -134,7 +140,7 @@ export function WorkdirFileBrowser({
   if (tasks.length === 0) {
     return (
       <div className={cn("text-sm text-muted-foreground", className)}>
-        No task runs found for this issue.
+        {translate('issueDetail.labels.noTaskRunsFound', 'No task runs found for this issue')}
       </div>
     );
   }
@@ -143,7 +149,7 @@ export function WorkdirFileBrowser({
     <div className={className}>
       <div className="flex items-center gap-2 mb-2">
         <Folder className="h-4 w-4 text-muted-foreground shrink-0" />
-        <span className="text-xs text-muted-foreground">Select task:</span>
+        <span className="text-xs text-muted-foreground">{translate('issueDetail.labels.selectTask', 'Select task:')}</span>
         <select
           className="flex-1 text-xs border rounded px-2 py-1 bg-background"
           value={selectedTask?.id || ""}

@@ -617,6 +617,10 @@ export const en: LandingDict = {
       subIssueOf: "Sub-issue of",
       subIssues: "Sub-issues",
       parentIssue: "Parent issue",
+      noTaskRunsFound: "No task runs found for this issue",
+      selectTask: "Select task:",
+      agentFiles: "Agent Files",
+      attachments: "Attachments",
     },
     sections: {
       properties: "Properties",
@@ -666,6 +670,13 @@ export const en: LandingDict = {
     },
     assignee: {
       unassigned: "Unassigned",
+    },
+    priorities: {
+      urgent: "Urgent",
+      high: "High",
+      medium: "Medium",
+      low: "Low",
+      noPriority: "No priority",
     },
   },
   modal: {

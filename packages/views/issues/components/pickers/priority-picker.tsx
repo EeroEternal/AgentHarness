@@ -27,7 +27,7 @@ export function PriorityPicker({
   open: controlledOpen,
   onOpenChange: controlledOnOpenChange,
   align,
-  t,
+  t = (_, f) => f,
 }: {
   priority: IssuePriority;
   onUpdate: (updates: Partial<UpdateIssueRequest>) => void;
@@ -56,7 +56,7 @@ export function PriorityPicker({
         customTrigger ?? (
           <>
             <PriorityIcon priority={priority} className="shrink-0" />
-            <span className="truncate">{translate(`issuesHeader.priorities.${getPriorityDictKey(priority)}`, cfg.label)}</span>
+            <span className="truncate">{translate(`issueDetail.priorities.${getPriorityDictKey(priority)}`, cfg.label)}</span>
           </>
         )
       }
@@ -74,7 +74,7 @@ export function PriorityPicker({
           >
             <span className={`inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-xs font-medium ${c.badgeBg} ${c.badgeText}`}>
               <PriorityIcon priority={p} className="h-3 w-3" inheritColor />
-              {translate(`issuesHeader.priorities.${getPriorityDictKey(p)}`, c.label)}
+              {translate(`issueDetail.priorities.${getPriorityDictKey(p)}`, c.label)}
             </span>
           </PickerItem>
         );

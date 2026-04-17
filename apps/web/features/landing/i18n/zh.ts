@@ -624,6 +624,10 @@ export const zh: LandingDict = {
       subIssueOf: "子问题属于",
       subIssues: "子问题",
       parentIssue: "父级问题",
+      noTaskRunsFound: "此任务没有运行记录",
+      selectTask: "选择任务:",
+      agentFiles: "代理文件",
+      attachments: "附件",
     },
     sections: {
       properties: "属性",
@@ -673,6 +677,13 @@ export const zh: LandingDict = {
     },
     assignee: {
       unassigned: "未指派",
+    },
+    priorities: {
+      urgent: "紧急",
+      high: "高",
+      medium: "中",
+      low: "低",
+      noPriority: "无优先级",
     },
   },
   modal: {

@@ -160,6 +160,39 @@ export const en = {
     activity: {
       title: "Activity",
     },
+    labels: {
+      subIssueOf: "Sub-issue of",
+      subIssues: "Sub-issues",
+      parentIssue: "Parent issue",
+      agentFiles: "Agent Files",
+      attachments: "Attachments",
+      noTaskRunsFound: "No task runs found for this issue",
+      tasks: "Tasks",
+      selectTask: "Select task:",
+    },
+    priorities: {
+      urgent: "Urgent",
+      high: "High",
+      medium: "Medium",
+      low: "Low",
+      noPriority: "No priority",
+    },
+    sections: {
+      properties: "Properties",
+      details: "Details",
+      tokenUsage: "Token usage",
+    },
+    details: {
+      createdBy: "Created by",
+      created: "Created",
+      updated: "Updated",
+    },
+    tokenUsage: {
+      input: "Input",
+      output: "Output",
+      cache: "Cache",
+      runs: "Runs",
+    },
   },
   projects: {
     detail: {
