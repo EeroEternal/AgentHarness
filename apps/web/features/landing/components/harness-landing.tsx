@@ -531,7 +531,7 @@ export function HarnessLanding() {
               <div className="mt-14 overflow-hidden rounded-[26px] border border-[#122033]/10 bg-white/68 p-3 shadow-[0_32px_140px_-80px_rgba(18,32,51,0.45)] sm:p-4">
                 <div className="overflow-hidden rounded-[22px] border border-[#122033]/8 bg-[#e8e1d6]">
                   <Image
-                    src="/images/landing-hero.png"
+                    src="/images/landing-hero-zh.png"
                     alt={t.hero.imageAlt}
                     width={3532}
                     height={2382}
