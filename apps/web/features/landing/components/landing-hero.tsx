@@ -106,7 +106,7 @@ function ProductImage({ alt }: { alt: string }) {
     <div>
       <div className="relative overflow-hidden border border-white/14">
         <Image
-          src="/images/landing-hero-zh.png"
+          src="/images/landing-hero-new.png"
           alt={alt}
           width={3532}
           height={2382}
