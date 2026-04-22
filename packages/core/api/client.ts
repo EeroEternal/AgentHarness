@@ -108,7 +108,7 @@ export class ApiClient {
   }
 
   private async fetch<T>(path: string, init?: RequestInit): Promise<T> {
-    const rid = crypto.randomUUID().slice(0, 8);
+    const rid = crypto.randomUUID ? crypto.randomUUID().slice(0, 8) : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
     const start = Date.now();
     const method = init?.method ?? "GET";
 
@@ -652,7 +652,7 @@ export class ApiClient {
     if (opts?.issueId) formData.append("issue_id", opts.issueId);
     if (opts?.commentId) formData.append("comment_id", opts.commentId);
 
-    const rid = crypto.randomUUID().slice(0, 8);
+    const rid = crypto.randomUUID ? crypto.randomUUID().slice(0, 8) : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
     const start = Date.now();
     this.logger.info("→ POST /api/upload-file", { rid });
 
