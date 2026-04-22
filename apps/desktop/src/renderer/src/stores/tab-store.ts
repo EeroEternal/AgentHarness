@@ -69,7 +69,7 @@ export function resolveRouteIcon(pathname: string): string {
 const DEFAULT_PATH = "/issues";
 
 function createId(): string {
-  return crypto.randomUUID();
+  return crypto.randomUUID ? crypto.randomUUID() : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
 function makeTab(path: string, title: string, icon: string): Tab {
