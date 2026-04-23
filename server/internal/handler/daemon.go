@@ -880,6 +880,9 @@ func (h *Handler) DownloadWorkspaceFile(w http.ResponseWriter, r *http.Request) 
 	if r.URL.Query().Get("ls") == "1" {
 		url += "&ls=1"
 	}
+	if r.URL.Query().Get("zip") == "1" {
+		url += "&zip=1"
+	}
 	slog.Info("proxying file request", "url", url, "workspace_id", workspaceID, "file_path", filePath)
 
 	proxyReq, err := http.NewRequestWithContext(r.Context(), http.MethodGet, url, nil)
