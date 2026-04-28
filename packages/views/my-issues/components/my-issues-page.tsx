@@ -227,7 +227,7 @@ export function MyIssuesPage({ t: tProp, headerActions }: MyIssuesPageProps = {}
             )}
           </div>
         )}
-        {viewMode === "list" && <BatchActionToolbar />}
+        {viewMode === "list" && <BatchActionToolbar t={t} />}
       </ViewStoreProvider>
     </div>
   );
