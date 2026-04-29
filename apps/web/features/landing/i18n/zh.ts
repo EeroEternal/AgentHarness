@@ -565,6 +565,7 @@ export const zh: LandingDict = {
     createWorkspace: "创建工作区",
     logout: "退出登录",
     unpin: "取消置顶",
+    aiPowered: "AI驱动",
   },
   // 新增以下两个字段以匹配类型定义
   common: {
@@ -574,6 +575,10 @@ export const zh: LandingDict = {
     assignee: "指派人",
     creator: "创建人",
     project: "项目",
+    members: "成员",
+    agents: "智能体",
+    noProject: "无项目",
+    removeFromProject: "从项目中移除",
     searchPlaceholder: "搜索...",
     actions: {
       cancel: "取消",
@@ -619,6 +624,7 @@ export const zh: LandingDict = {
     placeholders: {
       title: "问题标题",
       description: "添加描述...",
+      reply: "留下回复...",
     },
     labels: {
       subIssueOf: "子问题属于",
@@ -764,6 +770,7 @@ export const zh: LandingDict = {
     },
   },
   issuesHeader: {
+    newIssue: "新建问题",
     filter: "筛选",
     displaySettings: "显示设置",
     ordering: "排序",
@@ -781,6 +788,11 @@ export const zh: LandingDict = {
     noProject: "无项目",
     issue: "个问题",
     issues: "个问题",
+    stats: {
+      inProgress: "进行中",
+      inReview: "审查中",
+      done: "已完成",
+    },
     scopes: {
       all: { label: "全部", description: "工作区中的所有问题" },
       members: { label: "成员", description: "指派给团队成员的问题" },
@@ -814,6 +826,17 @@ export const zh: LandingDict = {
   },
   inbox: {
     title: "收件箱",
+    unread: "未读",
+    filter: "筛选",
+    filterAll: "全部",
+    filterUnread: "未读",
+    filterRead: "已读",
+    filterNoUnread: "没有未读通知",
+    filterNoRead: "没有已读通知",
+    sections: {
+      unread: "未读",
+      read: "已读",
+    },
     emptyState: {
       title: "暂无通知",
       subtitle: "收件箱是空的",
@@ -871,6 +894,22 @@ export const zh: LandingDict = {
       title: "暂无项目",
       subtitle: "创建一个项目来管理你的问题",
       action: "创建第一个项目",
+    },
+    stats: {
+      total: "{count} 个项目",
+      inProgress: "进行中",
+      completed: "已完成",
+      projects: "个项目",
+    },
+    view: {
+      grid: "网格视图",
+      list: "列表视图",
+    },
+    sort: "排序",
+    sortOptions: {
+      newest: "最新",
+      progress: "进度",
+      name: "名称",
     },
     columns: {
       name: "名称",

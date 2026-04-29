@@ -29,6 +29,10 @@ type CommonDict = {
   creator?: string;
   project?: string;
   searchPlaceholder?: string;
+  members?: string;
+  agents?: string;
+  noProject?: string;
+  removeFromProject?: string;
   actions?: CommonActionsDict;
 };
 
@@ -50,6 +54,7 @@ type SidebarDict = {
   createWorkspace: string;
   logout: string;
   unpin: string;
+  aiPowered: string;
 };
 
 // 新增：仪表盘 Issues 页面字段类型
@@ -104,6 +109,12 @@ type IssuesHeaderDict = {
   noProject: string;
   issue: string; // 单数
   issues: string; // 复数
+  newIssue: string;
+  stats?: {
+    inProgress?: string;
+    inReview?: string;
+    done?: string;
+  };
   scopes: {
     all: { label: string; description: string };
     members: { label: string; description: string };
@@ -139,6 +150,17 @@ type MyIssuesDict = {
 
 type InboxDict = {
   title: string;
+  unread: string;
+  filter: string;
+  filterAll: string;
+  filterUnread: string;
+  filterRead: string;
+  filterNoUnread: string;
+  filterNoRead: string;
+  sections: {
+    unread: string;
+    read: string;
+  };
   emptyState: {
     title: string;
     subtitle: string;
@@ -197,6 +219,22 @@ type ProjectsDict = {
     title: string;
     subtitle: string;
     action: string;
+  };
+  stats: {
+    total: string;
+    inProgress: string;
+    completed: string;
+    projects: string;
+  };
+  view: {
+    grid: string;
+    list: string;
+  };
+  sort: string;
+  sortOptions: {
+    newest: string;
+    progress: string;
+    name: string;
   };
   columns: {
     name: string;
@@ -402,6 +440,7 @@ type IssueDetailDict = {
   placeholders: {
     title: string;
     description: string;
+    reply: string;
   };
 
   // 标签与标题
