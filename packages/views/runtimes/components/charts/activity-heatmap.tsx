@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { useTranslation } from "@multica/core";
-import type { RuntimeUsage } from "@multica/core/types";
+import { useTranslation } from "@agentharness/core";
+import type { RuntimeUsage } from "@agentharness/core/types";
 import { formatTokens } from "../../utils";
 
 const HEATMAP_WEEKS = 13;

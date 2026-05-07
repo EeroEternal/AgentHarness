@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { Crown, Shield, User, Plus, MoreHorizontal, UserMinus, Users } from "lucide-react";
 import { ActorAvatar } from "../../common/actor-avatar";
-import type { MemberWithUser, MemberRole } from "@multica/core/types";
-import { Input } from "@multica/ui/components/ui/input";
-import { Button } from "@multica/ui/components/ui/button";
-import { Card, CardContent } from "@multica/ui/components/ui/card";
-import { Badge } from "@multica/ui/components/ui/badge";
+import type { MemberWithUser, MemberRole } from "@agentharness/core/types";
+import { Input } from "@agentharness/ui/components/ui/input";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { Card, CardContent } from "@agentharness/ui/components/ui/card";
+import { Badge } from "@agentharness/ui/components/ui/badge";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -17,14 +17,14 @@ import {
   AlertDialogFooter,
   AlertDialogCancel,
   AlertDialogAction,
-} from "@multica/ui/components/ui/alert-dialog";
+} from "@agentharness/ui/components/ui/alert-dialog";
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@multica/ui/components/ui/select";
+} from "@agentharness/ui/components/ui/select";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -34,15 +34,15 @@ import {
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@agentharness/ui/components/ui/dropdown-menu";
 import { toast } from "sonner";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceStore } from "@multica/core/workspace";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { memberListOptions, workspaceKeys } from "@multica/core/workspace/queries";
-import { api } from "@multica/core/api";
-import { useTranslation } from "@multica/core";
+import { useAuthStore } from "@agentharness/core/auth";
+import { useWorkspaceStore } from "@agentharness/core/workspace";
+import { useWorkspaceId } from "@agentharness/core/hooks";
+import { memberListOptions, workspaceKeys } from "@agentharness/core/workspace/queries";
+import { api } from "@agentharness/core/api";
+import { useTranslation } from "@agentharness/core";
 
 export function MembersTab() {
   const { t } = useTranslation();

@@ -4,24 +4,24 @@ import { useMemo, useState, useCallback, useRef } from "react";
 import { useDefaultLayout, usePanelRef } from "react-resizable-panels";
 import { Check, ChevronRight, FolderKanban, Link2, ListTodo, MoreHorizontal, PanelRight, Pin, PinOff, Trash2, UserMinus } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@agentharness/ui/lib/utils";
 import { toast } from "sonner";
-import type { Issue, IssueStatus, ProjectStatus, ProjectPriority } from "@multica/core/types";
-import { projectDetailOptions } from "@multica/core/projects/queries";
-import { useUpdateProject, useDeleteProject } from "@multica/core/projects/mutations";
-import { pinListOptions } from "@multica/core/pins";
-import { useCreatePin, useDeletePin } from "@multica/core/pins";
-import { issueListOptions } from "@multica/core/issues/queries";
-import { useUpdateIssue } from "@multica/core/issues/mutations";
-import { memberListOptions, agentListOptions } from "@multica/core/workspace/queries";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useWorkspaceStore } from "@multica/core/workspace";
-import { useActorName } from "@multica/core/workspace/hooks";
-import { useTranslation } from "@multica/core";
-import { PROJECT_STATUS_ORDER, PROJECT_STATUS_CONFIG, PROJECT_PRIORITY_ORDER, PROJECT_PRIORITY_CONFIG } from "@multica/core/projects/config";
-import { BOARD_STATUSES } from "@multica/core/issues/config";
-import { createIssueViewStore } from "@multica/core/issues/stores/view-store";
-import { ViewStoreProvider, useViewStore } from "@multica/core/issues/stores/view-store-context";
+import type { Issue, IssueStatus, ProjectStatus, ProjectPriority } from "@agentharness/core/types";
+import { projectDetailOptions } from "@agentharness/core/projects/queries";
+import { useUpdateProject, useDeleteProject } from "@agentharness/core/projects/mutations";
+import { pinListOptions } from "@agentharness/core/pins";
+import { useCreatePin, useDeletePin } from "@agentharness/core/pins";
+import { issueListOptions } from "@agentharness/core/issues/queries";
+import { useUpdateIssue } from "@agentharness/core/issues/mutations";
+import { memberListOptions, agentListOptions } from "@agentharness/core/workspace/queries";
+import { useWorkspaceId } from "@agentharness/core/hooks";
+import { useWorkspaceStore } from "@agentharness/core/workspace";
+import { useActorName } from "@agentharness/core/workspace/hooks";
+import { useTranslation } from "@agentharness/core";
+import { PROJECT_STATUS_ORDER, PROJECT_STATUS_CONFIG, PROJECT_PRIORITY_ORDER, PROJECT_PRIORITY_CONFIG } from "@agentharness/core/projects/config";
+import { BOARD_STATUSES } from "@agentharness/core/issues/config";
+import { createIssueViewStore } from "@agentharness/core/issues/stores/view-store";
+import { ViewStoreProvider, useViewStore } from "@agentharness/core/issues/stores/view-store-context";
 import { filterIssues } from "../../issues/utils/filter";
 import { getProjectIssueMetrics } from "./project-issue-metrics";
 import { ActorAvatar } from "../../common/actor-avatar";
@@ -32,27 +32,27 @@ import { IssuesHeader } from "../../issues/components/issues-header";
 import { BoardView } from "../../issues/components/board-view";
 import { ListView } from "../../issues/components/list-view";
 import { BatchActionToolbar } from "../../issues/components/batch-action-toolbar";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { Button } from "@multica/ui/components/ui/button";
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@multica/ui/components/ui/resizable";
+import { Skeleton } from "@agentharness/ui/components/ui/skeleton";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@agentharness/ui/components/ui/resizable";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@agentharness/ui/components/ui/dropdown-menu";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@multica/ui/components/ui/popover";
+} from "@agentharness/ui/components/ui/popover";
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "@multica/ui/components/ui/tooltip";
-import { EmojiPicker } from "@multica/ui/components/common/emoji-picker";
+} from "@agentharness/ui/components/ui/tooltip";
+import { EmojiPicker } from "@agentharness/ui/components/common/emoji-picker";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -62,7 +62,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@multica/ui/components/ui/alert-dialog";
+} from "@agentharness/ui/components/ui/alert-dialog";
 
 type TranslateFn = (key: string, fallback: string) => string;
 
@@ -245,7 +245,7 @@ export function ProjectDetail({ projectId, t: tProp }: { projectId: string; t?: 
 
   // Sidebar panel
   const { defaultLayout, onLayoutChanged } = useDefaultLayout({
-    id: "multica_project_detail_layout",
+    id: "agentharness_project_detail_layout",
   });
   const sidebarRef = usePanelRef();
   const [sidebarOpen, setSidebarOpen] = useState(true);

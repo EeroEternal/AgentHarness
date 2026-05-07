@@ -6,10 +6,10 @@ import {
   ArrowUpCircle,
   Check,
 } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import { api } from "@multica/core/api";
-import { useTranslation } from "@multica/core";
-import type { RuntimeUpdateStatus } from "@multica/core/types";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { api } from "@agentharness/core/api";
+import { useTranslation } from "@agentharness/core";
+import type { RuntimeUpdateStatus } from "@agentharness/core/types";
 
 const GITHUB_RELEASES_URL =
   "https://api.github.com/repos/EeroEternal/AgentHarness/releases/latest";

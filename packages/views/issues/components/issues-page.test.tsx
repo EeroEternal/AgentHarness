@@ -1,16 +1,16 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import type { Issue } from "@multica/core/types";
-import { WorkspaceIdProvider } from "@multica/core/hooks";
+import type { Issue } from "@agentharness/core/types";
+import { WorkspaceIdProvider } from "@agentharness/core/hooks";
 
 // ---------------------------------------------------------------------------
 // Mocks
 // ---------------------------------------------------------------------------
 
-// Mock @multica/core/auth
+// Mock @agentharness/core/auth
 const mockAuthUser = { id: "user-1", email: "test@test.com", name: "Test User" };
-vi.mock("@multica/core/auth", () => ({
+vi.mock("@agentharness/core/auth", () => ({
   useAuthStore: Object.assign(
     (selector?: any) => {
       const state = { user: mockAuthUser, isAuthenticated: true };
@@ -22,8 +22,8 @@ vi.mock("@multica/core/auth", () => ({
   createAuthStore: vi.fn(),
 }));
 
-// Mock @multica/core/workspace
-vi.mock("@multica/core/workspace", () => ({
+// Mock @agentharness/core/workspace
+vi.mock("@agentharness/core/workspace", () => ({
   useWorkspaceStore: Object.assign(
     (selector?: any) => {
       const state = {
@@ -44,7 +44,7 @@ vi.mock("@multica/core/workspace", () => ({
   registerWorkspaceStore: vi.fn(),
 }));
 
-// Mock @multica/views/navigation (AppLink + useNavigation)
+// Mock @agentharness/views/navigation (AppLink + useNavigation)
 vi.mock("../../navigation", () => ({
   AppLink: ({ children, href, ...props }: any) => (
     <a href={href} {...props}>
@@ -62,7 +62,7 @@ vi.mock("../../workspace/workspace-avatar", () => ({
 
 // Mock api (queries use api internally)
 const mockListIssues = vi.hoisted(() => vi.fn().mockResolvedValue({ issues: [], total: 0 }));
-vi.mock("@multica/core/api", () => ({
+vi.mock("@agentharness/core/api", () => ({
   api: {
     listIssues: (...args: any[]) => mockListIssues(...args),
     updateIssue: vi.fn(),
@@ -79,7 +79,7 @@ vi.mock("@multica/core/api", () => ({
 }));
 
 // Mock issue config
-vi.mock("@multica/core/issues/config", () => ({
+vi.mock("@agentharness/core/issues/config", () => ({
   ALL_STATUSES: ["backlog", "todo", "in_progress", "in_review", "done", "blocked", "cancelled"],
   BOARD_STATUSES: ["backlog", "todo", "in_progress", "in_review", "done", "blocked"],
   STATUS_ORDER: ["backlog", "todo", "in_progress", "in_review", "done", "blocked", "cancelled"],
@@ -133,7 +133,7 @@ const mockViewState = {
   toggleListCollapsed: vi.fn(),
 };
 
-vi.mock("@multica/core/issues/stores/view-store", () => ({
+vi.mock("@agentharness/core/issues/stores/view-store", () => ({
   initFilterWorkspaceSync: vi.fn(),
   registerViewStoreForWorkspaceSync: vi.fn(),
   viewStorePersistOptions: () => ({ name: "test", storage: undefined, partialize: (s: any) => s }),
@@ -162,13 +162,13 @@ vi.mock("@multica/core/issues/stores/view-store", () => ({
   ],
 }));
 
-vi.mock("@multica/core/issues/stores/view-store-context", () => ({
+vi.mock("@agentharness/core/issues/stores/view-store-context", () => ({
   ViewStoreProvider: ({ children }: { children: React.ReactNode }) => children,
   useViewStore: (selector?: any) => (selector ? selector(mockViewState) : mockViewState),
   useViewStoreApi: () => ({ getState: () => mockViewState, setState: vi.fn(), subscribe: vi.fn() }),
 }));
 
-vi.mock("@multica/core/issues/stores/issues-scope-store", () => ({
+vi.mock("@agentharness/core/issues/stores/issues-scope-store", () => ({
   useIssuesScopeStore: Object.assign(
     (selector?: any) => {
       const state = { scope: "all", setScope: vi.fn() };
@@ -178,7 +178,7 @@ vi.mock("@multica/core/issues/stores/issues-scope-store", () => ({
   ),
 }));
 
-vi.mock("@multica/core/issues/stores/selection-store", () => ({
+vi.mock("@agentharness/core/issues/stores/selection-store", () => ({
   useIssueSelectionStore: Object.assign(
     (selector?: any) => {
       const state = { selectedIds: new Set(), toggle: vi.fn(), clear: vi.fn(), setAll: vi.fn() };
@@ -188,7 +188,7 @@ vi.mock("@multica/core/issues/stores/selection-store", () => ({
   ),
 }));
 
-vi.mock("@multica/core/issues/stores/recent-issues-store", () => ({
+vi.mock("@agentharness/core/issues/stores/recent-issues-store", () => ({
   useRecentIssuesStore: Object.assign(
     (selector?: any) => {
       const state = { items: [], recordVisit: vi.fn() };
@@ -198,15 +198,15 @@ vi.mock("@multica/core/issues/stores/recent-issues-store", () => ({
   ),
 }));
 
-vi.mock("@multica/core/modals", () => ({
+vi.mock("@agentharness/core/modals", () => ({
   useModalStore: Object.assign(
     () => ({ open: vi.fn() }),
     { getState: () => ({ open: vi.fn() }) },
   ),
 }));
 
-// Mock @multica/core
-vi.mock("@multica/core", () => ({
+// Mock @agentharness/core
+vi.mock("@agentharness/core", () => ({
   useTranslation: () => ({
     t: (key: string, fallback: string) => {
       // Return English fallbacks for tests, with specific translations

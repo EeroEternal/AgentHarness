@@ -3,10 +3,10 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useDefaultLayout } from "react-resizable-panels";
 import { useQuery } from "@tanstack/react-query";
-import { useWorkspaceId } from "@multica/core/hooks";
+import { useWorkspaceId } from "@agentharness/core/hooks";
 import {
   inboxListOptions,
-} from "@multica/core/inbox/queries";
+} from "@agentharness/core/inbox/queries";
 import {
   useMarkInboxRead,
   useArchiveInbox,
@@ -14,10 +14,10 @@ import {
   useArchiveAllInbox,
   useArchiveAllReadInbox,
   useArchiveCompletedInbox,
-} from "@multica/core/inbox/mutations";
+} from "@agentharness/core/inbox/mutations";
 import { IssueDetail } from "../../issues/components";
 import { useNavigation } from "../../navigation";
-import { useTranslation } from "@multica/core";
+import { useTranslation } from "@agentharness/core";
 import { toast } from "sonner";
 import {
   MoreHorizontal,
@@ -31,22 +31,22 @@ import {
   BellOff,
   Filter,
 } from "lucide-react";
-import type { InboxItem } from "@multica/core/types";
-import { Button } from "@multica/ui/components/ui/button";
+import type { InboxItem } from "@agentharness/core/types";
+import { Button } from "@agentharness/ui/components/ui/button";
 import {
   ResizablePanelGroup,
   ResizablePanel,
   ResizableHandle,
-} from "@multica/ui/components/ui/resizable";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
+} from "@agentharness/ui/components/ui/resizable";
+import { Skeleton } from "@agentharness/ui/components/ui/skeleton";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-} from "@multica/ui/components/ui/dropdown-menu";
-import { useIsMobile } from "@multica/ui/hooks/use-mobile";
+} from "@agentharness/ui/components/ui/dropdown-menu";
+import { useIsMobile } from "@agentharness/ui/hooks/use-mobile";
 import { InboxListItem, timeAgo } from "./inbox-list-item";
 
 type TranslateFn = (key: string, fallback: string) => string;
@@ -80,7 +80,7 @@ export function InboxPage({ t: tProp }: InboxPageProps) {
   const items = useMemo(() => rawItems.filter((i) => !i.archived), [rawItems]);
 
   const { defaultLayout, onLayoutChanged } = useDefaultLayout({
-    id: "multica_inbox_layout",
+    id: "agentharness_inbox_layout",
   });
 
   const isMobile = useIsMobile();
@@ -309,7 +309,7 @@ export function InboxPage({ t: tProp }: InboxPageProps) {
       key={selected.id}
       issueId={selected.issue_id}
       defaultSidebarOpen={false}
-      layoutId="multica_inbox_issue_detail_layout"
+      layoutId="agentharness_inbox_issue_detail_layout"
       highlightCommentId={selected.details?.comment_id ?? undefined}
       onDelete={() => {
         handleArchive(selected.id);

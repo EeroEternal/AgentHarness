@@ -3,16 +3,16 @@
 import { useRef, useState } from "react";
 import { ChevronRight, Copy, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { Card } from "@multica/ui/components/ui/card";
-import { Button } from "@multica/ui/components/ui/button";
+import { Card } from "@agentharness/ui/components/ui/card";
+import { Button } from "@agentharness/ui/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-} from "@multica/ui/components/ui/dropdown-menu";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@multica/ui/components/ui/tooltip";
+} from "@agentharness/ui/components/ui/dropdown-menu";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@agentharness/ui/components/ui/tooltip";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,20 +22,20 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@multica/ui/components/ui/alert-dialog";
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@multica/ui/components/ui/collapsible";
+} from "@agentharness/ui/components/ui/alert-dialog";
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@agentharness/ui/components/ui/collapsible";
 import { ActorAvatar } from "../../common/actor-avatar";
-import { ReactionBar } from "@multica/ui/components/common/reaction-bar";
-import { QuickEmojiPicker } from "@multica/ui/components/common/quick-emoji-picker";
-import { cn } from "@multica/ui/lib/utils";
-import { useActorName } from "@multica/core/workspace/hooks";
-import { timeAgo } from "@multica/core/utils";
+import { ReactionBar } from "@agentharness/ui/components/common/reaction-bar";
+import { QuickEmojiPicker } from "@agentharness/ui/components/common/quick-emoji-picker";
+import { cn } from "@agentharness/ui/lib/utils";
+import { useActorName } from "@agentharness/core/workspace/hooks";
+import { timeAgo } from "@agentharness/core/utils";
 import { ContentEditor, type ContentEditorRef, copyMarkdown, ReadonlyContent, useFileDropZone, FileDropOverlay } from "../../editor";
-import { FileUploadButton } from "@multica/ui/components/common/file-upload-button";
-import { useFileUpload } from "@multica/core/hooks/use-file-upload";
-import { api } from "@multica/core/api";
+import { FileUploadButton } from "@agentharness/ui/components/common/file-upload-button";
+import { useFileUpload } from "@agentharness/core/hooks/use-file-upload";
+import { api } from "@agentharness/core/api";
 import { ReplyInput } from "./reply-input";
-import type { TimelineEntry } from "@multica/core/types";
+import type { TimelineEntry } from "@agentharness/core/types";
 
 // ---------------------------------------------------------------------------
 // Types

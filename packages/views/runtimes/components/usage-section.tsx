@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { BarChart3 } from "lucide-react";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import type { RuntimeUsage } from "@multica/core/types";
-import { api } from "@multica/core/api";
-import { useTranslation } from "@multica/core";
+import { Skeleton } from "@agentharness/ui/components/ui/skeleton";
+import type { RuntimeUsage } from "@agentharness/core/types";
+import { api } from "@agentharness/core/api";
+import { useTranslation } from "@agentharness/core";
 import { formatTokens, estimateCost, aggregateByDate } from "../utils";
 import { TokenCard } from "./shared";
 import {

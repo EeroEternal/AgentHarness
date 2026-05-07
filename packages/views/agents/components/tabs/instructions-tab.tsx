@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { Loader2, Save, Sparkles } from "lucide-react";
-import type { Agent } from "@multica/core/types";
-import { Button } from "@multica/ui/components/ui/button";
-import { useTranslation } from "@multica/core";
-import { cn } from "@multica/ui/lib/utils";
+import type { Agent } from "@agentharness/core/types";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { useTranslation } from "@agentharness/core";
+import { cn } from "@agentharness/ui/lib/utils";
 
 export function InstructionsTab({
   agent,

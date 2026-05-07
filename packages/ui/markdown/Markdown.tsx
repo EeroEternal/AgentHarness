@@ -3,7 +3,7 @@ import ReactMarkdown, { type Components, defaultUrlTransform } from 'react-markd
 import rehypeRaw from 'rehype-raw'
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
 import remarkGfm from 'remark-gfm'
-import { cn } from '@multica/ui/lib/utils'
+import { cn } from '@agentharness/ui/lib/utils'
 import { CodeBlock, InlineCode } from './CodeBlock'
 import { preprocessLinks } from './linkify'
 import { preprocessMentionShortcodes } from './mentions'

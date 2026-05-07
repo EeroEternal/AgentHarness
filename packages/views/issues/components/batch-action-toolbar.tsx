@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { X, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "@multica/ui/components/ui/button";
+import { Button } from "@agentharness/ui/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,10 +13,10 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@multica/ui/components/ui/alert-dialog";
-import type { UpdateIssueRequest } from "@multica/core/types";
-import { useIssueSelectionStore } from "@multica/core/issues/stores/selection-store";
-import { useBatchUpdateIssues, useBatchDeleteIssues } from "@multica/core/issues/mutations";
+} from "@agentharness/ui/components/ui/alert-dialog";
+import type { UpdateIssueRequest } from "@agentharness/core/types";
+import { useIssueSelectionStore } from "@agentharness/core/issues/stores/selection-store";
+import { useBatchUpdateIssues, useBatchDeleteIssues } from "@agentharness/core/issues/mutations";
 import { StatusPicker, PriorityPicker, AssigneePicker } from "./pickers";
 
 type TranslateFn = (key: string, fallback: string) => string;

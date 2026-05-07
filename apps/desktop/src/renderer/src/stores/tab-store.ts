@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { arrayMove } from "@dnd-kit/sortable";
-import { createPersistStorage, defaultStorage } from "@multica/core/platform";
+import { createPersistStorage, defaultStorage } from "@agentharness/core/platform";
 import type { DataRouter } from "react-router-dom";
 import { createTabRouter } from "../routes";
 
@@ -161,7 +161,7 @@ export const useTabStore = create<TabStore>()(
   },
     }),
     {
-      name: "multica_tabs",
+      name: "agentharness_tabs",
       version: 1,
       storage: createJSONStorage(() => createPersistStorage(defaultStorage)),
       partialize: (state) => ({

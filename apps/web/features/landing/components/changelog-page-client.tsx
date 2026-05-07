@@ -2,7 +2,7 @@
 
 import { LandingHeader } from "./landing-header";
 import { LandingFooter } from "./landing-footer";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@agentharness/ui/lib/utils";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useLocale } from "../i18n";

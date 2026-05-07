@@ -1,10 +1,10 @@
 "use client";
 
-import { MyIssuesPage } from "@multica/views/my-issues";
+import { MyIssuesPage } from "@agentharness/views/my-issues";
 import { useLocale } from "@/features/landing/i18n/context";
 import { en } from "@/features/landing/i18n/en";
 import { zh } from "@/features/landing/i18n/zh";
-import { Button } from "@multica/ui/components/ui/button";
+import { Button } from "@agentharness/ui/components/ui/button";
 import { Globe } from "lucide-react";
 
 function getNestedValue(obj: any, path: string): any {

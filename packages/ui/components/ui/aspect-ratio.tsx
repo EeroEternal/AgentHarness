@@ -1,4 +1,4 @@
-import { cn } from "@multica/ui/lib/utils"
+import { cn } from "@agentharness/ui/lib/utils"
 
 function AspectRatio({
   ratio,

@@ -13,7 +13,7 @@ import { Node, mergeAttributes } from "@tiptap/core";
 import { ReactNodeViewRenderer, NodeViewWrapper } from "@tiptap/react";
 import type { NodeViewProps } from "@tiptap/react";
 import { FileText, Loader2, Download } from "lucide-react";
-import { api } from "@multica/core/api";
+import { api } from "@agentharness/core/api";
 
 
 // ---------------------------------------------------------------------------
@@ -32,7 +32,7 @@ export function isCdnUrl(url: string): boolean {
       u.hostname === "localhost" ||
       u.hostname === "127.0.0.1" ||
       u.hostname.endsWith(".s3.garage.localhost") ||
-      url.includes("/multica-uploads/") ||
+      url.includes("/agentharness-uploads/") ||
       url.includes("/s3-")
     );
   } catch {
@@ -57,7 +57,7 @@ export function isFileCardUrl(url: string): boolean {
       u.hostname === "localhost" ||
       u.hostname === "127.0.0.1" ||
       u.hostname.endsWith(".s3.garage.localhost") ||
-      url.includes("/multica-uploads/") ||
+      url.includes("/agentharness-uploads/") ||
       url.includes("/s3-")
     );
   } catch {

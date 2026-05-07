@@ -1,22 +1,22 @@
-# multica ctrl - 多用户 CLI 实例管理
+# agentharness ctrl - 多用户 CLI 实例管理
 
 ## 概述
 
-`multica ctrl` 命令用于在同一台机器上启动和管理多个用户的独立 CLI 实例。每个实例运行在独立进程中，包含**自动登录认证**功能。
+`agentharness ctrl` 命令用于在同一台机器上启动和管理多个用户的独立 CLI 实例。每个实例运行在独立进程中，包含**自动登录认证**功能。
 
 ## 工作流程
 
 ```
-multica ctrl start --user alice --workspace ws-001
+agentharness ctrl start --user alice --workspace ws-001
     │
-    ▼ 检查 ~/.multica/profiles/alice/config.json
+    ▼ 检查 ~/.agentharness/profiles/alice/config.json
     │
     ├─ [已认证] Token 有效 → 直接启动 daemon
     │
     └─ [未认证/过期] → 浏览器验证码 → 获取 PAT → 保存 Token → 启动 daemon
     │
     ▼
-multica daemon start (每个用户独立进程轮询 task)
+agentharness daemon start (每个用户独立进程轮询 task)
 ```
 
 ## 新增命令
@@ -26,7 +26,7 @@ multica daemon start (每个用户独立进程轮询 task)
 多用户实例管理主命令。
 
 ```bash
-multica ctrl [command]
+agentharness ctrl [command]
 ```
 
 ### ctrl start
@@ -34,7 +34,7 @@ multica ctrl [command]
 启动一个 CLI 实例给指定用户，包含自动登录。
 
 ```bash
-multica ctrl start --user <user> --workspace <workspace-id> [flags]
+agentharness ctrl start --user <user> --workspace <workspace-id> [flags]
 ```
 
 **必填参数：**
@@ -53,13 +53,13 @@ multica ctrl start --user <user> --workspace <workspace-id> [flags]
 
 ```bash
 # 为 alice 启动实例（自动打开浏览器登录）
-multica ctrl start --user alice --workspace ws-001
+agentharness ctrl start --user alice --workspace ws-001
 
 # 为 bob 启动实例
-multica ctrl start --user bob --workspace ws-002 --server-url http://8080.multica.internal
+agentharness ctrl start --user bob --workspace ws-002 --server-url http://8080.agentharness.internal
 
 # 停止后重新启动（token 有效则跳过登录）
-multica ctrl start --user alice --workspace ws-001
+agentharness ctrl start --user alice --workspace ws-001
 ```
 
 ### ctrl stop
@@ -67,7 +67,7 @@ multica ctrl start --user alice --workspace ws-001
 停止一个 CLI 实例。
 
 ```bash
-multica ctrl stop [flags]
+agentharness ctrl stop [flags]
 ```
 
 **参数：**
@@ -79,10 +79,10 @@ multica ctrl stop [flags]
 
 ```bash
 # 停止 alice 的所有实例
-multica ctrl stop --user alice
+agentharness ctrl stop --user alice
 
 # 按实例 ID 停止
-multica ctrl stop --instance-id <uuid>
+agentharness ctrl stop --instance-id <uuid>
 ```
 
 ### ctrl list
@@ -90,7 +90,7 @@ multica ctrl stop --instance-id <uuid>
 列出所有运行中的实例。
 
 ```bash
-multica ctrl list
+agentharness ctrl list
 ```
 
 **输出示例：**
@@ -108,11 +108,11 @@ bob        ws-002     bob        12346    running
 
 ```
 ┌─────────────────────────────────────┐
-│      multica ctrl (主进程)           │
+│      agentharness ctrl (主进程)           │
 ├─────────────────────────────────────┤
 │  InstanceManager                   │
 │  - 管理 instances map               │
-│  - 状态持久化到 ~/.multica/         │
+│  - 状态持久化到 ~/.agentharness/         │
 │  - 自动登录认证                     │
 │  - 多进程启动/停止                  │
 └─────────────────────────────────────┘
@@ -121,15 +121,15 @@ bob        ws-002     bob        12346    running
         │
         ▼
 ┌─────────────────────────────────────┐
-│  multica --profile alice daemon start │ ───► Alice's Daemon
-│  multica --profile bob daemon start │ ───► Bob's Daemon
+│  agentharness --profile alice daemon start │ ───► Alice's Daemon
+│  agentharness --profile bob daemon start │ ───► Bob's Daemon
 └─────────────────────────────────────┘
 ```
 
 ### 自动登录流程
 
 1. **检查现有 Token**
-   - 读取 `~/.multica/profiles/<user>/config.json`
+   - 读取 `~/.agentharness/profiles/<user>/config.json`
    - 调用 `/api/me` 验证 Token 有效性
 
 2. **有效期** → 直接启动 daemon
@@ -143,7 +143,7 @@ bob        ws-002     bob        12346    running
    - 验证 PAT 后保存到 profile 配置
 
 4. **启动 Daemon**
-   - 使用子进程运行 `multica --profile <user> daemon start`
+   - 使用子进程运行 `agentharness --profile <user> daemon start`
    - Setsid + Setpgid 创建新会话隔离
 
 ### 核心组件
@@ -179,8 +179,8 @@ bob        ws-002     bob        12346    running
 
 | User | Config Path |
 |------|-------------|
-| alice | `~/.multica/profiles/alice/config.json` |
-| bob | `~/.multica/profiles/bob/config.json` |
+| alice | `~/.agentharness/profiles/alice/config.json` |
+| bob | `~/.agentharness/profiles/bob/config.json` |
 
 配置内容：
 ```json
@@ -195,7 +195,7 @@ bob        ws-002     bob        12346    running
 
 ### 状态存储
 
-实例状态文件：`~/.multica/instances/instances.json`
+实例状态文件：`~/.agentharness/instances/instances.json`
 
 ```json
 {
@@ -216,16 +216,16 @@ bob        ws-002     bob        12346    running
 
 | 原命令 | 作用 | ctrl 中的角色 |
 |--------|------|---------------|
-| `multica login` | 验证码认证 + 配置 workspace | **自动调用** |
-| `multica daemon start` | 启动 daemon 轮询任务 | **自动启动** |
+| `agentharness login` | 验证码认证 + 配置 workspace | **自动调用** |
+| `agentharness daemon start` | 启动 daemon 轮询任务 | **自动启动** |
 
 **完整流程对比：**
 
 | 手动操作 | ctrl 自动 |
 |----------|-----------|
-| `multica login` | ✅ 自动完成 |
-| `multica workspace watch ws-001` | 需手动配置 |
-| `multica daemon start` | ✅ 自动启动 |
+| `agentharness login` | ✅ 自动完成 |
+| `agentharness workspace watch ws-001` | 需手动配置 |
+| `agentharness daemon start` | ✅ 自动启动 |
 
 ## 使用流程
 
@@ -233,15 +233,15 @@ bob        ws-002     bob        12346    running
 
 ```bash
 # 为多个用户启动实例
-multica ctrl start --user alice --workspace ws-001
-multica ctrl start --user bob --workspace ws-002
-multica ctrl start --user charlie --workspace ws-003
+agentharness ctrl start --user alice --workspace ws-001
+agentharness ctrl start --user bob --workspace ws-002
+agentharness ctrl start --user charlie --workspace ws-003
 
 # 查看运行状态
-multica ctrl list
+agentharness ctrl list
 
 # 停止某个用户
-multica ctrl stop --user bob
+agentharness ctrl stop --user bob
 ```
 
 ### 2. 用户后续操作
@@ -250,14 +250,14 @@ multica ctrl stop --user bob
 
 ```bash
 # 用户自行启动
-multica login          # 首次认证
-multica workspace watch ws-001  # 监workspace
-multica daemon start   # 启动 daemon
+agentharness login          # 首次认证
+agentharness workspace watch ws-001  # 监workspace
+agentharness daemon start   # 启动 daemon
 ```
 
 ## 文件变更
 
-- 新增: `server/cmd/multica/cmd_ctrl.go`
+- 新增: `server/cmd/agentharness/cmd_ctrl.go`
   - InstanceManager 管理类
   - Instance 实例结构体
   - 自动登录认证逻辑

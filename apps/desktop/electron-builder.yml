@@ -1,5 +1,5 @@
-appId: ai.multica.desktop
-productName: Multica
+appId: ai.agentharness.desktop
+productName: AgentHarness
 directories:
   buildResources: build
 files:

@@ -2,15 +2,15 @@
 
 import { useState } from "react";
 import { User, Palette, Key, Settings, Users, FolderGit2 } from "lucide-react";
-import { useWorkspaceStore } from "@multica/core/workspace";
-import { useTranslation } from "@multica/core";
+import { useWorkspaceStore } from "@agentharness/core/workspace";
+import { useTranslation } from "@agentharness/core";
 import { AccountTab } from "./account-tab";
 import { AppearanceTab } from "./appearance-tab";
 import { TokensTab } from "./tokens-tab";
 import { WorkspaceTab } from "./workspace-tab";
 import { MembersTab } from "./members-tab";
 import { RepositoriesTab } from "./repositories-tab";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@agentharness/ui/lib/utils";
 
 type TabId = "profile" | "appearance" | "tokens" | "workspace" | "repositories" | "members";
 

@@ -1,12 +1,12 @@
 "use client";
 
-import { DashboardLayout } from "@multica/views/layout";
-import { SearchCommand, SearchTrigger } from "@multica/views/search";
-import { ChatFab, ChatWindow } from "@multica/views/chat";
+import { DashboardLayout } from "@agentharness/views/layout";
+import { SearchCommand, SearchTrigger } from "@agentharness/views/search";
+import { ChatFab, ChatWindow } from "@agentharness/views/chat";
 import { LocaleProvider, useLocale } from "@/features/landing/i18n/context";
 import { en } from "@/features/landing/i18n/en";
 import { zh } from "@/features/landing/i18n/zh";
-import { useI18nStore } from "@multica/core";
+import { useI18nStore } from "@agentharness/core";
 import type { ReactNode } from "react";
 
 function getNestedValue(obj: any, path: string): any {

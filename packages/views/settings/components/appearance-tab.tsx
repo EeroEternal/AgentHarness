@@ -1,8 +1,8 @@
 "use client";
 
-import { useTheme } from "@multica/ui/components/common/theme-provider";
-import { useI18nStore, useTranslation } from "@multica/core";
-import { cn } from "@multica/ui/lib/utils";
+import { useTheme } from "@agentharness/ui/components/common/theme-provider";
+import { useI18nStore, useTranslation } from "@agentharness/core";
+import { cn } from "@agentharness/ui/lib/utils";
 
 const LIGHT_COLORS = {
   titleBar: "#e8e8e8",

@@ -1,5 +1,5 @@
 {
-  "name": "@multica/views",
+  "name": "@agentharness/views",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -40,8 +40,8 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@floating-ui/dom": "^1.7.6",
-    "@multica/core": "workspace:*",
-    "@multica/ui": "workspace:*",
+    "@agentharness/core": "workspace:*",
+    "@agentharness/ui": "workspace:*",
     "@tiptap/core": "^3.22.1",
     "@tiptap/extension-code-block-lowlight": "^3.22.1",
     "@tiptap/extension-document": "^3.22.1",
@@ -79,7 +79,7 @@
     "zustand": "catalog:"
   },
   "devDependencies": {
-    "@multica/tsconfig": "workspace:*",
+    "@agentharness/tsconfig": "workspace:*",
     "@testing-library/jest-dom": "catalog:",
     "@testing-library/react": "catalog:",
     "@testing-library/user-event": "catalog:",

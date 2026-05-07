@@ -1,10 +1,10 @@
 "use client";
 
 import { Cloud, Monitor } from "lucide-react";
-import type { Agent } from "@multica/core/types";
+import type { Agent } from "@agentharness/core/types";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { statusConfig } from "../config";
-import { useTranslation } from "@multica/core";
+import { useTranslation } from "@agentharness/core";
 
 export function AgentListItem({
   agent,

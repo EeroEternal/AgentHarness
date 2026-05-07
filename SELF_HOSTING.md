@@ -1,10 +1,10 @@
 # Self-Hosting Guide
 
-This guide walks you through deploying Multica on your own infrastructure.
+This guide walks you through deploying AgentHarness on your own infrastructure.
 
 ## Architecture Overview
 
-Multica has three components:
+AgentHarness has three components:
 
 | Component | Description | Technology |
 |-----------|-------------|------------|
@@ -12,15 +12,15 @@ Multica has three components:
 | **Frontend** | Web application | Next.js 16 |
 | **Database** | Primary data store | PostgreSQL 17 with pgvector |
 
-Additionally, each user who wants to run AI agents locally installs the **`multica` CLI** and runs the **agent daemon** on their own machine.
+Additionally, each user who wants to run AI agents locally installs the **`agentharness` CLI** and runs the **agent daemon** on their own machine.
 
 ## Quick Start (Docker Compose)
 
 **Prerequisites:** Docker and Docker Compose.
 
 ```bash
-git clone https://github.com/multica-ai/multica.git
-cd multica
+git clone https://github.com/agentharness-ai/agentharness.git
+cd agentharness
 cp .env.example .env
 ```
 
@@ -62,18 +62,18 @@ All configuration is done via environment variables. Copy `.env.example` as a st
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `DATABASE_URL` | PostgreSQL connection string | `postgres://multica:multica@localhost:5432/multica?sslmode=disable` |
+| `DATABASE_URL` | PostgreSQL connection string | `postgres://agentharness:agentharness@localhost:5432/agentharness?sslmode=disable` |
 | `JWT_SECRET` | **Must change from default.** Secret key for signing JWT tokens. Use a long random string. | `openssl rand -hex 32` |
 | `FRONTEND_ORIGIN` | URL where the frontend is served (used for CORS) | `https://app.example.com` |
 
 ### Email (Required for Authentication)
 
-Multica uses email-based magic link authentication via [Resend](https://resend.com).
+AgentHarness uses email-based magic link authentication via [Resend](https://resend.com).
 
 | Variable | Description |
 |----------|-------------|
 | `RESEND_API_KEY` | Your Resend API key |
-| `RESEND_FROM_EMAIL` | Sender email address (default: `noreply@multica.ai`) |
+| `RESEND_FROM_EMAIL` | Sender email address (default: `noreply@agentharness.ai`) |
 
 If you deploy with the repository GitHub Actions workflow in `.github/workflows/deploy.yml`, set `RESEND_API_KEY` and `RESEND_FROM_EMAIL` as repository secrets. The workflow syncs them into the remote `.env.production` during deployment.
 
@@ -113,14 +113,14 @@ These are configured on each user's machine, not on the server:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MULTICA_SERVER_URL` | `ws://localhost:8080/ws` | WebSocket URL for daemon → server connection |
-| `MULTICA_APP_URL` | `http://localhost:3000` | Frontend URL for CLI login flow |
-| `MULTICA_DAEMON_POLL_INTERVAL` | `3s` | How often the daemon polls for tasks |
-| `MULTICA_DAEMON_HEARTBEAT_INTERVAL` | `15s` | Heartbeat frequency |
+| `AGENTHARNESS_SERVER_URL` | `ws://localhost:8080/ws` | WebSocket URL for daemon → server connection |
+| `AGENTHARNESS_APP_URL` | `http://localhost:3000` | Frontend URL for CLI login flow |
+| `AGENTHARNESS_DAEMON_POLL_INTERVAL` | `3s` | How often the daemon polls for tasks |
+| `AGENTHARNESS_DAEMON_HEARTBEAT_INTERVAL` | `15s` | Heartbeat frequency |
 
 ## Database Setup
 
-Multica requires PostgreSQL 17 with the pgvector extension.
+AgentHarness requires PostgreSQL 17 with the pgvector extension.
 
 ### Using Docker Compose (Recommended)
 
@@ -187,7 +187,7 @@ If Cloudflare Tunnel forwards traffic directly to `127.0.0.1:9997`, you only nee
 DATABASE_URL="your-database-url" \
 PORT=8080 \
 FRONTEND_ORIGIN=http://127.0.0.1:9997 \
-MULTICA_APP_URL=http://127.0.0.1:9997 \
+AGENTHARNESS_APP_URL=http://127.0.0.1:9997 \
 CORS_ALLOWED_ORIGINS=http://127.0.0.1:9997 \
 JWT_SECRET="your-secret" \
 ./server/bin/server
@@ -297,8 +297,8 @@ Each team member who wants to run AI agents locally needs to:
 1. **Install the CLI**
 
    ```bash
-   brew tap multica-ai/tap
-   brew install multica-cli
+   brew tap agentharness-ai/tap
+   brew install agentharness-cli
    ```
 
 2. **Install an AI agent CLI** — at least one of:
@@ -307,16 +307,16 @@ Each team member who wants to run AI agents locally needs to:
 
 3. **Point the CLI to your server**
 
-   The CLI defaults to the hosted Multica service. For self-hosted setups, you **must** set the server URLs before logging in:
+   The CLI defaults to the hosted AgentHarness service. For self-hosted setups, you **must** set the server URLs before logging in:
 
    ```bash
    # Local Docker Compose deployment (default ports):
-   export MULTICA_APP_URL=http://localhost:3000
-   export MULTICA_SERVER_URL=ws://localhost:8080/ws
+   export AGENTHARNESS_APP_URL=http://localhost:3000
+   export AGENTHARNESS_SERVER_URL=ws://localhost:8080/ws
 
    # Production deployment with TLS:
-   # export MULTICA_APP_URL=https://app.example.com
-   # export MULTICA_SERVER_URL=wss://api.example.com/ws
+   # export AGENTHARNESS_APP_URL=https://app.example.com
+   # export AGENTHARNESS_SERVER_URL=wss://api.example.com/ws
    ```
 
    > **Note:** Use `http://` and `ws://` for local deployments without TLS. Use `https://` and `wss://` for production deployments behind a TLS-terminating reverse proxy.
@@ -324,18 +324,18 @@ Each team member who wants to run AI agents locally needs to:
    You can also set these persistently so you don't need to export them each time:
 
    ```bash
-   multica config set app_url http://localhost:3000
-   multica config set server_url ws://localhost:8080/ws
+   agentharness config set app_url http://localhost:3000
+   agentharness config set server_url ws://localhost:8080/ws
    ```
 
 4. **Authenticate and start**
 
    ```bash
    # Login (opens browser to your frontend)
-   multica login
+   agentharness login
 
    # Start the daemon
-   multica daemon start
+   agentharness daemon start
    ```
 
    The login flow opens your browser, authenticates you via the frontend, and stores a personal access token locally. The daemon then uses this token to register with the backend.
@@ -343,7 +343,7 @@ Each team member who wants to run AI agents locally needs to:
    To verify the daemon is running:
 
    ```bash
-   multica daemon status
+   agentharness daemon status
    ```
 
 ## Upgrading

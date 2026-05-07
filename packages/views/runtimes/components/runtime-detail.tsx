@@ -4,13 +4,13 @@ import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
-import type { AgentRuntime } from "@multica/core/types";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useTranslation } from "@multica/core";
-import { memberListOptions } from "@multica/core/workspace/queries";
-import { useDeleteRuntime } from "@multica/core/runtimes/mutations";
-import { Button } from "@multica/ui/components/ui/button";
+import type { AgentRuntime } from "@agentharness/core/types";
+import { useAuthStore } from "@agentharness/core/auth";
+import { useWorkspaceId } from "@agentharness/core/hooks";
+import { useTranslation } from "@agentharness/core";
+import { memberListOptions } from "@agentharness/core/workspace/queries";
+import { useDeleteRuntime } from "@agentharness/core/runtimes/mutations";
+import { Button } from "@agentharness/ui/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,7 +20,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@multica/ui/components/ui/alert-dialog";
+} from "@agentharness/ui/components/ui/alert-dialog";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { formatLastSeen } from "../utils";
 import { StatusBadge, InfoField } from "./shared";

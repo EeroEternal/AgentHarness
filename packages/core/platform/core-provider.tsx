@@ -41,16 +41,16 @@ function initCore(
   const api = new ApiClient(apiBaseUrl, {
     logger: createLogger("api"),
     onUnauthorized: () => {
-      storage.removeItem("multica_token");
-      storage.removeItem("multica_workspace_id");
+      storage.removeItem("agentharness_token");
+      storage.removeItem("agentharness_workspace_id");
     },
   });
   setApiInstance(api);
 
   // Hydrate token from storage
-  const token = storage.getItem("multica_token");
+  const token = storage.getItem("agentharness_token");
   if (token) api.setToken(token);
-  const wsId = storage.getItem("multica_workspace_id");
+  const wsId = storage.getItem("agentharness_workspace_id");
   if (wsId) api.setWorkspaceId(wsId);
 
   authStore = createAuthStore({ api, storage, onLogin, onLogout });

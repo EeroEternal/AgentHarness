@@ -3,8 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useAuthStore } from "@multica/core/auth";
-import { cn } from "@multica/ui/lib/utils";
+import { useAuthStore } from "@agentharness/core/auth";
+import { cn } from "@agentharness/ui/lib/utils";
 import { useTheme } from "next-themes";
 import {
   ArrowRight,

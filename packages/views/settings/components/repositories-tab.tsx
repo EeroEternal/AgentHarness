@@ -2,18 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { Save, Plus, Trash2 } from "lucide-react";
-import { Input } from "@multica/ui/components/ui/input";
-import { Button } from "@multica/ui/components/ui/button";
-import { Card, CardContent } from "@multica/ui/components/ui/card";
+import { Input } from "@agentharness/ui/components/ui/input";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { Card, CardContent } from "@agentharness/ui/components/ui/card";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceStore } from "@multica/core/workspace";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { memberListOptions } from "@multica/core/workspace/queries";
-import { api } from "@multica/core/api";
-import type { WorkspaceRepo } from "@multica/core/types";
-import { useTranslation } from "@multica/core";
+import { useAuthStore } from "@agentharness/core/auth";
+import { useWorkspaceStore } from "@agentharness/core/workspace";
+import { useWorkspaceId } from "@agentharness/core/hooks";
+import { memberListOptions } from "@agentharness/core/workspace/queries";
+import { api } from "@agentharness/core/api";
+import type { WorkspaceRepo } from "@agentharness/core/types";
+import { useTranslation } from "@agentharness/core";
 
 export function RepositoriesTab() {
   const { t } = useTranslation();

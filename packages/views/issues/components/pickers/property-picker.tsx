@@ -6,7 +6,7 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@multica/ui/components/ui/popover";
+} from "@agentharness/ui/components/ui/popover";
 
 type TranslateFn = (key: string, fallback: string) => string;
 

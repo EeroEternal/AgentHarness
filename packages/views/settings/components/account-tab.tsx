@@ -2,15 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Camera, Loader2, Save, Key } from "lucide-react";
-import { Input } from "@multica/ui/components/ui/input";
-import { Label } from "@multica/ui/components/ui/label";
-import { Button } from "@multica/ui/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@multica/ui/components/ui/card";
+import { Input } from "@agentharness/ui/components/ui/input";
+import { Label } from "@agentharness/ui/components/ui/label";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@agentharness/ui/components/ui/card";
 import { toast } from "sonner";
-import { useAuthStore } from "@multica/core/auth";
-import { api } from "@multica/core/api";
-import { useFileUpload } from "@multica/core/hooks/use-file-upload";
-import { useTranslation } from "@multica/core";
+import { useAuthStore } from "@agentharness/core/auth";
+import { api } from "@agentharness/core/api";
+import { useFileUpload } from "@agentharness/core/hooks/use-file-upload";
+import { useTranslation } from "@agentharness/core";
 
 export function AccountTab() {
   const { t } = useTranslation();

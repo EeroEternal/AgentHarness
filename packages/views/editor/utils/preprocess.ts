@@ -1,5 +1,5 @@
-import { preprocessLinks } from "@multica/ui/markdown";
-import { preprocessMentionShortcodes } from "@multica/ui/markdown";
+import { preprocessLinks } from "@agentharness/ui/markdown";
+import { preprocessMentionShortcodes } from "@agentharness/ui/markdown";
 import { isFileCardUrl } from "../extensions/file-card";
 
 /**
@@ -27,7 +27,7 @@ export function preprocessMarkdown(markdown: string): string {
  * Convert standalone `[name](cdnUrl)` lines into HTML that Tiptap's fileCard
  * parseHTML can recognise. Handles both CDN URLs (http://...) and proxy URLs (/api/...).
  *
- * CDN Input:  `[report.pdf](https://multica-static.copilothub.ai/xxx.pdf)`
+ * CDN Input:  `[report.pdf](https://agentharness-static.copilothub.ai/xxx.pdf)`
  * CDN Output: `<div data-type="fileCard" data-href="url" data-filename="report.pdf"></div>`
  *
  * Proxy Input: `[report.pdf](/api/attachments/xxx/file?workspace_id=yyy)`

@@ -3,17 +3,17 @@
 import { useState } from "react";
 import { Download, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "@multica/ui/components/ui/button";
+import { Button } from "@agentharness/ui/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@agentharness/ui/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import type { Attachment } from "@multica/core/types";
-import { api } from "@multica/core/api";
-import { timeAgo } from "@multica/core/utils";
+import type { Attachment } from "@agentharness/core/types";
+import { api } from "@agentharness/core/api";
+import { timeAgo } from "@agentharness/core/utils";
 
 function formatFileSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;

@@ -1,8 +1,8 @@
 "use client";
 
 import { Send } from "lucide-react";
-import { useChatStore } from "@multica/core/chat";
-import { useTranslation } from "@multica/core";
+import { useChatStore } from "@agentharness/core/chat";
+import { useTranslation } from "@agentharness/core";
 import { useState, useRef, useEffect, useCallback } from "react";
 
 const INITIAL_BOTTOM = 80;

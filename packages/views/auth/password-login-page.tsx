@@ -8,13 +8,13 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "@multica/ui/components/ui/card";
-import { Input } from "@multica/ui/components/ui/input";
-import { Button } from "@multica/ui/components/ui/button";
-import { Label } from "@multica/ui/components/ui/label";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceStore } from "@multica/core/workspace";
-import { api } from "@multica/core/api";
+} from "@agentharness/ui/components/ui/card";
+import { Input } from "@agentharness/ui/components/ui/input";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { Label } from "@agentharness/ui/components/ui/label";
+import { useAuthStore } from "@agentharness/core/auth";
+import { useWorkspaceStore } from "@agentharness/core/workspace";
+import { api } from "@agentharness/core/api";
 
 interface PasswordLoginPageProps {
   logo?: React.ReactNode;

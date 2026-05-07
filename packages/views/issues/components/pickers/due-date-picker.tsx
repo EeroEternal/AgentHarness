@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { CalendarDays } from "lucide-react";
-import type { UpdateIssueRequest } from "@multica/core/types";
-import { Calendar } from "@multica/ui/components/ui/calendar";
+import type { UpdateIssueRequest } from "@agentharness/core/types";
+import { Calendar } from "@agentharness/ui/components/ui/calendar";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@multica/ui/components/ui/popover";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@agentharness/ui/components/ui/popover";
+import { Button } from "@agentharness/ui/components/ui/button";
 
 type TranslateFn = (key: string, fallback: string) => string;
 

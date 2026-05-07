@@ -1,17 +1,17 @@
 import { Server, ArrowUpCircle, ChevronDown, Check, Play, Square } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
-import type { AgentRuntime, MemberWithUser } from "@multica/core/types";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useTranslation } from "@multica/core";
-import { memberListOptions } from "@multica/core/workspace/queries";
+import type { AgentRuntime, MemberWithUser } from "@agentharness/core/types";
+import { useWorkspaceId } from "@agentharness/core/hooks";
+import { useTranslation } from "@agentharness/core";
+import { memberListOptions } from "@agentharness/core/workspace/queries";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@agentharness/ui/components/ui/dropdown-menu";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { ProviderLogo } from "./provider-logo";
 
@@ -100,8 +100,8 @@ export function RuntimeList({
   const wsId = useWorkspaceId();
   const { data: members = [] } = useQuery(memberListOptions(wsId));
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [isStartingMultica, setIsStartingMultica] = useState(false);
-  const [isStoppingMultica, setIsStoppingMultica] = useState(false);
+  const [isStartingAgentHarness, setIsStartingAgentHarness] = useState(false);
+  const [isStoppingAgentHarness, setIsStoppingAgentHarness] = useState(false);
   const [daemonStatus, setDaemonStatus] = useState<"running" | "stopped" | "unknown">("unknown");
 
   // Get token from localStorage (matches what auth store uses)
@@ -109,7 +109,7 @@ export function RuntimeList({
 
   useEffect(() => {
     // Read token from localStorage - this is what the auth store uses
-    const storedToken = localStorage.getItem("multica_token");
+    const storedToken = localStorage.getItem("agentharness_token");
     setToken(storedToken);
   }, []);
 
@@ -124,7 +124,7 @@ export function RuntimeList({
       };
 
       try {
-        const statusResponse = await fetch("/api/multica/cli", {
+        const statusResponse = await fetch("/api/agentharness/cli", {
           method: "POST",
           headers,
           body: JSON.stringify({ command: "daemon status" }),
@@ -148,7 +148,7 @@ export function RuntimeList({
     return () => clearInterval(interval);
   }, [token]);
 
-  const handleStopMultica = async () => {
+  const handleStopAgentHarness = async () => {
     try {
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
@@ -158,10 +158,10 @@ export function RuntimeList({
         headers["Authorization"] = `Bearer ${token}`;
       }
 
-      setIsStoppingMultica(true);
+      setIsStoppingAgentHarness(true);
 
       // Call daemon stop
-      const stopResponse = await fetch("/api/multica/cli", {
+      const stopResponse = await fetch("/api/agentharness/cli", {
         method: "POST",
         headers,
         body: JSON.stringify({ command: "daemon stop" }),
@@ -176,17 +176,17 @@ export function RuntimeList({
       setDaemonStatus("stopped");
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      console.error("Failed to stop Multica:", error);
-      alert("Failed to stop Multica: " + message);
+      console.error("Failed to stop AgentHarness:", error);
+      alert("Failed to stop AgentHarness: " + message);
     } finally {
-      setIsStoppingMultica(false);
+      setIsStoppingAgentHarness(false);
     }
   };
 
-  const handleStartMultica = async () => {
+  const handleStartAgentHarness = async () => {
     try {
       // Use existing token from localStorage to authenticate with the API
-      // The "login" command will auto-create a PAT and configure multica CLI
+      // The "login" command will auto-create a PAT and configure agentharness CLI
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
       };
@@ -195,8 +195,8 @@ export function RuntimeList({
         headers["Authorization"] = `Bearer ${token}`;
       }
 
-      // First call login to auto-create PAT and configure multica
-      const loginResponse = await fetch("/api/multica/cli", {
+      // First call login to auto-create PAT and configure agentharness
+      const loginResponse = await fetch("/api/agentharness/cli", {
         method: "POST",
         headers,
         body: JSON.stringify({ command: "login" }),
@@ -207,10 +207,10 @@ export function RuntimeList({
         throw new Error(errorData.error || "Login failed");
       }
 
-      setIsStartingMultica(true);
+      setIsStartingAgentHarness(true);
 
       // Call daemon start (ignore error if already running)
-      const daemonStartResponse = await fetch("/api/multica/cli", {
+      const daemonStartResponse = await fetch("/api/agentharness/cli", {
         method: "POST",
         headers,
         body: JSON.stringify({ command: "daemon start" }),
@@ -228,7 +228,7 @@ export function RuntimeList({
       let isRunning = false;
       for (let i = 0; i < 10; i++) {
         await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds between checks
-        const statusResponse = await fetch("/api/multica/cli", {
+        const statusResponse = await fetch("/api/agentharness/cli", {
           method: "POST",
           headers,
           body: JSON.stringify({ command: "daemon status" }),
@@ -256,11 +256,11 @@ export function RuntimeList({
       // Refresh runtimes list - relies on WS event
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      console.error("Failed to start Multica:", error);
-      alert("Failed to start Multica: " + message);
+      console.error("Failed to start AgentHarness:", error);
+      alert("Failed to start AgentHarness: " + message);
     } finally {
       setIsLoggingIn(false);
-      setIsStartingMultica(false);
+      setIsStartingAgentHarness(false);
     }
   };
 
@@ -372,11 +372,11 @@ export function RuntimeList({
         <div className="flex items-center gap-2">
           {daemonStatus === "running" ? (
             <button
-              onClick={handleStopMultica}
-              disabled={isStoppingMultica}
+              onClick={handleStopAgentHarness}
+              disabled={isStoppingAgentHarness}
               className="flex items-center gap-1.5 rounded-md bg-destructive/10 text-destructive px-3 py-1.5 text-xs font-medium transition-colors hover:bg-destructive/20 cursor-pointer"
             >
-              {isStoppingMultica ? (
+              {isStoppingAgentHarness ? (
                 <>
                   <Square className="h-3.5 w-3.5 animate-spin" />
                   <span>{t("runtimes.stopping", "Stopping...")}</span>
@@ -390,11 +390,11 @@ export function RuntimeList({
             </button>
           ) : (
             <button
-              onClick={handleStartMultica}
-              disabled={isStartingMultica || isLoggingIn || daemonStatus === "unknown"}
+              onClick={handleStartAgentHarness}
+              disabled={isStartingAgentHarness || isLoggingIn || daemonStatus === "unknown"}
               className="flex items-center gap-1.5 rounded-md bg-primary text-primary-foreground px-3 py-1.5 text-xs font-medium transition-colors hover:bg-primary/90 disabled:opacity-50 cursor-pointer"
             >
-              {isStartingMultica ? (
+              {isStartingAgentHarness ? (
                 <>
                   <Play className="h-3.5 w-3.5 animate-spin" />
                   <span>{t("runtimes.starting", "Starting...")}</span>

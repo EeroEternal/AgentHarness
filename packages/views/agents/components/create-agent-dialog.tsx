@@ -7,7 +7,7 @@ import type {
   AgentVisibility,
   RuntimeDevice,
   CreateAgentRequest,
-} from "@multica/core/types";
+} from "@agentharness/core/types";
 import {
   Dialog,
   DialogContent,
@@ -15,17 +15,17 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@multica/ui/components/ui/dialog";
+} from "@agentharness/ui/components/ui/dialog";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@multica/ui/components/ui/popover";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { Label } from "@multica/ui/components/ui/label";
+} from "@agentharness/ui/components/ui/popover";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { Input } from "@agentharness/ui/components/ui/input";
+import { Label } from "@agentharness/ui/components/ui/label";
 import { toast } from "sonner";
-import { useTranslation } from "@multica/core";
+import { useTranslation } from "@agentharness/core";
 
 export function CreateAgentDialog({
   runtimes,

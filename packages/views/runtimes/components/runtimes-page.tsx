@@ -8,14 +8,14 @@ import {
   ResizablePanelGroup,
   ResizablePanel,
   ResizableHandle,
-} from "@multica/ui/components/ui/resizable";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useTranslation } from "@multica/core";
-import { runtimeListOptions, runtimeKeys } from "@multica/core/runtimes/queries";
-import { useUpdatableRuntimeIds } from "@multica/core/runtimes/hooks";
-import { useWSEvent } from "@multica/core/realtime";
+} from "@agentharness/ui/components/ui/resizable";
+import { Skeleton } from "@agentharness/ui/components/ui/skeleton";
+import { useAuthStore } from "@agentharness/core/auth";
+import { useWorkspaceId } from "@agentharness/core/hooks";
+import { useTranslation } from "@agentharness/core";
+import { runtimeListOptions, runtimeKeys } from "@agentharness/core/runtimes/queries";
+import { useUpdatableRuntimeIds } from "@agentharness/core/runtimes/hooks";
+import { useWSEvent } from "@agentharness/core/realtime";
 import { RuntimeList } from "./runtime-list";
 import { RuntimeDetail } from "./runtime-detail";
 
@@ -34,7 +34,7 @@ export default function RuntimesPage() {
   const { data: runtimes = [], isLoading: fetching } = useQuery(runtimeListOptions(wsId, ownerParam));
 
   const { defaultLayout, onLayoutChanged } = useDefaultLayout({
-    id: "multica_runtimes_layout",
+    id: "agentharness_runtimes_layout",
   });
 
   // Re-fetch on daemon register/deregister events.

@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { SidebarProvider, SidebarInset, SidebarTrigger } from "@multica/ui/components/ui/sidebar";
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@agentharness/ui/components/ui/sidebar";
 import { ModalRegistry } from "../modals/registry";
 import { AppSidebar } from "./app-sidebar";
 import { DashboardGuard } from "./dashboard-guard";

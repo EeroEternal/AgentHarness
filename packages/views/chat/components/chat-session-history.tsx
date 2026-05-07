@@ -2,15 +2,15 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, MessageSquare, Archive, Trash2 } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@multica/ui/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@agentharness/ui/components/ui/avatar";
 import { Bot } from "lucide-react";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { agentListOptions } from "@multica/core/workspace/queries";
-import { allChatSessionsOptions } from "@multica/core/chat/queries";
-import { useArchiveChatSession } from "@multica/core/chat/mutations";
-import { useChatStore } from "@multica/core/chat";
-import { useTranslation } from "@multica/core";
-import type { ChatSession, Agent } from "@multica/core/types";
+import { useWorkspaceId } from "@agentharness/core/hooks";
+import { agentListOptions } from "@agentharness/core/workspace/queries";
+import { allChatSessionsOptions } from "@agentharness/core/chat/queries";
+import { useArchiveChatSession } from "@agentharness/core/chat/mutations";
+import { useChatStore } from "@agentharness/core/chat";
+import { useTranslation } from "@agentharness/core";
+import type { ChatSession, Agent } from "@agentharness/core/types";
 
 export function ChatSessionHistory() {
   const { t } = useTranslation();

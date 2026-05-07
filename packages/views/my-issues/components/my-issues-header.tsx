@@ -17,7 +17,7 @@ import {
   SortDesc,
   X,
 } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
+import { Button } from "@agentharness/ui/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -28,28 +28,28 @@ import {
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@agentharness/ui/components/ui/dropdown-menu";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@multica/ui/components/ui/popover";
-import { cn } from "@multica/ui/lib/utils";
+} from "@agentharness/ui/components/ui/popover";
+import { cn } from "@agentharness/ui/lib/utils";
 import {
   ALL_STATUSES,
   STATUS_CONFIG,
   PRIORITY_ORDER,
   PRIORITY_CONFIG,
-} from "@multica/core/issues/config";
+} from "@agentharness/core/issues/config";
 import { StatusIcon, PriorityIcon } from "../../issues/components";
 import {
   SORT_OPTIONS,
   CARD_PROPERTY_OPTIONS,
-} from "@multica/core/issues/stores/view-store";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@multica/ui/components/ui/tooltip";
-import type { Issue } from "@multica/core/types";
-import { myIssuesViewStore, type MyIssuesScope } from "@multica/core/issues/stores/my-issues-view-store";
-import { useModalStore } from "@multica/core/modals";
+} from "@agentharness/core/issues/stores/view-store";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@agentharness/ui/components/ui/tooltip";
+import type { Issue } from "@agentharness/core/types";
+import { myIssuesViewStore, type MyIssuesScope } from "@agentharness/core/issues/stores/my-issues-view-store";
+import { useModalStore } from "@agentharness/core/modals";
 
 type TranslateFn = (key: string, fallback: string) => string;
 

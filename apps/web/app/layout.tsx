@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@multica/ui/components/ui/sonner";
-import { cn } from "@multica/ui/lib/utils";
+import { Toaster } from "@agentharness/ui/components/ui/sonner";
+import { cn } from "@agentharness/ui/lib/utils";
 import { WebProviders } from "@/components/web-providers";
 import { LocaleSync } from "@/components/locale-sync";
 import "./globals.css";

@@ -13,7 +13,7 @@ set -Eeuo pipefail
 GARAGE_HOST="${GARAGE_HOST:-127.0.0.1}"
 GARAGE_PORT="${GARAGE_PORT:-9000}"
 GARAGE_ADMIN_PORT="${GARAGE_ADMIN_PORT:-3903}"
-BUCKET_NAME="${BUCKET_NAME:-multica-uploads}"
+BUCKET_NAME="${BUCKET_NAME:-agentharness-uploads}"
 GARAGE_DIR="${GARAGE_DIR:-$HOME/garage}"
 GARAGE_CREDENTIALS="${GARAGE_CREDENTIALS:-$GARAGE_DIR/.credentials}"
 
@@ -361,7 +361,7 @@ case "${1:-detect}" in
         echo "  GARAGE_HOST      - Garage host (default: 127.0.0.1)"
         echo "  GARAGE_PORT      - Garage S3 port (default: 9000)"
         echo "  GARAGE_ADMIN_PORT - Garage admin port (default: 3903)"
-        echo "  BUCKET_NAME     - Bucket name (default: multica-uploads)"
+        echo "  BUCKET_NAME     - Bucket name (default: agentharness-uploads)"
         echo "  AWS_ACCESS_KEY_ID     - S3 access key (for remote connections)"
         echo "  AWS_SECRET_ACCESS_KEY - S3 secret key (for remote connections)"
         ;;

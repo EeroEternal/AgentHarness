@@ -2,17 +2,17 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { Bot, Plus, Archive, Search } from "lucide-react";
-import type { CreateAgentRequest, UpdateAgentRequest, Agent } from "@multica/core/types";
-import { Button } from "@multica/ui/components/ui/button";
+import type { CreateAgentRequest, UpdateAgentRequest, Agent } from "@agentharness/core/types";
+import { Button } from "@agentharness/ui/components/ui/button";
 import { toast } from "sonner";
-import { Input } from "@multica/ui/components/ui/input";
-import { api } from "@multica/core/api";
-import { useAuthStore } from "@multica/core/auth";
-import { runtimeListOptions } from "@multica/core/runtimes/queries";
+import { Input } from "@agentharness/ui/components/ui/input";
+import { api } from "@agentharness/core/api";
+import { useAuthStore } from "@agentharness/core/auth";
+import { runtimeListOptions } from "@agentharness/core/runtimes/queries";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useTranslation } from "@multica/core";
-import { agentListOptions, workspaceKeys } from "@multica/core/workspace/queries";
+import { useWorkspaceId } from "@agentharness/core/hooks";
+import { useTranslation } from "@agentharness/core";
+import { agentListOptions, workspaceKeys } from "@agentharness/core/workspace/queries";
 import { CreateAgentDialog } from "./create-agent-dialog";
 import { AgentDetail } from "./agent-detail";
 import { statusConfig } from "../config";

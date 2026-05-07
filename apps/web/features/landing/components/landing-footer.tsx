@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { cn } from "@multica/ui/lib/utils";
-import { useAuthStore } from "@multica/core/auth";
+import { cn } from "@agentharness/ui/lib/utils";
+import { useAuthStore } from "@agentharness/core/auth";
 import { GitHubMark, githubUrl } from "./shared";
 import { useLocale, locales, localeLabels } from "../i18n";
 

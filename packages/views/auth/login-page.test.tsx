@@ -14,7 +14,7 @@ const mockApiVerifyCode = vi.hoisted(() => vi.fn());
 const mockApiSetToken = vi.hoisted(() => vi.fn());
 const mockApiGetMe = vi.hoisted(() => vi.fn());
 
-vi.mock("@multica/core/auth", () => ({
+vi.mock("@agentharness/core/auth", () => ({
   useAuthStore: Object.assign(
     // Zustand hook form — component may call useAuthStore(selector)
     (selector?: (s: unknown) => unknown) => {
@@ -30,7 +30,7 @@ vi.mock("@multica/core/auth", () => ({
   ),
 }));
 
-vi.mock("@multica/core/workspace", () => ({
+vi.mock("@agentharness/core/workspace", () => ({
   useWorkspaceStore: Object.assign(
     (selector?: (s: unknown) => unknown) => {
       const state = { hydrateWorkspace: mockHydrateWorkspace };
@@ -44,7 +44,7 @@ vi.mock("@multica/core/workspace", () => ({
   ),
 }));
 
-vi.mock("@multica/core/api", () => ({
+vi.mock("@agentharness/core/api", () => ({
   api: {
     listWorkspaces: mockApiListWorkspaces,
     verifyCode: mockApiVerifyCode,
@@ -53,7 +53,7 @@ vi.mock("@multica/core/api", () => ({
   },
 }));
 
-vi.mock("@multica/core/types", () => ({}));
+vi.mock("@agentharness/core/types", () => ({}));
 
 // ---------------------------------------------------------------------------
 // Import after mocks
@@ -376,7 +376,7 @@ describe("LoginPage", () => {
   // -------------------------------------------------------------------------
 
   it("shows cli_confirm step when existing session + cliCallback", async () => {
-    localStorage.setItem("multica_token", "existing-jwt");
+    localStorage.setItem("agentharness_token", "existing-jwt");
     mockApiGetMe.mockResolvedValueOnce({
       id: "u-1",
       email: "user@example.com",
@@ -405,7 +405,7 @@ describe("LoginPage", () => {
   });
 
   it("CLI authorize button redirects to callback URL", async () => {
-    localStorage.setItem("multica_token", "existing-jwt");
+    localStorage.setItem("agentharness_token", "existing-jwt");
     mockApiGetMe.mockResolvedValueOnce({
       id: "u-1",
       email: "user@example.com",
@@ -437,7 +437,7 @@ describe("LoginPage", () => {
   });
 
   it("'Use a different account' returns to email step", async () => {
-    localStorage.setItem("multica_token", "existing-jwt");
+    localStorage.setItem("agentharness_token", "existing-jwt");
     mockApiGetMe.mockResolvedValueOnce({
       id: "u-1",
       email: "user@example.com",

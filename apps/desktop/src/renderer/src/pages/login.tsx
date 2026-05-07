@@ -1,5 +1,5 @@
-import { LoginPage } from "@multica/views/auth";
-import { MulticaIcon } from "@multica/ui/components/common/multica-icon";
+import { LoginPage } from "@agentharness/views/auth";
+import { AgentHarnessIcon } from "@agentharness/ui/components/common/agentharness-icon";
 
 export function DesktopLoginPage() {
   return (
@@ -10,7 +10,7 @@ export function DesktopLoginPage() {
         style={{ WebkitAppRegion: "drag" } as React.CSSProperties}
       />
       <LoginPage
-        logo={<MulticaIcon bordered size="lg" />}
+        logo={<AgentHarnessIcon bordered size="lg" />}
         onSuccess={() => {
           // Auth store update triggers AppContent re-render → shows DesktopShell
         }}

@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { WorkspaceIdProvider } from "@multica/core/hooks";
+import { WorkspaceIdProvider } from "@agentharness/core/hooks";
 import { useDashboardGuard } from "./use-dashboard-guard";
 
 interface DashboardGuardProps {

@@ -152,8 +152,8 @@ ensure_env_file() {
     set_or_append FRONTEND_ORIGIN "http://127.0.0.1:${APP_PORT}"
   fi
 
-  if ! grep -q '^MULTICA_APP_URL=' "$ENV_FILE" || [ -z "$(sed -n 's/^MULTICA_APP_URL=//p' "$ENV_FILE")" ]; then
-    set_or_append MULTICA_APP_URL "http://127.0.0.1:${APP_PORT}"
+  if ! grep -q '^AGENTHARNESS_APP_URL=' "$ENV_FILE" || [ -z "$(sed -n 's/^AGENTHARNESS_APP_URL=//p' "$ENV_FILE")" ]; then
+    set_or_append AGENTHARNESS_APP_URL "http://127.0.0.1:${APP_PORT}"
   fi
 }
 

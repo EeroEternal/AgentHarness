@@ -18,12 +18,12 @@ import {
   Cpu,
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
-import { cn } from "@multica/ui/lib/utils";
-import { Dialog, DialogContent, DialogTitle } from "@multica/ui/components/ui/dialog";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@multica/ui/components/ui/collapsible";
+import { cn } from "@agentharness/ui/lib/utils";
+import { Dialog, DialogContent, DialogTitle } from "@agentharness/ui/components/ui/dialog";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@agentharness/ui/components/ui/collapsible";
 import { ActorAvatar } from "../../common/actor-avatar";
-import { api } from "@multica/core/api";
-import type { AgentTask, Agent, AgentRuntime } from "@multica/core/types/agent";
+import { api } from "@agentharness/core/api";
+import type { AgentTask, Agent, AgentRuntime } from "@agentharness/core/types/agent";
 import { redactSecrets } from "../utils/redact";
 
 // ─── Types ──────────────────────────────────────────────────────────────────

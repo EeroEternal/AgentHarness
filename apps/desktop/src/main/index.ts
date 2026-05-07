@@ -38,7 +38,7 @@ function createWindow(): void {
 }
 
 app.whenReady().then(() => {
-  electronApp.setAppUserModelId("ai.multica.desktop");
+  electronApp.setAppUserModelId("ai.agentharness.desktop");
 
   app.on("browser-window-created", (_, window) => {
     optimizer.watchWindowShortcuts(window);

@@ -4,7 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
 import { en } from "./en";
 import { zh } from "./zh";
 import type { LandingDict, Locale } from "./types";
-import { useI18nStore } from "@multica/core";
+import { useI18nStore } from "@agentharness/core";
 
 const dictionaries: Record<Locale, LandingDict> = { en, zh };
 

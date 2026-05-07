@@ -15,29 +15,29 @@ if ! command -v kimi &> /dev/null; then
     exit 1
 fi
 
-# Check if multica is available
-if ! command -v multica &> /dev/null; then
-    echo "ERROR: multica command not found"
+# Check if agentharness is available
+if ! command -v agentharness &> /dev/null; then
+    echo "ERROR: agentharness command not found"
     exit 1
 fi
 
 # Get workspace info
 echo "=== Getting workspace info ==="
-WORKSPACE=$(multica workspace get --output json 2>/dev/null)
+WORKSPACE=$(agentharness workspace get --output json 2>/dev/null)
 WORKSPACE_ID=$(echo "$WORKSPACE" | grep -o '"id":"[^"]*"' | head -1 | cut -d'"' -f4)
 echo "Workspace ID: $WORKSPACE_ID"
 echo ""
 
 # Create test issue
 echo "=== Creating test issue ==="
-ISSUE=$(multica issue create --title "Kimi Debug Test $(date +%s)" --description "Testing Kimi command execution" --output json 2>/dev/null)
+ISSUE=$(agentharness issue create --title "Kimi Debug Test $(date +%s)" --description "Testing Kimi command execution" --output json 2>/dev/null)
 ISSUE_ID=$(echo "$ISSUE" | grep -o '"id":"[^"]*"' | head -1 | cut -d'"' -f4)
 echo "Issue ID: $ISSUE_ID"
 echo ""
 
 # Get agent info
 echo "=== Getting agent list ==="
-AGENTS=$(multica agent list --output json 2>/dev/null)
+AGENTS=$(agentharness agent list --output json 2>/dev/null)
 echo "$AGENTS" | head -c 800
 echo ""
 
@@ -49,7 +49,7 @@ echo ""
 
 # Assign to Kimi
 echo "=== Assigning issue to Kimi ==="
-multica issue assign "$ISSUE_ID" --to "$KIMI_AGENT_ID" --output json 2>/dev/null || true
+agentharness issue assign "$ISSUE_ID" --to "$KIMI_AGENT_ID" --output json 2>/dev/null || true
 echo ""
 
 # Wait for task
@@ -59,17 +59,17 @@ echo ""
 
 # Check issue details
 echo "=== Issue details after waiting ==="
-multica issue get "$ISSUE_ID" --output json 2>/dev/null | python3 -m json.tool 2>/dev/null | head -50
+agentharness issue get "$ISSUE_ID" --output json 2>/dev/null | python3 -m json.tool 2>/dev/null | head -50
 echo ""
 
 # Check comments
 echo "=== Issue comments ==="
-multica issue comment list "$ISSUE_ID" --output json 2>/dev/null | python3 -m json.tool 2>/dev/null | head -50
+agentharness issue comment list "$ISSUE_ID" --output json 2>/dev/null | python3 -m json.tool 2>/dev/null | head -50
 echo ""
 
 # Add a follow-up comment
 echo "=== Adding follow-up comment ==="
-COMMENT=$(multica issue comment add "$ISSUE_ID" --content "Can you elaborate on your previous response?" --output json 2>/dev/null)
+COMMENT=$(agentharness issue comment add "$ISSUE_ID" --content "Can you elaborate on your previous response?" --output json 2>/dev/null)
 COMMENT_ID=$(echo "$COMMENT" | grep -o '"id":"[^"]*"' | head -1 | cut -d'"' -f4)
 echo "Comment ID: $COMMENT_ID"
 echo ""
@@ -81,12 +81,12 @@ echo ""
 
 # Check comments again
 echo "=== Issue comments after follow-up ==="
-multica issue comment list "$ISSUE_ID" --output json 2>/dev/null | python3 -m json.tool 2>/dev/null | head -80
+agentharness issue comment list "$ISSUE_ID" --output json 2>/dev/null | python3 -m json.tool 2>/dev/null | head -80
 echo ""
 
 # Check daemon logs
 echo "=== Recent daemon logs ==="
-tail -100 ~/.multica/profiles/user-ffd8723e/daemon.log 2>/dev/null | grep -E "(kimi|task|issue)" | tail -30
+tail -100 ~/.agentharness/profiles/user-ffd8723e/daemon.log 2>/dev/null | grep -E "(kimi|task|issue)" | tail -30
 echo ""
 
 echo "============================================"

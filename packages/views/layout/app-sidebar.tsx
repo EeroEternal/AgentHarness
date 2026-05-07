@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect } from "react";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@agentharness/ui/lib/utils";
 import { useNavigation } from "../navigation";
 import {
   DndContext,
@@ -33,8 +33,8 @@ import {
   Ellipsis,
 } from "lucide-react";
 import { WorkspaceAvatar } from "../workspace/workspace-avatar";
-import { ActorAvatar } from "@multica/ui/components/common/actor-avatar";
-import { useIssueDraftStore } from "@multica/core/issues/stores/draft-store";
+import { ActorAvatar } from "@agentharness/ui/components/common/actor-avatar";
+import { useIssueDraftStore } from "@agentharness/core/issues/stores/draft-store";
 import {
   Sidebar,
   SidebarContent,
@@ -44,7 +44,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "@multica/ui/components/ui/sidebar";
+} from "@agentharness/ui/components/ui/sidebar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -53,20 +53,20 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@multica/ui/components/ui/dropdown-menu";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@multica/ui/components/ui/tooltip";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceStore } from "@multica/core/workspace";
+} from "@agentharness/ui/components/ui/dropdown-menu";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@agentharness/ui/components/ui/tooltip";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { Input } from "@agentharness/ui/components/ui/input";
+import { useAuthStore } from "@agentharness/core/auth";
+import { useWorkspaceStore } from "@agentharness/core/workspace";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { inboxKeys } from "@multica/core/inbox/queries";
-import { api } from "@multica/core/api";
-import { useModalStore } from "@multica/core/modals";
-import { useMyRuntimesNeedUpdate } from "@multica/core/runtimes/hooks";
-import { pinKeys } from "@multica/core/pins/queries";
-import { useDeletePin, useReorderPins } from "@multica/core/pins/mutations";
-import type { PinnedItem } from "@multica/core/types";
+import { inboxKeys } from "@agentharness/core/inbox/queries";
+import { api } from "@agentharness/core/api";
+import { useModalStore } from "@agentharness/core/modals";
+import { useMyRuntimesNeedUpdate } from "@agentharness/core/runtimes/hooks";
+import { pinKeys } from "@agentharness/core/pins/queries";
+import { useDeletePin, useReorderPins } from "@agentharness/core/pins/mutations";
+import type { PinnedItem } from "@agentharness/core/types";
 
 type TranslateFn = (key: string, fallback: string) => string;
 

@@ -8,11 +8,11 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "@multica/ui/components/ui/card";
-import { Input } from "@multica/ui/components/ui/input";
-import { Button } from "@multica/ui/components/ui/button";
-import { Label } from "@multica/ui/components/ui/label";
-import { useAuthStore } from "@multica/core/auth";
+} from "@agentharness/ui/components/ui/card";
+import { Input } from "@agentharness/ui/components/ui/input";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { Label } from "@agentharness/ui/components/ui/label";
+import { useAuthStore } from "@agentharness/core/auth";
 
 // We'll use window.location directly since this is a static link
 

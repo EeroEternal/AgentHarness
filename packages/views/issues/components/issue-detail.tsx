@@ -20,7 +20,7 @@ import {
   Users,
 } from "lucide-react";
 import { toast } from "sonner";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
+import { Skeleton } from "@agentharness/ui/components/ui/skeleton";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,8 +30,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@multica/ui/components/ui/alert-dialog";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@agentharness/ui/components/ui/alert-dialog";
+import { Button } from "@agentharness/ui/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -41,22 +41,22 @@ import {
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
-} from "@multica/ui/components/ui/dropdown-menu";
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@multica/ui/components/ui/resizable";
+} from "@agentharness/ui/components/ui/dropdown-menu";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@agentharness/ui/components/ui/resizable";
 import { ContentEditor, type ContentEditorRef, TitleEditor, useFileDropZone, FileDropOverlay } from "../../editor";
-import { FileUploadButton } from "@multica/ui/components/common/file-upload-button";
+import { FileUploadButton } from "@agentharness/ui/components/common/file-upload-button";
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "@multica/ui/components/ui/tooltip";
-import { Popover, PopoverTrigger, PopoverContent } from "@multica/ui/components/ui/popover";
-import { Checkbox } from "@multica/ui/components/ui/checkbox";
-import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@multica/ui/components/ui/command";
-import { AvatarGroup, AvatarGroupCount } from "@multica/ui/components/ui/avatar";
+} from "@agentharness/ui/components/ui/tooltip";
+import { Popover, PopoverTrigger, PopoverContent } from "@agentharness/ui/components/ui/popover";
+import { Checkbox } from "@agentharness/ui/components/ui/checkbox";
+import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@agentharness/ui/components/ui/command";
+import { AvatarGroup, AvatarGroupCount } from "@agentharness/ui/components/ui/avatar";
 import { ActorAvatar } from "../../common/actor-avatar";
-import type { UpdateIssueRequest, IssueStatus, IssuePriority, TimelineEntry } from "@multica/core/types";
-import { ALL_STATUSES, STATUS_CONFIG, PRIORITY_ORDER, PRIORITY_CONFIG } from "@multica/core/issues/config";
+import type { UpdateIssueRequest, IssueStatus, IssuePriority, TimelineEntry } from "@agentharness/core/types";
+import { ALL_STATUSES, STATUS_CONFIG, PRIORITY_ORDER, PRIORITY_CONFIG } from "@agentharness/core/issues/config";
 import { StatusIcon, PriorityIcon, StatusPicker, PriorityPicker, DueDatePicker, AssigneePicker, canAssignAgent } from ".";
 import { ProjectPicker } from "../../projects/components/project-picker";
 import { CommentCard } from "./comment-card";
@@ -65,25 +65,25 @@ import { AgentLiveCard, TaskRunHistory } from "./agent-live-card";
 import { AttachmentList } from "./attachment-list";
 import { WorkdirFileBrowser } from "./workdir-file-download";
 import { useQuery } from "@tanstack/react-query";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceStore } from "@multica/core/workspace";
-import { useActorName } from "@multica/core/workspace/hooks";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { issueListOptions, issueDetailOptions, childIssuesOptions, issueUsageOptions } from "@multica/core/issues/queries";
-import { memberListOptions, agentListOptions } from "@multica/core/workspace/queries";
-import { useUpdateIssue, useDeleteIssue } from "@multica/core/issues/mutations";
-import { useRecentIssuesStore } from "@multica/core/issues/stores";
+import { useAuthStore } from "@agentharness/core/auth";
+import { useWorkspaceStore } from "@agentharness/core/workspace";
+import { useActorName } from "@agentharness/core/workspace/hooks";
+import { useWorkspaceId } from "@agentharness/core/hooks";
+import { issueListOptions, issueDetailOptions, childIssuesOptions, issueUsageOptions } from "@agentharness/core/issues/queries";
+import { memberListOptions, agentListOptions } from "@agentharness/core/workspace/queries";
+import { useUpdateIssue, useDeleteIssue } from "@agentharness/core/issues/mutations";
+import { useRecentIssuesStore } from "@agentharness/core/issues/stores";
 import { useIssueTimeline } from "../hooks/use-issue-timeline";
 import { useIssueReactions } from "../hooks/use-issue-reactions";
 import { useIssueSubscribers } from "../hooks/use-issue-subscribers";
-import { ReactionBar } from "@multica/ui/components/common/reaction-bar";
-import { useFileUpload } from "@multica/core/hooks/use-file-upload";
-import { api } from "@multica/core/api";
-import { useModalStore } from "@multica/core/modals";
-import { timeAgo } from "@multica/core/utils";
-import { cn } from "@multica/ui/lib/utils";
-import { pinListOptions } from "@multica/core/pins";
-import { useCreatePin, useDeletePin } from "@multica/core/pins";
+import { ReactionBar } from "@agentharness/ui/components/common/reaction-bar";
+import { useFileUpload } from "@agentharness/core/hooks/use-file-upload";
+import { api } from "@agentharness/core/api";
+import { useModalStore } from "@agentharness/core/modals";
+import { timeAgo } from "@agentharness/core/utils";
+import { cn } from "@agentharness/ui/lib/utils";
+import { pinListOptions } from "@agentharness/core/pins";
+import { useCreatePin, useDeletePin } from "@agentharness/core/pins";
 
 import { ProgressRing } from "./progress-ring";
 
@@ -244,7 +244,7 @@ export function IssueDetail({
   issueId, 
   onDelete, 
   defaultSidebarOpen = true, 
-  layoutId = "multica_issue_detail_layout", 
+  layoutId = "agentharness_issue_detail_layout", 
   highlightCommentId,
   t = (_, fallback) => fallback 
 }: IssueDetailProps) {

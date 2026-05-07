@@ -189,8 +189,8 @@ ensure_env_file() {
     set_or_append FRONTEND_ORIGIN "http://127.0.0.1:${APP_PORT}"
   fi
 
-  if ! grep -q '^MULTICA_APP_URL=' "$ENV_FILE" || [ -z "$(sed -n 's/^MULTICA_APP_URL=//p' "$ENV_FILE")" ]; then
-    set_or_append MULTICA_APP_URL "http://127.0.0.1:${APP_PORT}"
+  if ! grep -q '^AGENTHARNESS_APP_URL=' "$ENV_FILE" || [ -z "$(sed -n 's/^AGENTHARNESS_APP_URL=//p' "$ENV_FILE")" ]; then
+    set_or_append AGENTHARNESS_APP_URL "http://127.0.0.1:${APP_PORT}"
   fi
 
   if ! grep -q '^CORS_ALLOWED_ORIGINS=' "$ENV_FILE" || [ -z "$(sed -n 's/^CORS_ALLOWED_ORIGINS=//p' "$ENV_FILE")" ]; then
@@ -205,7 +205,7 @@ ensure_env_file() {
 
   # S3-compatible storage (MinIO/Garage) - optional
   if ! grep -q '^S3_BUCKET=' "$ENV_FILE" || [ -z "$(sed -n 's/^S3_BUCKET=//p' "$ENV_FILE")" ]; then
-    set_or_append S3_BUCKET "multica-uploads"
+    set_or_append S3_BUCKET "agentharness-uploads"
   fi
 
   if ! grep -q '^S3_REGION=' "$ENV_FILE" || [ -z "$(sed -n 's/^S3_REGION=//p' "$ENV_FILE")" ]; then
@@ -251,7 +251,7 @@ build_release() {
   pnpm install --frozen-lockfile
 
   log "Building web app"
-  pnpm --filter @multica/web build
+  pnpm --filter @agentharness/web build
 
   log "Building Go binaries"
   make build

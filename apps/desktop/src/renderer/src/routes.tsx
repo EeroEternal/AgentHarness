@@ -8,14 +8,14 @@ import {
 import type { RouteObject } from "react-router-dom";
 import { IssueDetailPage } from "./pages/issue-detail-page";
 import { ProjectDetailPage } from "./pages/project-detail-page";
-import { IssuesPage } from "@multica/views/issues/components";
-import { ProjectsPage } from "@multica/views/projects/components";
-import { MyIssuesPage } from "@multica/views/my-issues";
-import { RuntimesPage } from "@multica/views/runtimes";
-import { SkillsPage } from "@multica/views/skills";
-import { AgentsPage } from "@multica/views/agents";
-import { InboxPage } from "@multica/views/inbox";
-import { SettingsPage } from "@multica/views/settings";
+import { IssuesPage } from "@agentharness/views/issues/components";
+import { ProjectsPage } from "@agentharness/views/projects/components";
+import { MyIssuesPage } from "@agentharness/views/my-issues";
+import { RuntimesPage } from "@agentharness/views/runtimes";
+import { SkillsPage } from "@agentharness/views/skills";
+import { AgentsPage } from "@agentharness/views/agents";
+import { InboxPage } from "@agentharness/views/inbox";
+import { SettingsPage } from "@agentharness/views/settings";
 
 /**
  * Sets document.title from the deepest matched route's handle.title.

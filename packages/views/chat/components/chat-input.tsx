@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import { ArrowUp, Square } from "lucide-react";
-import { useTranslation } from "@multica/core";
+import { useTranslation } from "@agentharness/core";
 
 interface ChatInputProps {
   onSend: (content: string) => void;

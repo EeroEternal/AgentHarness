@@ -12,10 +12,10 @@ import {
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from "@multica/ui/components/ui/chart";
-import { api } from "@multica/core/api";
-import { useTranslation } from "@multica/core";
-import type { RuntimeHourlyActivity } from "@multica/core/types";
+} from "@agentharness/ui/components/ui/chart";
+import { api } from "@agentharness/core/api";
+import { useTranslation } from "@agentharness/core";
+import type { RuntimeHourlyActivity } from "@agentharness/core/types";
 
 const hourlyChartConfig = {
   count: { label: "Tasks", color: "hsl(var(--chart-2))" },

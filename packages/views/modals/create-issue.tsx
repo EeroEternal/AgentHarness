@@ -3,26 +3,26 @@
 import { useState, useRef } from "react";
 import { useNavigation } from "../navigation";
 import { Check, ChevronRight, Maximize2, Minimize2, X as XIcon, Calendar, Folder } from "lucide-react";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@agentharness/ui/lib/utils";
 import { toast } from "sonner";
-import type { IssueStatus, IssuePriority, IssueAssigneeType } from "@multica/core/types";
+import type { IssueStatus, IssuePriority, IssueAssigneeType } from "@agentharness/core/types";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@multica/ui/components/ui/tooltip";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@agentharness/ui/components/ui/dialog";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@agentharness/ui/components/ui/tooltip";
+import { Button } from "@agentharness/ui/components/ui/button";
 import { ContentEditor, type ContentEditorRef, TitleEditor, useFileDropZone, FileDropOverlay } from "../editor";
 import { StatusIcon, StatusPicker, PriorityPicker, AssigneePicker, DueDatePicker, PriorityIcon } from "../issues/components";
 import { ProjectPicker } from "../projects/components/project-picker";
-import { useWorkspaceStore } from "@multica/core/workspace";
-import { useIssueDraftStore } from "@multica/core/issues/stores/draft-store";
-import { useCreateIssue } from "@multica/core/issues/mutations";
-import { useFileUpload } from "@multica/core/hooks/use-file-upload";
-import { api } from "@multica/core/api";
-import { FileUploadButton } from "@multica/ui/components/common/file-upload-button";
-import { useTranslation } from "@multica/core";
+import { useWorkspaceStore } from "@agentharness/core/workspace";
+import { useIssueDraftStore } from "@agentharness/core/issues/stores/draft-store";
+import { useCreateIssue } from "@agentharness/core/issues/mutations";
+import { useFileUpload } from "@agentharness/core/hooks/use-file-upload";
+import { api } from "@agentharness/core/api";
+import { FileUploadButton } from "@agentharness/ui/components/common/file-upload-button";
+import { useTranslation } from "@agentharness/core";
 
 function getPriorityDictKey(priority: IssuePriority): string {
   const map: Record<string, string> = {

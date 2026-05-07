@@ -60,7 +60,7 @@ export function createWorkspaceStore(api: ApiClient, options?: WorkspaceStoreOpt
         api.setWorkspaceId(null);
         setCurrentWorkspaceId(null);
         rehydrateAllWorkspaceStores();
-        storage?.removeItem("multica_workspace_id");
+        storage?.removeItem("agentharness_workspace_id");
         set({ workspace: null });
         return null;
       }
@@ -68,7 +68,7 @@ export function createWorkspaceStore(api: ApiClient, options?: WorkspaceStoreOpt
       api.setWorkspaceId(nextWorkspace.id);
       setCurrentWorkspaceId(nextWorkspace.id);
       rehydrateAllWorkspaceStores();
-      storage?.setItem("multica_workspace_id", nextWorkspace.id);
+      storage?.setItem("agentharness_workspace_id", nextWorkspace.id);
       set({ workspace: nextWorkspace });
       logger.debug("hydrate workspace", nextWorkspace.name, nextWorkspace.id);
 
@@ -85,7 +85,7 @@ export function createWorkspaceStore(api: ApiClient, options?: WorkspaceStoreOpt
       if (!ws) return;
 
       api.setWorkspaceId(ws.id);
-      storage?.setItem("multica_workspace_id", ws.id);
+      storage?.setItem("agentharness_workspace_id", ws.id);
 
       // All data caches (issues, inbox, members, agents, skills, runtimes)
       // are managed by TanStack Query, keyed by wsId — auto-refetch on switch.
@@ -96,7 +96,7 @@ export function createWorkspaceStore(api: ApiClient, options?: WorkspaceStoreOpt
 
     refreshWorkspaces: async () => {
       const { workspace, hydrateWorkspace } = get();
-      const storedWorkspaceId = storage?.getItem("multica_workspace_id") ?? null;
+      const storedWorkspaceId = storage?.getItem("agentharness_workspace_id") ?? null;
       try {
         const wsList = await api.listWorkspaces();
         hydrateWorkspace(wsList, workspace?.id ?? storedWorkspaceId);

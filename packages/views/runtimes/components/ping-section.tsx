@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Loader2, CheckCircle2, XCircle, Zap } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import { api } from "@multica/core/api";
-import { useTranslation } from "@multica/core";
-import type { RuntimePingStatus } from "@multica/core/types";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { api } from "@agentharness/core/api";
+import { useTranslation } from "@agentharness/core";
+import type { RuntimePingStatus } from "@agentharness/core/types";
 
 export function PingSection({ runtimeId }: { runtimeId: string }) {
   const { t } = useTranslation();

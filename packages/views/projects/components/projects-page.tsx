@@ -3,42 +3,42 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { Plus, FolderKanban, ChevronRight, Maximize2, Minimize2, X as XIcon, UserMinus, LayoutGrid, List, ArrowUpDown, CalendarDays, TrendingUp, CheckCircle2, Clock, Pause, XCircle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { projectListOptions } from "@multica/core/projects/queries";
-import { useCreateProject } from "@multica/core/projects/mutations";
-import { PROJECT_STATUS_CONFIG, PROJECT_STATUS_ORDER, PROJECT_PRIORITY_CONFIG, PROJECT_PRIORITY_ORDER } from "@multica/core/projects/config";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useWorkspaceStore } from "@multica/core/workspace";
-import { memberListOptions, agentListOptions } from "@multica/core/workspace/queries";
+import { projectListOptions } from "@agentharness/core/projects/queries";
+import { useCreateProject } from "@agentharness/core/projects/mutations";
+import { PROJECT_STATUS_CONFIG, PROJECT_STATUS_ORDER, PROJECT_PRIORITY_CONFIG, PROJECT_PRIORITY_ORDER } from "@agentharness/core/projects/config";
+import { useWorkspaceId } from "@agentharness/core/hooks";
+import { useWorkspaceStore } from "@agentharness/core/workspace";
+import { memberListOptions, agentListOptions } from "@agentharness/core/workspace/queries";
 import { AppLink, useNavigation } from "../../navigation";
 import { ActorAvatar } from "../../common/actor-avatar";
-import { useActorName } from "@multica/core/workspace/hooks";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { Button } from "@multica/ui/components/ui/button";
-import { cn } from "@multica/ui/lib/utils";
+import { useActorName } from "@agentharness/core/workspace/hooks";
+import { Skeleton } from "@agentharness/ui/components/ui/skeleton";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { cn } from "@agentharness/ui/lib/utils";
 import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
+} from "@agentharness/ui/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@agentharness/ui/components/ui/dropdown-menu";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@multica/ui/components/ui/popover";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@multica/ui/components/ui/tooltip";
+} from "@agentharness/ui/components/ui/popover";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@agentharness/ui/components/ui/tooltip";
 import { ContentEditor, type ContentEditorRef } from "../../editor";
 import { TitleEditor } from "../../editor";
-import { EmojiPicker } from "@multica/ui/components/common/emoji-picker";
-import type { Project, ProjectStatus, ProjectPriority } from "@multica/core/types";
+import { EmojiPicker } from "@agentharness/ui/components/common/emoji-picker";
+import type { Project, ProjectStatus, ProjectPriority } from "@agentharness/core/types";
 import { PriorityIcon } from "../../issues/components/priority-icon";
-import { useTranslation } from "@multica/core";
+import { useTranslation } from "@agentharness/core";
 
 type TranslateFn = (key: string, fallback: string) => string;
 

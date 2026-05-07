@@ -1,9 +1,9 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { SidebarMenuButton } from "@multica/ui/components/ui/sidebar";
+import { SidebarMenuButton } from "@agentharness/ui/components/ui/sidebar";
 import { useSearchStore } from "./search-store";
-import { useTranslation } from "@multica/core";
+import { useTranslation } from "@agentharness/core";
 
 export function SearchTrigger() {
   const { t } = useTranslation();

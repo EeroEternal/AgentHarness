@@ -12,7 +12,7 @@ import {
   MoreHorizontal,
   Settings,
 } from "lucide-react";
-import type { Agent, RuntimeDevice } from "@multica/core/types";
+import type { Agent, RuntimeDevice } from "@agentharness/core/types";
 import {
   Dialog,
   DialogContent,
@@ -20,22 +20,22 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@multica/ui/components/ui/dialog";
+} from "@agentharness/ui/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@multica/ui/components/ui/dropdown-menu";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@agentharness/ui/components/ui/dropdown-menu";
+import { Button } from "@agentharness/ui/components/ui/button";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { statusConfig } from "../config";
 import { InstructionsTab } from "./tabs/instructions-tab";
 import { SkillsTab } from "./tabs/skills-tab";
 import { TasksTab } from "./tabs/tasks-tab";
 import { SettingsTab } from "./tabs/settings-tab";
-import { useTranslation } from "@multica/core";
-import { cn } from "@multica/ui/lib/utils";
+import { useTranslation } from "@agentharness/core";
+import { cn } from "@agentharness/ui/lib/utils";
 
 function getRuntimeDevice(agent: Agent, runtimes: RuntimeDevice[]): RuntimeDevice | undefined {
   return runtimes.find((runtime) => runtime.id === agent.runtime_id);

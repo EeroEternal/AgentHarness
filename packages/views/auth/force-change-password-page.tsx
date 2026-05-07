@@ -7,11 +7,11 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from "@multica/ui/components/ui/card";
-import { Input } from "@multica/ui/components/ui/input";
-import { Button } from "@multica/ui/components/ui/button";
-import { Label } from "@multica/ui/components/ui/label";
-import { useAuthStore } from "@multica/core/auth";
+} from "@agentharness/ui/components/ui/card";
+import { Input } from "@agentharness/ui/components/ui/input";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { Label } from "@agentharness/ui/components/ui/label";
+import { useAuthStore } from "@agentharness/core/auth";
 
 interface ForceChangePasswordPageProps {
   logo?: React.ReactNode;
@@ -54,7 +54,7 @@ export function ForceChangePasswordPage({
       }
       // After successful change, the password_change_required flag will be cleared
       // We just need to login again or refresh the user data
-      const token = localStorage.getItem("multica_token");
+      const token = localStorage.getItem("agentharness_token");
       if (!token) {
         setError("No token found");
         setLoading(false);

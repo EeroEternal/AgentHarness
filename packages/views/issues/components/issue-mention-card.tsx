@@ -2,8 +2,8 @@
 
 import { AppLink } from "../../navigation";
 import { useQuery } from "@tanstack/react-query";
-import { issueListOptions } from "@multica/core/issues/queries";
-import { useWorkspaceId } from "@multica/core/hooks";
+import { issueListOptions } from "@agentharness/core/issues/queries";
+import { useWorkspaceId } from "@agentharness/core/hooks";
 import { StatusIcon } from "./status-icon";
 
 interface IssueMentionCardProps {

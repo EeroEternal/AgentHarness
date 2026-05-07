@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import { useNavigationStore } from "@multica/core/navigation";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceStore } from "@multica/core/workspace";
+import { useNavigationStore } from "@agentharness/core/navigation";
+import { useAuthStore } from "@agentharness/core/auth";
+import { useWorkspaceStore } from "@agentharness/core/workspace";
 import { useNavigation } from "../navigation";
 
 export function useDashboardGuard(loginPath = "/") {

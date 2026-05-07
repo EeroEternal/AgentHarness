@@ -2,9 +2,9 @@
 
 import { Suspense, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useAuthStore } from "@multica/core/auth";
+import { useAuthStore } from "@agentharness/core/auth";
 import { setLoggedInCookie } from "@/features/auth/auth-cookie";
-import { LoginPageV2, validateCliCallback } from "@multica/views/auth";
+import { LoginPageV2, validateCliCallback } from "@agentharness/views/auth";
 
 const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 
@@ -26,7 +26,7 @@ function LoginPageContent() {
 
   const lastWorkspaceId =
     typeof window !== "undefined"
-      ? localStorage.getItem("multica_workspace_id")
+      ? localStorage.getItem("agentharness_workspace_id")
       : null;
 
   return (

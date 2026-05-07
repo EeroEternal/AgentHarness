@@ -1,5 +1,5 @@
 {
-  "name": "@multica/core",
+  "name": "@agentharness/core",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -69,7 +69,7 @@
     "react": "catalog:"
   },
   "devDependencies": {
-    "@multica/tsconfig": "workspace:*",
+    "@agentharness/tsconfig": "workspace:*",
     "@types/react": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"

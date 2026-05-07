@@ -3,7 +3,7 @@
 import { useLocale } from "@/features/landing/i18n/context";
 import { en } from "@/features/landing/i18n/en";
 import { zh } from "@/features/landing/i18n/zh";
-import { InboxPage } from "@multica/views/inbox";
+import { InboxPage } from "@agentharness/views/inbox";
 
 function getNestedValue(obj: any, path: string): any {
   return path.split(".").reduce((acc, part) => acc && acc[part], obj);

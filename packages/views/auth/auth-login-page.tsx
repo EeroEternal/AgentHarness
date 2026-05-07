@@ -8,21 +8,21 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "@multica/ui/components/ui/card";
-import { Input } from "@multica/ui/components/ui/input";
-import { Button } from "@multica/ui/components/ui/button";
-import { Label } from "@multica/ui/components/ui/label";
+} from "@agentharness/ui/components/ui/card";
+import { Input } from "@agentharness/ui/components/ui/input";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { Label } from "@agentharness/ui/components/ui/label";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-} from "@multica/ui/components/ui/input-otp";
+} from "@agentharness/ui/components/ui/input-otp";
 
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceStore } from "@multica/core/workspace";
-import { useI18nStore, useTranslation } from "@multica/core";
-import { api } from "@multica/core/api";
-import type { User } from "@multica/core/types";
+import { useAuthStore } from "@agentharness/core/auth";
+import { useWorkspaceStore } from "@agentharness/core/workspace";
+import { useI18nStore, useTranslation } from "@agentharness/core";
+import { api } from "@agentharness/core/api";
+import type { User } from "@agentharness/core/types";
 import { Loader2, Mail, Lock, Globe, Moon, Sun, Monitor } from "lucide-react";
 
 interface GoogleAuthConfig {
@@ -87,7 +87,7 @@ export function LoginPageV2({
 
   useEffect(() => {
     if (!cliCallback) return;
-    const token = localStorage.getItem("multica_token");
+    const token = localStorage.getItem("agentharness_token");
     if (!token) return;
 
     api.setToken(token);
@@ -98,7 +98,7 @@ export function LoginPageV2({
       })
       .catch(() => {
         api.setToken(null);
-        localStorage.removeItem("multica_token");
+        localStorage.removeItem("agentharness_token");
       });
   }, [cliCallback]);
 
@@ -119,7 +119,7 @@ export function LoginPageV2({
       setLoading(true);
       try {
         const { token, user } = await api.loginWithPassword(email, password);
-        localStorage.setItem("multica_token", token);
+        localStorage.setItem("agentharness_token", token);
         api.setToken(token);
         onTokenObtained?.();
 
@@ -169,7 +169,7 @@ export function LoginPageV2({
       setLoading(true);
       try {
         const { token, user } = await api.register(email, password, name);
-        localStorage.setItem("multica_token", token);
+        localStorage.setItem("agentharness_token", token);
         api.setToken(token);
         onTokenObtained?.();
 
@@ -224,7 +224,7 @@ export function LoginPageV2({
       try {
         if (cliCallback) {
           const { token } = await api.verifyCode(email, value);
-          localStorage.setItem("multica_token", token);
+          localStorage.setItem("agentharness_token", token);
           api.setToken(token);
           onTokenObtained?.();
           redirectToCliCallback(cliCallback.url, token, cliCallback.state);
@@ -298,7 +298,7 @@ export function LoginPageV2({
 
   const handleCliAuthorize = () => {
     if (!cliCallback) return;
-    const token = localStorage.getItem("multica_token");
+    const token = localStorage.getItem("agentharness_token");
     if (!token) return;
     setLoading(true);
     onTokenObtained?.();

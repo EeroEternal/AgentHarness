@@ -2,18 +2,18 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { cn } from "@multica/ui/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@multica/ui/components/ui/avatar";
+import { cn } from "@agentharness/ui/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@agentharness/ui/components/ui/avatar";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@multica/ui/components/ui/collapsible";
+} from "@agentharness/ui/components/ui/collapsible";
 import { Bot, Loader2, ChevronRight, ChevronDown, Brain, AlertCircle } from "lucide-react";
-import { api } from "@multica/core/api";
-import { Markdown } from "@multica/views/common/markdown";
-import type { ChatMessage, Agent, TaskMessagePayload } from "@multica/core/types";
-import type { ChatTimelineItem } from "@multica/core/chat";
+import { api } from "@agentharness/core/api";
+import { Markdown } from "@agentharness/views/common/markdown";
+import type { ChatMessage, Agent, TaskMessagePayload } from "@agentharness/core/types";
+import type { ChatTimelineItem } from "@agentharness/core/chat";
 
 // ─── Public component ────────────────────────────────────────────────────
 

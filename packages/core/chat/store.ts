@@ -2,8 +2,8 @@ import { create } from "zustand";
 import type { StorageAdapter } from "../types";
 import { getCurrentWorkspaceId, registerForWorkspaceRehydration } from "../platform/workspace-storage";
 
-const AGENT_STORAGE_KEY = "multica:chat:selectedAgentId";
-const SESSION_STORAGE_KEY = "multica:chat:activeSessionId";
+const AGENT_STORAGE_KEY = "agentharness:chat:selectedAgentId";
+const SESSION_STORAGE_KEY = "agentharness:chat:activeSessionId";
 
 export interface ChatTimelineItem {
   seq: number;

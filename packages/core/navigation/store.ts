@@ -24,7 +24,7 @@ export const useNavigationStore = create<NavigationState>()(
       },
     }),
     {
-      name: "multica_navigation",
+      name: "agentharness_navigation",
       storage: createJSONStorage(() => createPersistStorage(defaultStorage)),
       partialize: (state) => ({ lastPath: state.lastPath }),
     }

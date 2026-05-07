@@ -18,7 +18,7 @@ import {
   LayoutGrid,
   List,
 } from "lucide-react";
-import type { Skill, CreateSkillRequest, UpdateSkillRequest } from "@multica/core/types";
+import type { Skill, CreateSkillRequest, UpdateSkillRequest } from "@agentharness/core/types";
 import {
   Dialog,
   DialogContent,
@@ -26,22 +26,22 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@multica/ui/components/ui/dialog";
-import { Badge } from "@multica/ui/components/ui/badge";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { Label } from "@multica/ui/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@multica/ui/components/ui/tabs";
+} from "@agentharness/ui/components/ui/dialog";
+import { Badge } from "@agentharness/ui/components/ui/badge";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { Input } from "@agentharness/ui/components/ui/input";
+import { Label } from "@agentharness/ui/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@agentharness/ui/components/ui/tabs";
 import { toast } from "sonner";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { ScrollArea } from "@multica/ui/components/ui/scroll-area";
-import { api } from "@multica/core/api";
+import { Skeleton } from "@agentharness/ui/components/ui/skeleton";
+import { ScrollArea } from "@agentharness/ui/components/ui/scroll-area";
+import { api } from "@agentharness/core/api";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useTranslation } from "@multica/core";
-import { skillListOptions, workspaceKeys } from "@multica/core/workspace/queries";
-import { cn } from "@multica/ui/lib/utils";
+import { useAuthStore } from "@agentharness/core/auth";
+import { useWorkspaceId } from "@agentharness/core/hooks";
+import { useTranslation } from "@agentharness/core";
+import { skillListOptions, workspaceKeys } from "@agentharness/core/workspace/queries";
+import { cn } from "@agentharness/ui/lib/utils";
 import { Markdown } from "../../common/markdown";
 
 const SKILL_MD = "SKILL.md";

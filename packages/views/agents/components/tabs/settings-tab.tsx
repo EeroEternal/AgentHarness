@@ -14,21 +14,21 @@ import {
   Settings2,
   ListTodo,
 } from "lucide-react";
-import type { Agent, AgentVisibility, RuntimeDevice } from "@multica/core/types";
+import type { Agent, AgentVisibility, RuntimeDevice } from "@agentharness/core/types";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@multica/ui/components/ui/popover";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { Label } from "@multica/ui/components/ui/label";
+} from "@agentharness/ui/components/ui/popover";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { Input } from "@agentharness/ui/components/ui/input";
+import { Label } from "@agentharness/ui/components/ui/label";
 import { toast } from "sonner";
-import { api } from "@multica/core/api";
-import { useFileUpload } from "@multica/core/hooks/use-file-upload";
+import { api } from "@agentharness/core/api";
+import { useFileUpload } from "@agentharness/core/hooks/use-file-upload";
 import { ActorAvatar } from "../../../common/actor-avatar";
-import { useTranslation } from "@multica/core";
-import { cn } from "@multica/ui/lib/utils";
+import { useTranslation } from "@agentharness/core";
+import { cn } from "@agentharness/ui/lib/utils";
 
 export function SettingsTab({
   agent,

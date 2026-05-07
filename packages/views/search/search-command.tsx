@@ -17,23 +17,23 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Command as CommandPrimitive } from "cmdk";
-import type { SearchIssueResult, SearchProjectResult } from "@multica/core/types";
-import { api } from "@multica/core/api";
-import { useRecentIssuesStore } from "@multica/core/issues/stores";
+import type { SearchIssueResult, SearchProjectResult } from "@agentharness/core/types";
+import { api } from "@agentharness/core/api";
+import { useRecentIssuesStore } from "@agentharness/core/issues/stores";
 import { StatusIcon } from "../issues/components";
-import { STATUS_CONFIG } from "@multica/core/issues/config";
-import { PROJECT_STATUS_CONFIG } from "@multica/core/projects/config";
-import type { ProjectStatus } from "@multica/core/types";
+import { STATUS_CONFIG } from "@agentharness/core/issues/config";
+import { PROJECT_STATUS_CONFIG } from "@agentharness/core/projects/config";
+import type { ProjectStatus } from "@agentharness/core/types";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@multica/ui/components/ui/dialog";
+} from "@agentharness/ui/components/ui/dialog";
 import { useNavigation } from "../navigation";
 import { useSearchStore } from "./search-store";
-import { useTranslation } from "@multica/core";
+import { useTranslation } from "@agentharness/core";
 
 function HighlightText({ text, query }: { text: string; query: string }) {
   const parts = useMemo(() => {

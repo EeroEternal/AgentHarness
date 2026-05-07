@@ -1,10 +1,10 @@
 "use client";
 
-import { IssuesPage } from "@multica/views/issues/components";
+import { IssuesPage } from "@agentharness/views/issues/components";
 import { useLocale } from "@/features/landing/i18n/context";
 import { en } from "@/features/landing/i18n/en";
 import { zh } from "@/features/landing/i18n/zh";
-import { Button } from "@multica/ui/components/ui/button";
+import { Button } from "@agentharness/ui/components/ui/button";
 import { Globe } from "lucide-react";
 
 // 简单的嵌套对象查找辅助函数，用于替代复杂的递归查找

@@ -38,7 +38,7 @@ export const useRecentIssuesStore = create<RecentIssuesState>()(
         }),
     }),
     {
-      name: "multica_recent_issues",
+      name: "agentharness_recent_issues",
       storage: createJSONStorage(() =>
         createWorkspaceAwareStorage(defaultStorage),
       ),

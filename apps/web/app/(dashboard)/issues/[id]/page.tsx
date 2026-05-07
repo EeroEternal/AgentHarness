@@ -1,7 +1,7 @@
 "use client";
 
 import { use } from "react";
-import { IssueDetail } from "@multica/views/issues/components";
+import { IssueDetail } from "@agentharness/views/issues/components";
 import { useLocale } from "@/features/landing/i18n/context";
 import { en } from "@/features/landing/i18n/en";
 import { zh } from "@/features/landing/i18n/zh";

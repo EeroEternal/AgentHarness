@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { LandingHeader } from "./landing-header";
 import { LandingFooter } from "./landing-footer";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@agentharness/ui/lib/utils";
 import { ArrowRight, Landmark, ShieldCheck, Waypoints } from "lucide-react";
 import { GitHubMark, githubUrl } from "./shared";
 import { useLocale } from "../i18n";

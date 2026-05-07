@@ -18,7 +18,7 @@ vi.mock("next/navigation", () => ({
 }));
 
 // Mock auth store
-vi.mock("@multica/core/auth", () => {
+vi.mock("@agentharness/core/auth", () => {
   const authState = {
     sendCode: mockSendCode,
     verifyCode: mockVerifyCode,
@@ -38,7 +38,7 @@ vi.mock("@/features/auth/auth-cookie", () => ({
 }));
 
 // Mock workspace store
-vi.mock("@multica/core/workspace", () => {
+vi.mock("@agentharness/core/workspace", () => {
   const wsState = { hydrateWorkspace: mockHydrateWorkspace };
   const useWorkspaceStore = Object.assign(
     (selector?: (s: typeof wsState) => unknown) => selector ? selector(wsState) : wsState,
@@ -48,7 +48,7 @@ vi.mock("@multica/core/workspace", () => {
 });
 
 // Mock i18n store
-vi.mock("@multica/core", () => ({
+vi.mock("@agentharness/core", () => ({
   useI18nStore: Object.assign(
     (selector?: (s: { language: string; setLanguage: Function }) => unknown) => {
       const state = { language: "en", setLanguage: vi.fn() };
@@ -62,7 +62,7 @@ vi.mock("@multica/core", () => ({
 }));
 
 // Mock api
-vi.mock("@multica/core/api", () => ({
+vi.mock("@agentharness/core/api", () => ({
   api: {
     listWorkspaces: vi.fn().mockResolvedValue([]),
     verifyCode: vi.fn(),

@@ -5,15 +5,15 @@ import { AppLink } from "../../navigation";
 import { useSortable, defaultAnimateLayoutChanges } from "@dnd-kit/sortable";
 import type { AnimateLayoutChanges } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import type { Issue } from "@multica/core/types";
+import type { Issue } from "@agentharness/core/types";
 import { CalendarDays } from "lucide-react";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { PriorityIcon } from "./priority-icon";
-import { PRIORITY_CONFIG } from "@multica/core/issues/config";
+import { PRIORITY_CONFIG } from "@agentharness/core/issues/config";
 import { ProgressRing } from "./progress-ring";
-import { useViewStore } from "@multica/core/issues/stores/view-store-context";
+import { useViewStore } from "@agentharness/core/issues/stores/view-store-context";
 import type { ChildProgress } from "./list-row";
-import type { IssuePriority } from "@multica/core/types";
+import type { IssuePriority } from "@agentharness/core/types";
 
 type TranslateFn = (key: string, fallback: string) => string;
 

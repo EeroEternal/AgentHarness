@@ -1,5 +1,5 @@
 {
-  "name": "@multica/desktop",
+  "name": "@agentharness/desktop",
   "version": "0.2.2",
   "private": true,
   "main": "./out/main/index.js",
@@ -23,9 +23,9 @@
     "@electron-toolkit/utils": "^4.0.0",
     "@fontsource/geist-mono": "^5.2.7",
     "@fontsource/geist-sans": "^5.2.5",
-    "@multica/core": "workspace:*",
-    "@multica/ui": "workspace:*",
-    "@multica/views": "workspace:*",
+    "@agentharness/core": "workspace:*",
+    "@agentharness/ui": "workspace:*",
+    "@agentharness/views": "workspace:*",
     "@tanstack/react-query": "catalog:",
     "lucide-react": "catalog:",
     "react-router-dom": "^7.6.0",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^2.0.0",
-    "@multica/tsconfig": "workspace:*",
+    "@agentharness/tsconfig": "workspace:*",
     "@tailwindcss/vite": "^4",
     "@types/node": "catalog:",
     "@types/react": "catalog:",

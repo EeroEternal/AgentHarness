@@ -3,7 +3,7 @@
 import { StatusIcon } from "../../issues/components";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { Archive } from "lucide-react";
-import type { InboxItem } from "@multica/core/types";
+import type { InboxItem } from "@agentharness/core/types";
 import { getInboxDetailLabel } from "./inbox-detail-label";
 
 type TranslateFn = (key: string, fallback: string) => string;

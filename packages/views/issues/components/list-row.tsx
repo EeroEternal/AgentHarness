@@ -2,12 +2,12 @@
 
 import { memo } from "react";
 import { AppLink } from "../../navigation";
-import type { Issue } from "@multica/core/types";
+import type { Issue } from "@agentharness/core/types";
 import { ActorAvatar } from "../../common/actor-avatar";
-import { useIssueSelectionStore } from "@multica/core/issues/stores/selection-store";
+import { useIssueSelectionStore } from "@agentharness/core/issues/stores/selection-store";
 import { PriorityIcon } from "./priority-icon";
 import { ProgressRing } from "./progress-ring";
-import { PRIORITY_CONFIG } from "@multica/core/issues/config";
+import { PRIORITY_CONFIG } from "@agentharness/core/issues/config";
 
 export interface ChildProgress {
   done: number;

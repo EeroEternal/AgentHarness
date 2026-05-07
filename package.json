@@ -1,11 +1,11 @@
 {
-  "name": "multica",
-  "version": "0.2.2",
+  "name": "agentharness",
+  "version": "0.2.3",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev:web": "turbo dev --filter=@multica/web",
-    "dev:desktop": "turbo dev --filter=@multica/desktop",
+    "dev:web": "turbo dev --filter=@agentharness/web",
+    "dev:desktop": "turbo dev --filter=@agentharness/desktop",
     "build": "turbo build",
     "typecheck": "turbo typecheck",
     "test": "turbo test",

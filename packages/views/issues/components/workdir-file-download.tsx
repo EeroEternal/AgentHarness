@@ -3,15 +3,15 @@
 import { useState, useEffect, useMemo } from "react";
 import { Folder, Download, Loader2, File, FolderOpen, CheckSquare, Square, Archive, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "@multica/ui/components/ui/button";
-import { api } from "@multica/core/api";
-import { shortID } from "@multica/core/utils";
-import { cn } from "@multica/ui/lib/utils";
+import { Button } from "@agentharness/ui/components/ui/button";
+import { api } from "@agentharness/core/api";
+import { shortID } from "@agentharness/core/utils";
+import { cn } from "@agentharness/ui/lib/utils";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
+} from "@agentharness/ui/components/ui/tooltip";
 
 type TranslateFn = (key: string, fallback: string) => string;
 

@@ -22,7 +22,7 @@ export function AuthInitializer({
   storage?: StorageAdapter;
 }) {
   useEffect(() => {
-    const token = storage.getItem("multica_token");
+    const token = storage.getItem("agentharness_token");
     if (!token) {
       onLogout?.();
       useAuthStore.setState({ isLoading: false });
@@ -31,7 +31,7 @@ export function AuthInitializer({
 
     const api = getApi();
     api.setToken(token);
-    const wsId = storage.getItem("multica_workspace_id");
+    const wsId = storage.getItem("agentharness_workspace_id");
 
     Promise.all([api.getMe(), api.listWorkspaces()])
       .then(([user, wsList]) => {
@@ -43,8 +43,8 @@ export function AuthInitializer({
         logger.error("auth init failed", err);
         api.setToken(null);
         api.setWorkspaceId(null);
-        storage.removeItem("multica_token");
-        storage.removeItem("multica_workspace_id");
+        storage.removeItem("agentharness_token");
+        storage.removeItem("agentharness_workspace_id");
         onLogout?.();
         useAuthStore.setState({ user: null, isLoading: false });
       });

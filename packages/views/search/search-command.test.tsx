@@ -11,14 +11,14 @@ const { mockPush, mockSearchIssues, mockSearchProjects } = vi.hoisted(() => ({
   mockSearchProjects: vi.fn(),
 }));
 
-vi.mock("@multica/core/api", () => ({
+vi.mock("@agentharness/core/api", () => ({
   api: {
     searchIssues: mockSearchIssues,
     searchProjects: mockSearchProjects,
   },
 }));
 
-vi.mock("@multica/core/issues/stores", () => ({
+vi.mock("@agentharness/core/issues/stores", () => ({
   useRecentIssuesStore: (selector?: (state: { items: [] }) => unknown) => {
     const state = { items: [] as [] };
     return selector ? selector(state) : state;

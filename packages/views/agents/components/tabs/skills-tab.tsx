@@ -2,21 +2,21 @@
 
 import { useState } from "react";
 import { Plus, FileText, Trash2, Sparkles, X } from "lucide-react";
-import type { Agent } from "@multica/core/types";
+import type { Agent } from "@agentharness/core/types";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@multica/ui/components/ui/dialog";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@agentharness/ui/components/ui/dialog";
+import { Button } from "@agentharness/ui/components/ui/button";
 import { toast } from "sonner";
-import { api } from "@multica/core/api";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { skillListOptions, workspaceKeys } from "@multica/core/workspace/queries";
+import { api } from "@agentharness/core/api";
+import { useWorkspaceId } from "@agentharness/core/hooks";
+import { skillListOptions, workspaceKeys } from "@agentharness/core/workspace/queries";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useTranslation } from "@multica/core";
+import { useTranslation } from "@agentharness/core";
 
 export function SkillsTab({
   agent,

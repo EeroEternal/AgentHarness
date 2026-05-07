@@ -2,15 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { ListTodo, Clock, Play, CheckCircle2, XCircle, Sparkles } from "lucide-react";
-import type { Agent, AgentTask } from "@multica/core/types";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { api } from "@multica/core/api";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { issueListOptions } from "@multica/core/issues/queries";
+import type { Agent, AgentTask } from "@agentharness/core/types";
+import { Skeleton } from "@agentharness/ui/components/ui/skeleton";
+import { api } from "@agentharness/core/api";
+import { useWorkspaceId } from "@agentharness/core/hooks";
+import { issueListOptions } from "@agentharness/core/issues/queries";
 import { useQuery } from "@tanstack/react-query";
 import { taskStatusConfig } from "../../config";
-import { useTranslation } from "@multica/core";
-import { cn } from "@multica/ui/lib/utils";
+import { useTranslation } from "@agentharness/core";
+import { cn } from "@agentharness/ui/lib/utils";
 
 export function TasksTab({ agent }: { agent: Agent }) {
   const { t } = useTranslation();

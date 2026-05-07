@@ -8,12 +8,12 @@ import type { StorageAdapter } from "../types/storage";
  * Also ensure the store uses `createWorkspaceAwareStorage` for its persist config.
  */
 const WORKSPACE_SCOPED_KEYS = [
-  "multica_issue_draft",
-  "multica_issues_view",
-  "multica_issues_scope",
-  "multica_my_issues_view",
-  "multica:chat:selectedAgentId",
-  "multica:chat:activeSessionId",
+  "agentharness_issue_draft",
+  "agentharness_issues_view",
+  "agentharness_issues_scope",
+  "agentharness_my_issues_view",
+  "agentharness:chat:selectedAgentId",
+  "agentharness:chat:activeSessionId",
 ];
 
 /** Remove all workspace-scoped storage entries for the given workspace. */

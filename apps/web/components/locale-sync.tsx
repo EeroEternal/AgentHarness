@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useI18nStore } from "@multica/core";
+import { useI18nStore } from "@agentharness/core";
 
 /**
  * Reads the locale cookie on the client and updates <html lang> and i18n store.

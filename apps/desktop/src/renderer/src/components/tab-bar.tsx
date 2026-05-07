@@ -28,7 +28,7 @@ import {
   restrictToParentElement,
 } from "@dnd-kit/modifiers";
 import { CSS } from "@dnd-kit/utilities";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@agentharness/ui/lib/utils";
 import { useTabStore, resolveRouteIcon, type Tab } from "@/stores/tab-store";
 
 const TAB_ICONS: Record<string, LucideIcon> = {

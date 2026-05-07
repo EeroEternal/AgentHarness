@@ -1,9 +1,9 @@
 "use client";
 
-import { STATUS_CONFIG, PRIORITY_CONFIG } from "@multica/core/issues/config";
-import { useActorName } from "@multica/core/workspace/hooks";
+import { STATUS_CONFIG, PRIORITY_CONFIG } from "@agentharness/core/issues/config";
+import { useActorName } from "@agentharness/core/workspace/hooks";
 import { StatusIcon, PriorityIcon } from "../../issues/components";
-import type { InboxItem, InboxItemType, IssueStatus, IssuePriority } from "@multica/core/types";
+import type { InboxItem, InboxItemType, IssueStatus, IssuePriority } from "@agentharness/core/types";
 
 type TranslateFn = (key: string, fallback: string) => string;
 

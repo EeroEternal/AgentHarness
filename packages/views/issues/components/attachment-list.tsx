@@ -2,14 +2,14 @@
 
 import { ChevronDown, Paperclip } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { issueAttachmentsOptions } from "@multica/core/issues/queries";
-import { useAuthStore } from "@multica/core/auth";
+import { Skeleton } from "@agentharness/ui/components/ui/skeleton";
+import { issueAttachmentsOptions } from "@agentharness/core/issues/queries";
+import { useAuthStore } from "@agentharness/core/auth";
 import { AttachmentCard } from "./attachment-card";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { cn } from "@multica/ui/lib/utils";
-import type { Attachment } from "@multica/core/types";
+import { cn } from "@agentharness/ui/lib/utils";
+import type { Attachment } from "@agentharness/core/types";
 
 interface AttachmentListProps {
   issueId: string;
