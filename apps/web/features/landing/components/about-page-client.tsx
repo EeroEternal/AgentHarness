@@ -65,7 +65,7 @@ export function AboutPageClient() {
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link
+                {/* <Link
                   href={githubUrl}
                   target="_blank"
                   rel="noreferrer"
@@ -73,7 +73,7 @@ export function AboutPageClient() {
                 >
                   <GitHubMark className="size-4" />
                   {t.about.cta}
-                </Link>
+                </Link> */}
                 <Link
                   href="/"
                   className="inline-flex items-center justify-center gap-2 rounded-[16px] border border-[#122033]/12 bg-white/76 px-6 py-3 text-sm font-semibold text-[#122033] transition-colors hover:bg-white"

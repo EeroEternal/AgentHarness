@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { cn } from "@multica/ui/lib/utils";
+import Image from "next/image";
 import { useAuthStore } from "@multica/core/auth";
 import { GitHubMark, githubUrl } from "./shared";
 import { useLocale, locales, localeLabels } from "../i18n";
+import { cn } from "@multica/ui/lib/utils";
 
 export function LandingFooter() {
   const { t, locale, setLocale } = useLocale();
@@ -18,9 +19,13 @@ export function LandingFooter() {
         <div className="grid gap-10 py-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:py-14">
           <div>
             <Link href="/" className="flex items-center gap-3">
-              <span className="inline-flex size-10 items-center justify-center rounded-[14px] border border-[#122033]/12 bg-white/80 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8c6730]">
-                H
-              </span>
+              <Image
+                src="/images/agentharness.png"
+                alt="AgentHarness"
+                width={40}
+                height={40}
+                className="rounded-[14px] mix-blend-multiply dark:mix-blend-screen dark:brightness-150"
+              />
               <div>
                 <div className="text-[0.68rem] font-medium uppercase tracking-[0.22em] text-[#8c6730]">
                   {brandLabel}
@@ -42,7 +47,7 @@ export function LandingFooter() {
               >
                 {user ? t.header.dashboard : t.footer.cta}
               </Link>
-              <Link
+              {/* <Link
                 href={githubUrl}
                 target="_blank"
                 rel="noreferrer"
@@ -50,7 +55,7 @@ export function LandingFooter() {
               >
                 <GitHubMark className="size-4" />
                 GitHub
-              </Link>
+              </Link> */}
             </div>
           </div>
 
