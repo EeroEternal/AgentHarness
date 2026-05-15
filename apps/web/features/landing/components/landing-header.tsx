@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@multica/ui/lib/utils";
 import { useAuthStore } from "@multica/core/auth";
 import { localeLabels, locales, useLocale } from "../i18n";
@@ -26,16 +27,13 @@ export function LandingHeader({
     >
       <div className="mx-auto flex min-h-[76px] max-w-[1360px] items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3">
-          <span
-            className={cn(
-              "inline-flex size-10 items-center justify-center rounded-[14px] border text-[11px] font-semibold uppercase tracking-[0.22em]",
-              variant === "dark"
-                ? "border-white/16 bg-white/8 text-white"
-                : "border-[#122033]/12 bg-white/80 text-[#8c6730]",
-            )}
-          >
-            H
-          </span>
+          <Image
+            src="/images/agentharness.png"
+            alt="AgentHarness"
+            width={40}
+            height={40}
+            className="rounded-[14px]"
+          />
           <div>
             <div
               className={cn(

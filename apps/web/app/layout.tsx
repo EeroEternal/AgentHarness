@@ -28,8 +28,8 @@ export const metadata: Metadata = {
   description:
     "Open-source operating system for planning work, routing execution, and governing delivery across human teams and AI agents.",
   icons: {
-    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
-    shortcut: ["/favicon.svg"],
+    icon: [{ url: "/images/agent_harness_favicon.ico", type: "image/x-icon" }],
+    shortcut: ["/images/agent_harness_favicon.ico"],
   },
   openGraph: {
     type: "website",

@@ -120,7 +120,7 @@ const content: Record<Locale, LandingContent> = {
       backToTop: "Back to top",
     },
     hero: {
-      eyebrow: "Open-source AI workforce management",
+      eyebrow: "Tianyu Intelligent Dispatch Hub",
       line1: "In the future of team collaboration",
       line2: "partners are not just humans.",
       description:
@@ -425,9 +425,13 @@ export function HarnessLanding() {
       <header className="sticky top-0 z-40 border-b border-[#e8e4df] bg-[#faf8f5]/90 backdrop-blur-xl dark:border-border dark:bg-background/80">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-3 cursor-pointer">
-            <span className="flex size-10 items-center justify-center rounded-xl bg-brand text-white font-bold text-sm">
-              H
-            </span>
+            <Image
+              src="/images/agentharness.png"
+              alt="AgentHarness"
+              width={40}
+              height={40}
+              className="rounded-xl"
+            />
             <span className="text-lg font-semibold tracking-tight">Agent Harness</span>
           </Link>
 
@@ -774,9 +778,13 @@ export function HarnessLanding() {
       <footer className="border-t border-[#e8e4df] bg-[#f0ede8] dark:border-border dark:bg-card">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-10 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <div className="flex items-center gap-3">
-            <span className="flex size-9 items-center justify-center rounded-lg bg-brand text-white font-bold text-xs">
-              H
-            </span>
+            <Image
+              src="/images/agentharness.png"
+              alt="AgentHarness"
+              width={36}
+              height={36}
+              className="rounded-lg"
+            />
             <span className="text-base font-semibold">Agent Harness</span>
           </div>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
