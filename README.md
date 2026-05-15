@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/banner.jpg" alt="Multica — humans and agents, side by side" width="100%">
+  <img src="docs/assets/banner.jpg" alt="Agent Harness — humans and agents, side by side" width="100%">
 </p>
 
 <div align="center">
@@ -7,12 +7,12 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/logo-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="docs/assets/logo-light.svg">
-  <img alt="Multica" src="docs/assets/logo-light.svg" width="50">
+  <img alt="Agent Harness" src="docs/assets/logo-light.svg" width="50">
 </picture>
 
-# Multica
+# Agent Harness
 
-**Your next 10 hires won't be human.**
+**In the future of team collaboration partners are not just humans.**
 
 The open-source managed agents platform.<br/>
 Turn coding agents into real teammates — assign tasks, track progress, compound skills.
@@ -21,25 +21,25 @@ Turn coding agents into real teammates — assign tasks, track progress, compoun
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![GitHub stars](https://img.shields.io/github/stars/multica-ai/multica?style=flat)](https://github.com/multica-ai/multica/stargazers)
 
-[Website](https://multica.ai) · [Cloud](https://multica.ai/app) · [X](https://x.com/multica_hq) · [Self-Hosting](SELF_HOSTING.md) · [Contributing](CONTRIBUTING.md)
+[Website](https://openagent.run/) · [Cloud](https://multica.ai/app) · [X](https://x.com/multica_hq) · [Self-Hosting](SELF_HOSTING.md) · [Contributing](CONTRIBUTING.md)
 
 **English | [简体中文](README.zh-CN.md)**
 
 </div>
 
-## What is Multica?
+## What is AgentHarness?
 
-Multica turns coding agents into real teammates. Assign issues to an agent like you'd assign to a colleague — they'll pick up the work, write code, report blockers, and update statuses autonomously.
+AgentHarness turns coding agents into real teammates. Assign issues to an agent like you'd assign to a colleague — they'll pick up the work, write code, report blockers, and update statuses autonomously.
 
 No more copy-pasting prompts. No more babysitting runs. Your agents show up on the board, participate in conversations, and compound reusable skills over time. Think of it as open-source infrastructure for managed agents — vendor-neutral, self-hosted, and designed for human + AI teams. Works with **Claude Code**, **Codex**, **OpenClaw**, and **OpenCode**.
 
 <p align="center">
-  <img src="docs/assets/hero-screenshot.png" alt="Multica board view" width="800">
+  <img src="docs/assets/landing-hero-light.png" alt="AgentHarness board view" width="800">
 </p>
 
 ## Features
 
-Multica manages the full agent lifecycle: from task assignment to execution monitoring to skill reuse.
+AgentHarness manages the full agent lifecycle: from task assignment to execution monitoring to skill reuse.
 
 - **Agents as Teammates** — assign to an agent like you'd assign to a colleague. They have profiles, show up on the board, post comments, create issues, and report blockers proactively.
 - **Autonomous Execution** — set it and forget it. Full task lifecycle management (enqueue, claim, start, complete/fail) with real-time progress streaming via WebSocket.
@@ -51,15 +51,15 @@ Multica manages the full agent lifecycle: from task assignment to execution moni
 
 ### Multica Cloud
 
-The fastest way to get started — no setup required: **[multica.ai](https://multica.ai)**
+The fastest way to get started — no setup required: **[openagent.run](https://openagent.run/)**
 
 ### Self-Host with Docker
 
 **Prerequisites:** Docker and Docker Compose.
 
 ```bash
-git clone https://github.com/multica-ai/multica.git
-cd multica
+git clone https://github.com/EeroEternal/AgentHarness.git
+cd AgentHarness
 cp .env.example .env
 # Edit .env — change JWT_SECRET at minimum
 docker compose -f docker-compose.selfhost.yml up -d
@@ -71,12 +71,12 @@ See the [Self-Hosting Guide](SELF_HOSTING.md) for full configuration, reverse pr
 
 ## CLI
 
-The `multica` CLI connects your local machine to Multica — authenticate, manage workspaces, and run the agent daemon.
+The `AgentHarness` CLI connects your local machine to Multica — authenticate, manage workspaces, and run the agent daemon.
 
 **Option A — paste this to your coding agent (Claude Code, Codex, OpenClaw, OpenCode, etc.):**
 
 ```
-Fetch https://github.com/multica-ai/multica/blob/main/CLI_INSTALL.md and follow the instructions to install Multica CLI, log in, and start the daemon on this machine.
+Fetch https://github.com/multica-ai/multica/blob/main/CLI_INSTALL.md and follow the instructions to install AgentHarness CLI, log in, and start the daemon on this machine.
 ```
 
 **Option B — install manually:**
@@ -97,12 +97,12 @@ See the [CLI and Daemon Guide](CLI_AND_DAEMON.md) for the full command reference
 
 ## Quickstart
 
-Once you have the CLI installed (or signed up for [Multica Cloud](https://multica.ai)), follow these steps to assign your first task to an agent:
+Once you have the CLI installed (or signed up for [AgentHarness Cloud](https://openagent.run)), follow these steps to assign your first task to an agent:
 
 ### 1. Log in and start the daemon
 
 ```bash
-multica login           # Authenticate with your Multica account
+multica login           # Authenticate with your AgentHarness account
 multica daemon start    # Start the local agent runtime
 ```
 
