@@ -85,5 +85,11 @@ DELETE FROM agent_runtime WHERE id = $1;
 -- name: CountActiveAgentsByRuntime :one
 SELECT count(*) FROM agent WHERE runtime_id = $1 AND archived_at IS NULL;
 
+-- name: UpdateAgentRuntimeMetadata :one
+UPDATE agent_runtime
+SET metadata = metadata || @metadata::jsonb, updated_at = now()
+WHERE id = @id AND workspace_id = @workspace_id
+RETURNING *;
+
 -- name: DeleteArchivedAgentsByRuntime :exec
 DELETE FROM agent WHERE runtime_id = $1 AND archived_at IS NOT NULL;

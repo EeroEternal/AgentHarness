@@ -18,11 +18,11 @@ type RepoContextForEnv struct {
 
 // PrepareParams holds all inputs needed to set up an execution environment.
 type PrepareParams struct {
-	WorkspacesRoot string           // base path for all envs (e.g., ~/multica_workspaces)
-	WorkspaceID    string           // workspace UUID — tasks are grouped under this
-	TaskID         string           // task UUID — used for directory name
-	AgentName      string           // for git branch naming only
-	Provider       string           // agent provider ("claude", "codex") — determines skill injection paths
+	WorkspacesRoot string            // base path for all envs (e.g., ~/multica_workspaces)
+	WorkspaceID    string            // workspace UUID — tasks are grouped under this
+	TaskID         string            // task UUID — used for directory name
+	AgentName      string            // for git branch naming only
+	Provider       string            // agent provider ("opencode", "openclaw", "hermes", "kimi") — determines skill injection paths
 	Task           TaskContextForEnv // context data for writing files
 }
 
@@ -56,8 +56,6 @@ type Environment struct {
 	RootDir string
 	// WorkDir is the directory to pass as Cwd to the agent ({RootDir}/workdir/).
 	WorkDir string
-	// CodexHome is the path to the per-task CODEX_HOME directory (set only for codex provider).
-	CodexHome string
 
 	logger *slog.Logger // for cleanup logging
 }
@@ -102,20 +100,6 @@ func Prepare(params PrepareParams, logger *slog.Logger) (*Environment, error) {
 	// Write context files into workdir (skills go to provider-native paths).
 	if err := writeContextFiles(workDir, params.Provider, params.Task); err != nil {
 		return nil, fmt.Errorf("execenv: write context files: %w", err)
-	}
-
-	// For Codex, set up a per-task CODEX_HOME seeded from ~/.codex/ with skills.
-	if params.Provider == "codex" {
-		codexHome := filepath.Join(envRoot, "codex-home")
-		if err := prepareCodexHome(codexHome, logger); err != nil {
-			return nil, fmt.Errorf("execenv: prepare codex-home: %w", err)
-		}
-		if len(params.Task.AgentSkills) > 0 {
-			if err := writeSkillFiles(filepath.Join(codexHome, "skills"), params.Task.AgentSkills); err != nil {
-				return nil, fmt.Errorf("execenv: write codex skills: %w", err)
-			}
-		}
-		env.CodexHome = codexHome
 	}
 
 	logger.Info("execenv: prepared env", "root", envRoot, "repos_available", len(params.Task.Repos))

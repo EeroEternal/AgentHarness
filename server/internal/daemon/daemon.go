@@ -44,9 +44,13 @@ type Daemon struct {
 // New creates a new Daemon instance.
 func New(cfg Config, logger *slog.Logger) *Daemon {
 	cacheRoot := filepath.Join(cfg.WorkspacesRoot, ".repos")
+	client := NewClient(cfg.ServerBaseURL)
+	if cfg.EncryptionKey != "" {
+		client.SetEncryptionKey(cfg.EncryptionKey)
+	}
 	return &Daemon{
 		cfg:          cfg,
-		client:       NewClient(cfg.ServerBaseURL),
+		client:       client,
 		repoCache:    repocache.New(cacheRoot, logger),
 		logger:       logger,
 		workspaces:   make(map[string]*workspaceState),
@@ -953,10 +957,13 @@ func (d *Daemon) runTask(ctx context.Context, task Task, provider string, taskLo
 		binDir := filepath.Dir(selfBin)
 		agentEnv["PATH"] = binDir + string(os.PathListSeparator) + os.Getenv("PATH")
 	}
-	// Point Codex to the per-task CODEX_HOME so it discovers skills natively
-	// without polluting the system ~/.codex/skills/.
-	if env.CodexHome != "" {
-		agentEnv["CODEX_HOME"] = env.CodexHome
+	// Inject effective API keys for this agent.
+	if apiKeys, err := d.client.GetEffectiveAPIKeys(ctx, task.AgentID); err != nil {
+		taskLog.Warn("failed to fetch API keys from server, agent will use host environment only", "error", err)
+	} else {
+		for k, v := range apiKeys {
+			agentEnv[k] = v
+		}
 	}
 	backend, err := agent.New(provider, agent.Config{
 		ExecutablePath: entry.Path,

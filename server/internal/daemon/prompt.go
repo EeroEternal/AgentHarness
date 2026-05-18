@@ -20,7 +20,7 @@ func BuildPrompt(task Task) string {
 		fmt.Fprintf(&b, "You MUST answer the triggering comment (ID: %s), NOT repeat your self-introduction.\n\n", task.TriggerCommentID)
 		fmt.Fprintf(&b, "Step 1: Run `multica issue comment get %s --output json` to read the exact question asked.\n\n", task.TriggerCommentID)
 		fmt.Fprintf(&b, "Step 2: Run `multica issue comment list %s --limit 5 --output json` to see recent conversation.\n\n", task.IssueID)
-		fmt.Fprintf(&b, "Step 3: Answer the triggering comment directly.\n\n", task.TriggerCommentID)
+		fmt.Fprint(&b, "Step 3: Answer the triggering comment directly.\n\n")
 		fmt.Fprintf(&b, "Step 4: Post your answer with: `multica issue comment add %s --parent %s --content \"你的回答\"`\n\n", task.IssueID, task.TriggerCommentID)
 		b.WriteString("Do NOT give a self-introduction. Do NOT talk about your capabilities. Answer the question directly.\n\n")
 	}

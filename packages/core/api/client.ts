@@ -503,6 +503,19 @@ export class ApiClient {
       body: JSON.stringify({ target_version: targetVersion }),
     });
   }
+  async getRuntimeModels(runtimeId: string): Promise<{ models: Array<{ id: string; name: string; description?: string }> }> {
+    return this.fetch(`/api/runtimes/${runtimeId}/models`);
+  }
+
+  async updateRuntimeMetadata(
+    runtimeId: string,
+    metadata: Record<string, unknown>,
+  ): Promise<AgentRuntime> {
+    return this.fetch(`/api/runtimes/${runtimeId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ metadata }),
+    });
+  }
 
   async getUpdateResult(
     runtimeId: string,
@@ -892,5 +905,39 @@ export class ApiClient {
       throw new Error(message);
     }
     return response.json();
+  }
+
+  async getWorkspaceApiKeys(workspaceId: string): Promise<Array<{ key_name: string; masked_value: string; scope: string }>> {
+    return this.fetch(`/api/workspaces/${workspaceId}/api-keys`);
+  }
+
+  async putWorkspaceApiKeys(workspaceId: string, keys: Record<string, string>): Promise<void> {
+    return this.fetch(`/api/workspaces/${workspaceId}/api-keys`, {
+      method: "PUT",
+      body: JSON.stringify({ keys }),
+    });
+  }
+
+  async deleteWorkspaceApiKey(workspaceId: string, keyName: string): Promise<void> {
+    return this.fetch(`/api/workspaces/${workspaceId}/api-keys/${encodeURIComponent(keyName)}`, {
+      method: "DELETE",
+    });
+  }
+
+  async getAgentApiKeys(agentId: string): Promise<Array<{ key_name: string; masked_value: string; scope: string }>> {
+    return this.fetch(`/api/agents/${agentId}/api-keys`);
+  }
+
+  async putAgentApiKeys(agentId: string, keys: Record<string, string>): Promise<void> {
+    return this.fetch(`/api/agents/${agentId}/api-keys`, {
+      method: "PUT",
+      body: JSON.stringify({ keys }),
+    });
+  }
+
+  async deleteAgentApiKey(agentId: string, keyName: string): Promise<void> {
+    return this.fetch(`/api/agents/${agentId}/api-keys/${encodeURIComponent(keyName)}`, {
+      method: "DELETE",
+    });
   }
 }

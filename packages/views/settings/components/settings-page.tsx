@@ -7,12 +7,13 @@ import { useTranslation } from "@multica/core";
 import { AccountTab } from "./account-tab";
 import { AppearanceTab } from "./appearance-tab";
 import { TokensTab } from "./tokens-tab";
+import { ApiKeysTab } from "./api-keys-tab";
 import { WorkspaceTab } from "./workspace-tab";
 import { MembersTab } from "./members-tab";
 import { RepositoriesTab } from "./repositories-tab";
 import { cn } from "@multica/ui/lib/utils";
 
-type TabId = "profile" | "appearance" | "tokens" | "workspace" | "repositories" | "members";
+type TabId = "profile" | "appearance" | "tokens" | "workspace" | "api-keys" | "repositories" | "members";
 
 interface TabConfig {
   id: TabId;
@@ -34,6 +35,7 @@ export function SettingsPage() {
 
   const workspaceTabs: TabConfig[] = [
     { id: "workspace", label: t("settings.navigation.general", "General"), icon: Settings, group: "workspace" },
+    { id: "api-keys", label: t("settings.navigation.apiKeys", "API Keys"), icon: Key, group: "workspace" },
     { id: "repositories", label: t("settings.navigation.repositories", "Repositories"), icon: FolderGit2, group: "workspace" },
     { id: "members", label: t("settings.navigation.members", "Members"), icon: Users, group: "workspace" },
   ];
@@ -46,6 +48,7 @@ export function SettingsPage() {
       case "appearance": return <AppearanceTab />;
       case "tokens": return <TokensTab />;
       case "workspace": return <WorkspaceTab />;
+      case "api-keys": return <ApiKeysTab />;
       case "repositories": return <RepositoriesTab />;
       case "members": return <MembersTab />;
       default: return null;
