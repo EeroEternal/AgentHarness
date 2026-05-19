@@ -34,7 +34,6 @@ type S3Storage struct {
 func NewS3StorageFromEnv() *S3Storage {
 	bucket := os.Getenv("S3_BUCKET")
 	if bucket == "" {
-		slog.Info("S3_BUCKET not set, file upload disabled")
 		return nil
 	}
 

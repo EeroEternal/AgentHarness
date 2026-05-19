@@ -56,9 +56,9 @@ func allowedOrigins() []string {
 func NewRouter(pool *pgxpool.Pool, hub *realtime.Hub, bus *events.Bus) chi.Router {
 	queries := db.New(pool)
 	emailSvc := service.NewEmailService()
-	s3 := storage.NewS3StorageFromEnv()
+	st := storage.NewStorageFromEnv()
 	cfSigner := auth.NewCloudFrontSignerFromEnv()
-	h := handler.New(queries, pool, hub, bus, emailSvc, s3, cfSigner, os.Getenv("MULTICA_ENCRYPTION_KEY"))
+	h := handler.New(queries, pool, hub, bus, emailSvc, st, cfSigner, os.Getenv("MULTICA_ENCRYPTION_KEY"))
 
 	r := chi.NewRouter()
 

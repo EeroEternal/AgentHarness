@@ -41,12 +41,12 @@ type Handler struct {
 	EmailService  *service.EmailService
 	PingStore     *PingStore
 	UpdateStore   *UpdateStore
-	Storage       *storage.S3Storage
+	Storage       storage.Storage
 	CFSigner      *auth.CloudFrontSigner
 	EncryptionKey string
 }
 
-func New(queries *db.Queries, txStarter txStarter, hub *realtime.Hub, bus *events.Bus, emailService *service.EmailService, s3 *storage.S3Storage, cfSigner *auth.CloudFrontSigner, encryptionKey string) *Handler {
+func New(queries *db.Queries, txStarter txStarter, hub *realtime.Hub, bus *events.Bus, emailService *service.EmailService, s storage.Storage, cfSigner *auth.CloudFrontSigner, encryptionKey string) *Handler {
 	var executor dbExecutor
 	if candidate, ok := txStarter.(dbExecutor); ok {
 		executor = candidate
@@ -62,7 +62,7 @@ func New(queries *db.Queries, txStarter txStarter, hub *realtime.Hub, bus *event
 		EmailService:  emailService,
 		PingStore:     NewPingStore(),
 		UpdateStore:   NewUpdateStore(),
-		Storage:       s3,
+		Storage:       s,
 		CFSigner:      cfSigner,
 		EncryptionKey: encryptionKey,
 	}

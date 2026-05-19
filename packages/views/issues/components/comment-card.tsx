@@ -117,7 +117,7 @@ function CommentRow({
   const [editing, setEditing] = useState(false);
   const editEditorRef = useRef<ContentEditorRef>(null);
   const cancelledRef = useRef(false);
-  const { uploadWithToast } = useFileUpload(api);
+  const { uploadWithToast } = useFileUpload(api, (err) => toast.error(err.message));
   const { isDragOver, dropZoneProps } = useFileDropZone({
     onDrop: (files) => files.forEach((f) => editEditorRef.current?.uploadFile(f)),
     enabled: editing,
@@ -294,7 +294,7 @@ function CommentCard({
   const defaultT = (_key: string, fallback: string) => fallback;
   const translate = t || defaultT;
   const { getActorName } = useActorName();
-  const { uploadWithToast } = useFileUpload(api);
+  const { uploadWithToast } = useFileUpload(api, (err) => toast.error(err.message));
   const [open, setOpen] = useState(true);
   const [editing, setEditing] = useState(false);
   const editEditorRef = useRef<ContentEditorRef>(null);
