@@ -7,6 +7,7 @@ import { FileUploadButton } from "@multica/ui/components/common/file-upload-butt
 import { ActorAvatar } from "../../common/actor-avatar";
 import { useFileUpload } from "@multica/core/hooks/use-file-upload";
 import { api } from "@multica/core/api";
+import { toast } from "sonner";
 import { cn } from "@multica/ui/lib/utils";
 
 // ---------------------------------------------------------------------------
@@ -40,7 +41,7 @@ function ReplyInput({
   const [isExpanded, setIsExpanded] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [attachmentIds, setAttachmentIds] = useState<string[]>([]);
-  const { uploadWithToast } = useFileUpload(api);
+  const { uploadWithToast } = useFileUpload(api, (err) => toast.error(err.message));
   const { isDragOver, dropZoneProps } = useFileDropZone({
     onDrop: (files) => files.forEach((f) => editorRef.current?.uploadFile(f)),
   });

@@ -37,7 +37,7 @@ func TestDaemonRegister_WithDaemonToken(t *testing.T) {
 		"daemon_id":    "test-daemon-mdt",
 		"device_name":  "test-device",
 		"runtimes": []map[string]any{
-			{"name": "test-runtime", "type": "claude", "version": "1.0.0", "status": "online"},
+			{"name": "test-runtime", "type": "opencode", "version": "1.0.0", "status": "online"},
 		},
 	}, testWorkspaceID, "test-daemon-mdt")
 
@@ -71,7 +71,7 @@ func TestDaemonRegister_WithDaemonToken_WorkspaceMismatch(t *testing.T) {
 		"daemon_id":    "test-daemon-mdt",
 		"device_name":  "test-device",
 		"runtimes": []map[string]any{
-			{"name": "test-runtime", "type": "claude", "version": "1.0.0", "status": "online"},
+			{"name": "test-runtime", "type": "opencode", "version": "1.0.0", "status": "online"},
 		},
 	}, "00000000-0000-0000-0000-000000000000", "test-daemon-mdt")
 
@@ -93,7 +93,7 @@ func TestDaemonHeartbeat_WithDaemonToken_CrossWorkspace(t *testing.T) {
 		"daemon_id":    "test-daemon-heartbeat",
 		"device_name":  "test-device",
 		"runtimes": []map[string]any{
-			{"name": "test-runtime-hb", "type": "claude", "version": "1.0.0", "status": "online"},
+			{"name": "test-runtime-hb", "type": "opencode", "version": "1.0.0", "status": "online"},
 		},
 	})
 	testHandler.DaemonRegister(w, req)

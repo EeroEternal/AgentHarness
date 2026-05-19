@@ -57,18 +57,8 @@ func TestCheckMinVersion(t *testing.T) {
 		version   string
 		wantErr   bool
 	}{
-		{"claude", "2.0.0", false},
-		{"claude", "2.1.100", false},
-		{"claude", "2.1.100 (Claude Code)", false},
-		{"claude", "v2.0.0", false},
-		{"claude", "1.0.128", true},
-		{"claude", "1.9.99", true},
-		{"claude", "invalid", true},
-		{"codex", "codex-cli 0.118.0", false},
-		{"codex", "codex-cli 0.100.0", false},
-		{"codex", "codex-cli 0.99.0", true},
-		{"codex", "codex-cli 0.50.0", true},
 		{"unknown", "1.0.0", false},
+		{"opencode", "1.0.0", false},
 	}
 	for _, tt := range tests {
 		err := CheckMinVersion(tt.agentType, tt.version)

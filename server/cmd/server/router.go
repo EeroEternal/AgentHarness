@@ -56,9 +56,9 @@ func allowedOrigins() []string {
 func NewRouter(pool *pgxpool.Pool, hub *realtime.Hub, bus *events.Bus) chi.Router {
 	queries := db.New(pool)
 	emailSvc := service.NewEmailService()
-	s3 := storage.NewS3StorageFromEnv()
+	st := storage.NewStorageFromEnv()
 	cfSigner := auth.NewCloudFrontSignerFromEnv()
-	h := handler.New(queries, pool, hub, bus, emailSvc, s3, cfSigner)
+	h := handler.New(queries, pool, hub, bus, emailSvc, st, cfSigner, os.Getenv("MULTICA_ENCRYPTION_KEY"))
 
 	r := chi.NewRouter()
 
@@ -120,6 +120,7 @@ func NewRouter(pool *pgxpool.Pool, hub *realtime.Hub, bus *events.Bus) chi.Route
 		r.Post("/tasks/{taskId}/usage", h.ReportTaskUsage)
 		r.Post("/tasks/{taskId}/messages", h.ReportTaskMessages)
 		r.Get("/tasks/{taskId}/messages", h.ListTaskMessages)
+		r.Get("/agents/{id}/effective-api-keys", h.GetEffectiveAPIKeys)
 	})
 
 	// Protected API routes
@@ -146,10 +147,13 @@ func NewRouter(pool *pgxpool.Pool, hub *realtime.Hub, bus *events.Bus) chi.Route
 					r.Get("/members", h.ListMembersWithUser)
 					r.Post("/leave", h.LeaveWorkspace)
 					r.Get("/download", h.DownloadWorkspaceFile)
+					r.Get("/api-keys", h.ListWorkspaceAPIKeys)
 				})
 				// Admin-level access
 				r.Group(func(r chi.Router) {
 					r.Use(middleware.RequireWorkspaceRoleFromURL(queries, "id", "owner", "admin"))
+					r.Put("/api-keys", h.PutWorkspaceAPIKeys)
+					r.Delete("/api-keys/{keyName}", h.DeleteWorkspaceAPIKey)
 					r.Put("/", h.UpdateWorkspace)
 					r.Patch("/", h.UpdateWorkspace)
 					r.Post("/members", h.CreateMember)
@@ -250,6 +254,9 @@ func NewRouter(pool *pgxpool.Pool, hub *realtime.Hub, bus *events.Bus) chi.Route
 					r.Get("/tasks", h.ListAgentTasks)
 					r.Get("/skills", h.ListAgentSkills)
 					r.Put("/skills", h.SetAgentSkills)
+					r.Get("/api-keys", h.ListAgentAPIKeys)
+					r.Put("/api-keys", h.PutAgentAPIKeys)
+					r.Delete("/api-keys/{keyName}", h.DeleteAgentAPIKey)
 				})
 			})
 
@@ -284,6 +291,8 @@ func NewRouter(pool *pgxpool.Pool, hub *realtime.Hub, bus *events.Bus) chi.Route
 					r.Get("/ping/{pingId}", h.GetPing)
 					r.Post("/update", h.InitiateUpdate)
 					r.Get("/update/{updateId}", h.GetUpdate)
+					r.Get("/models", h.GetRuntimeModels)
+					r.Patch("/", h.UpdateAgentRuntime)
 					r.Delete("/", h.DeleteAgentRuntime)
 				})
 			})

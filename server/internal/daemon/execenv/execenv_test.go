@@ -135,7 +135,7 @@ func TestPrepareWithRepoContext(t *testing.T) {
 		WorkspaceID:    "ws-test-002",
 		TaskID:         "b2c3d4e5-f6a7-8901-bcde-f12345678901",
 		AgentName:      "Code Reviewer",
-		Provider:       "claude",
+		Provider:       "opencode",
 		Task:           taskCtx,
 	}, testLogger())
 	if err != nil {
@@ -144,7 +144,7 @@ func TestPrepareWithRepoContext(t *testing.T) {
 	defer env.Cleanup(true)
 
 	// Inject runtime config (done separately in daemon, replicate here).
-	if err := InjectRuntimeConfig(env.WorkDir, "claude", taskCtx); err != nil {
+	if err := InjectRuntimeConfig(env.WorkDir, "opencode", taskCtx); err != nil {
 		t.Fatalf("InjectRuntimeConfig failed: %v", err)
 	}
 
@@ -155,15 +155,15 @@ func TestPrepareWithRepoContext(t *testing.T) {
 	}
 	for _, e := range entries {
 		name := e.Name()
-		if name != ".agent_context" && name != "CLAUDE.md" && name != ".claude" {
+		if name != ".agent_context" && name != "AGENTS.md" && name != ".config" {
 			t.Errorf("unexpected entry in workdir: %s", name)
 		}
 	}
 
-	// CLAUDE.md should contain repo info.
-	content, err := os.ReadFile(filepath.Join(env.WorkDir, "CLAUDE.md"))
+	// AGENTS.md should contain repo info.
+	content, err := os.ReadFile(filepath.Join(env.WorkDir, "AGENTS.md"))
 	if err != nil {
-		t.Fatalf("failed to read CLAUDE.md: %v", err)
+		t.Fatalf("failed to read AGENTS.md: %v", err)
 	}
 	s := string(content)
 	for _, want := range []string{
@@ -174,7 +174,7 @@ func TestPrepareWithRepoContext(t *testing.T) {
 		"React frontend",
 	} {
 		if !strings.Contains(s, want) {
-			t.Errorf("CLAUDE.md missing %q", want)
+			t.Errorf("AGENTS.md missing %q", want)
 		}
 	}
 }
@@ -267,12 +267,12 @@ func TestWriteContextFilesOmitsSkillsWhenEmpty(t *testing.T) {
 	}
 }
 
-func TestWriteContextFilesClaudeNativeSkills(t *testing.T) {
+func TestWriteContextFilesOpenCodeNativeSkills(t *testing.T) {
 	t.Parallel()
 	dir := t.TempDir()
 
 	ctx := TaskContextForEnv{
-		IssueID: "claude-skill-test",
+		IssueID: "opencode-skill-test",
 		AgentSkills: []SkillContextForEnv{
 			{
 				Name:    "Go Conventions",
@@ -284,21 +284,21 @@ func TestWriteContextFilesClaudeNativeSkills(t *testing.T) {
 		},
 	}
 
-	if err := writeContextFiles(dir, "claude", ctx); err != nil {
+	if err := writeContextFiles(dir, "opencode", ctx); err != nil {
 		t.Fatalf("writeContextFiles failed: %v", err)
 	}
 
-	// Skills should be in .claude/skills/ (native discovery), NOT .agent_context/skills/.
-	skillMd, err := os.ReadFile(filepath.Join(dir, ".claude", "skills", "go-conventions", "SKILL.md"))
+	// Skills should be in .config/opencode/skills/ (native discovery), NOT .agent_context/skills/.
+	skillMd, err := os.ReadFile(filepath.Join(dir, ".config", "opencode", "skills", "go-conventions", "SKILL.md"))
 	if err != nil {
-		t.Fatalf("failed to read .claude/skills/go-conventions/SKILL.md: %v", err)
+		t.Fatalf("failed to read .config/opencode/skills/go-conventions/SKILL.md: %v", err)
 	}
 	if !strings.Contains(string(skillMd), "Follow Go conventions.") {
 		t.Error("SKILL.md missing content")
 	}
 
-	// Supporting files should also be under .claude/skills/.
-	supportFile, err := os.ReadFile(filepath.Join(dir, ".claude", "skills", "go-conventions", "templates", "example.go"))
+	// Supporting files should also be under .config/opencode/skills/.
+	supportFile, err := os.ReadFile(filepath.Join(dir, ".config", "opencode", "skills", "go-conventions", "templates", "example.go"))
 	if err != nil {
 		t.Fatalf("failed to read supporting file: %v", err)
 	}
@@ -306,9 +306,9 @@ func TestWriteContextFilesClaudeNativeSkills(t *testing.T) {
 		t.Errorf("supporting file content = %q, want %q", string(supportFile), "package main")
 	}
 
-	// .agent_context/skills/ should NOT exist for Claude.
+	// .agent_context/skills/ should NOT exist for OpenCode.
 	if _, err := os.Stat(filepath.Join(dir, ".agent_context", "skills")); !os.IsNotExist(err) {
-		t.Error("expected .agent_context/skills/ to NOT exist for Claude provider")
+		t.Error("expected .agent_context/skills/ to NOT exist for OpenCode provider")
 	}
 
 	// issue_context.md should still be in .agent_context/.
@@ -352,7 +352,7 @@ func TestCleanupPreservesLogs(t *testing.T) {
 	}
 }
 
-func TestInjectRuntimeConfigClaude(t *testing.T) {
+func TestInjectRuntimeConfigOpenCode(t *testing.T) {
 	t.Parallel()
 	dir := t.TempDir()
 
@@ -366,13 +366,13 @@ func TestInjectRuntimeConfigClaude(t *testing.T) {
 		},
 	}
 
-	if err := InjectRuntimeConfig(dir, "claude", ctx); err != nil {
+	if err := InjectRuntimeConfig(dir, "opencode", ctx); err != nil {
 		t.Fatalf("InjectRuntimeConfig failed: %v", err)
 	}
 
-	content, err := os.ReadFile(filepath.Join(dir, "CLAUDE.md"))
+	content, err := os.ReadFile(filepath.Join(dir, "AGENTS.md"))
 	if err != nil {
-		t.Fatalf("failed to read CLAUDE.md: %v", err)
+		t.Fatalf("failed to read AGENTS.md: %v", err)
 	}
 
 	s := string(content)
@@ -385,12 +385,12 @@ func TestInjectRuntimeConfigClaude(t *testing.T) {
 		"discovered automatically",
 	} {
 		if !strings.Contains(s, want) {
-			t.Errorf("CLAUDE.md missing %q", want)
+			t.Errorf("AGENTS.md missing %q", want)
 		}
 	}
 }
 
-func TestInjectRuntimeConfigCodex(t *testing.T) {
+func TestInjectRuntimeConfigOpenclaw(t *testing.T) {
 	t.Parallel()
 	dir := t.TempDir()
 
@@ -399,7 +399,7 @@ func TestInjectRuntimeConfigCodex(t *testing.T) {
 		AgentSkills: []SkillContextForEnv{{Name: "Coding", Content: "Write good code."}},
 	}
 
-	if err := InjectRuntimeConfig(dir, "codex", ctx); err != nil {
+	if err := InjectRuntimeConfig(dir, "openclaw", ctx); err != nil {
 		t.Fatalf("InjectRuntimeConfig failed: %v", err)
 	}
 
@@ -423,13 +423,13 @@ func TestInjectRuntimeConfigNoSkills(t *testing.T) {
 
 	ctx := TaskContextForEnv{IssueID: "test-issue-id"}
 
-	if err := InjectRuntimeConfig(dir, "claude", ctx); err != nil {
+	if err := InjectRuntimeConfig(dir, "opencode", ctx); err != nil {
 		t.Fatalf("InjectRuntimeConfig failed: %v", err)
 	}
 
-	content, err := os.ReadFile(filepath.Join(dir, "CLAUDE.md"))
+	content, err := os.ReadFile(filepath.Join(dir, "AGENTS.md"))
 	if err != nil {
-		t.Fatalf("failed to read CLAUDE.md: %v", err)
+		t.Fatalf("failed to read AGENTS.md: %v", err)
 	}
 
 	s := string(content)
@@ -596,145 +596,5 @@ func TestInjectRuntimeConfigUnknownProvider(t *testing.T) {
 	entries, _ := os.ReadDir(dir)
 	if len(entries) != 0 {
 		t.Fatalf("expected empty dir for unknown provider, got %d entries", len(entries))
-	}
-}
-
-func TestPrepareCodexHomeSeedsFromShared(t *testing.T) {
-	// Cannot use t.Parallel() with t.Setenv.
-
-	// Create a fake shared codex home.
-	sharedHome := t.TempDir()
-	os.WriteFile(filepath.Join(sharedHome, "auth.json"), []byte(`{"token":"secret"}`), 0o644)
-	os.WriteFile(filepath.Join(sharedHome, "config.json"), []byte(`{"model":"o3"}`), 0o644)
-	os.WriteFile(filepath.Join(sharedHome, "config.toml"), []byte(`model = "o3"`), 0o644)
-	os.WriteFile(filepath.Join(sharedHome, "instructions.md"), []byte("Be helpful."), 0o644)
-
-	// Point CODEX_HOME to our fake shared home.
-	t.Setenv("CODEX_HOME", sharedHome)
-
-	codexHome := filepath.Join(t.TempDir(), "codex-home")
-	if err := prepareCodexHome(codexHome, testLogger()); err != nil {
-		t.Fatalf("prepareCodexHome failed: %v", err)
-	}
-
-	// sessions should be a symlink to the shared sessions dir.
-	sessionsPath := filepath.Join(codexHome, "sessions")
-	fi, err := os.Lstat(sessionsPath)
-	if err != nil {
-		t.Fatalf("sessions not found: %v", err)
-	}
-	if fi.Mode()&os.ModeSymlink == 0 {
-		t.Error("sessions should be a symlink")
-	}
-	sessTarget, _ := os.Readlink(sessionsPath)
-	if sessTarget != filepath.Join(sharedHome, "sessions") {
-		t.Errorf("sessions symlink target = %q, want %q", sessTarget, filepath.Join(sharedHome, "sessions"))
-	}
-
-	// auth.json should be a symlink.
-	authPath := filepath.Join(codexHome, "auth.json")
-	fi, err = os.Lstat(authPath)
-	if err != nil {
-		t.Fatalf("auth.json not found: %v", err)
-	}
-	if fi.Mode()&os.ModeSymlink == 0 {
-		t.Error("auth.json should be a symlink")
-	}
-	target, _ := os.Readlink(authPath)
-	if target != filepath.Join(sharedHome, "auth.json") {
-		t.Errorf("auth.json symlink target = %q, want %q", target, filepath.Join(sharedHome, "auth.json"))
-	}
-	// Verify content is accessible through symlink.
-	data, _ := os.ReadFile(authPath)
-	if string(data) != `{"token":"secret"}` {
-		t.Errorf("auth.json content = %q", data)
-	}
-
-	// config.json should be a copy (not symlink).
-	configPath := filepath.Join(codexHome, "config.json")
-	fi, err = os.Lstat(configPath)
-	if err != nil {
-		t.Fatalf("config.json not found: %v", err)
-	}
-	if fi.Mode()&os.ModeSymlink != 0 {
-		t.Error("config.json should be a copy, not a symlink")
-	}
-	data, _ = os.ReadFile(configPath)
-	if string(data) != `{"model":"o3"}` {
-		t.Errorf("config.json content = %q", data)
-	}
-
-	// config.toml should be copied.
-	data, _ = os.ReadFile(filepath.Join(codexHome, "config.toml"))
-	if string(data) != `model = "o3"` {
-		t.Errorf("config.toml content = %q", data)
-	}
-
-	// instructions.md should be copied.
-	data, _ = os.ReadFile(filepath.Join(codexHome, "instructions.md"))
-	if string(data) != "Be helpful." {
-		t.Errorf("instructions.md content = %q", data)
-	}
-}
-
-func TestPrepareCodexHomeSkipsMissingFiles(t *testing.T) {
-	// Cannot use t.Parallel() with t.Setenv.
-
-	// Empty shared home — no files to seed.
-	sharedHome := t.TempDir()
-	t.Setenv("CODEX_HOME", sharedHome)
-
-	codexHome := filepath.Join(t.TempDir(), "codex-home")
-	if err := prepareCodexHome(codexHome, testLogger()); err != nil {
-		t.Fatalf("prepareCodexHome failed: %v", err)
-	}
-
-	// Directory should only contain the sessions symlink (no auth.json, no config.json, etc.).
-	entries, err := os.ReadDir(codexHome)
-	if err != nil {
-		t.Fatalf("failed to read codex-home: %v", err)
-	}
-	if len(entries) != 1 {
-		names := make([]string, len(entries))
-		for i, e := range entries {
-			names[i] = e.Name()
-		}
-		t.Errorf("expected only sessions symlink in codex-home, got: %v", names)
-	}
-	// sessions should be a symlink to the shared sessions dir.
-	sessionsPath := filepath.Join(codexHome, "sessions")
-	fi, err := os.Lstat(sessionsPath)
-	if err != nil {
-		t.Fatalf("sessions not found: %v", err)
-	}
-	if fi.Mode()&os.ModeSymlink == 0 {
-		t.Error("sessions should be a symlink")
-	}
-}
-
-func TestEnsureSymlinkRepairsBrokenLink(t *testing.T) {
-	t.Parallel()
-	dir := t.TempDir()
-
-	src := filepath.Join(dir, "source.json")
-	dst := filepath.Join(dir, "link.json")
-
-	os.WriteFile(src, []byte("real"), 0o644)
-
-	// Create a broken symlink pointing to a non-existent file.
-	os.Symlink(filepath.Join(dir, "old-source.json"), dst)
-
-	if err := ensureSymlink(src, dst); err != nil {
-		t.Fatalf("ensureSymlink failed: %v", err)
-	}
-
-	// Should now point to src.
-	target, _ := os.Readlink(dst)
-	if target != src {
-		t.Errorf("symlink target = %q, want %q", target, src)
-	}
-	data, _ := os.ReadFile(dst)
-	if string(data) != "real" {
-		t.Errorf("content = %q, want %q", data, "real")
 	}
 }

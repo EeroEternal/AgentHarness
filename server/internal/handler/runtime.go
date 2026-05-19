@@ -1,10 +1,14 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
+	"fmt"
 	"log/slog"
 	"net/http"
+	"os/exec"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/go-chi/chi/v5"
@@ -405,4 +409,231 @@ func (h *Handler) DeleteAgentRuntime(w http.ResponseWriter, r *http.Request) {
 	})
 
 	writeJSON(w, http.StatusOK, map[string]string{"status": "ok"})
+}
+
+// ModelInfo represents a single available model for an agent runtime.
+type ModelInfo struct {
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description,omitempty"`
+}
+
+// GetRuntimeModels returns available models for a runtime based on its provider.
+func (h *Handler) GetRuntimeModels(w http.ResponseWriter, r *http.Request) {
+	runtimeID := chi.URLParam(r, "runtimeId")
+
+	rt, err := h.Queries.GetAgentRuntime(r.Context(), parseUUID(runtimeID))
+	if err != nil {
+		writeError(w, http.StatusNotFound, "runtime not found")
+		return
+	}
+
+	if _, ok := h.requireWorkspaceMember(w, r, uuidToString(rt.WorkspaceID), "runtime not found"); !ok {
+		return
+	}
+
+	models := getModelsForRuntime(rt.Provider, rt.RuntimeMode)
+
+	writeJSON(w, http.StatusOK, map[string]any{"models": models})
+}
+
+// getModelsForRuntime returns available models based on provider and runtime mode.
+// Priority: CLI (real-time) > API (cloud) > Preset (fallback)
+func getModelsForRuntime(provider, runtimeMode string) []ModelInfo {
+	// 1. First try to get models from CLI (real-time)
+	if models := fetchModelsFromCLI(provider); models != nil && len(models) > 0 {
+		return models
+	}
+
+	// 2. For cloud runtimes without CLI, try API models
+	if runtimeMode == "cloud" {
+		if models := fetchModelsFromAPI(provider); models != nil && len(models) > 0 {
+			return models
+		}
+	}
+
+	// 3. Fallback to preset models
+	return getPresetModels(provider)
+}
+
+// fetchModelsFromAPI tries to get models from provider API for cloud runtimes.
+func fetchModelsFromAPI(provider string) []ModelInfo {
+	switch provider {
+	case "opencode":
+		return []ModelInfo{
+			{ID: "claude-sonnet-4", Name: "Claude Sonnet 4", Description: "Via OpenCode API"},
+			{ID: "gpt-4o", Name: "GPT-4o", Description: "Via OpenCode API"},
+		}
+	case "kimi":
+		return []ModelInfo{
+			{ID: "kimi-for-coding", Name: "Kimi for Coding", Description: "Moonshot - Coding optimized"},
+			{ID: "kimi-k2-latest", Name: "Kimi K2", Description: "Moonshot - Latest model"},
+		}
+	}
+	return nil
+}
+
+func getPresetModels(provider string) []ModelInfo {
+
+	switch provider {
+	case "opencode":
+		return []ModelInfo{
+			{ID: "claude-sonnet-4", Name: "Claude Sonnet 4", Description: "Via OpenCode"},
+			{ID: "gpt-4o", Name: "GPT-4o", Description: "Via OpenCode"},
+		}
+	case "kimi":
+		return []ModelInfo{
+			{ID: "kimi-for-coding", Name: "Kimi for Coding", Description: "Optimized for coding tasks"},
+			{ID: "kimi-k2", Name: "Kimi K2", Description: "General purpose model"},
+		}
+	case "hermes":
+		return []ModelInfo{{ID: "default", Name: "Default", Description: "Hermes default model"}}
+	case "openclaw":
+		return []ModelInfo{{ID: "default", Name: "Default", Description: "OpenClaw default model"}}
+	default:
+		return []ModelInfo{{ID: "default", Name: "Default", Description: "Default model for " + provider}}
+	}
+}
+
+// fetchModelsFromCLI attempts to get available models from the CLI tool.
+// Returns nil if CLI is not available or command fails.
+func fetchModelsFromCLI(provider string) []ModelInfo {
+	var execPath string
+
+	switch provider {
+	case "opencode":
+		execPath = "opencode"
+	case "kimi":
+		execPath = "kimi"
+	default:
+		return nil
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	models, err := listModelsFromCLI(ctx, execPath, provider)
+	if err != nil {
+		slog.Debug("failed to get models from CLI", "provider", provider, "error", err)
+		return nil
+	}
+
+	return models
+}
+
+// listModelsFromCLI executes the CLI and tries to parse available models.
+func listModelsFromCLI(ctx context.Context, execPath, provider string) ([]ModelInfo, error) {
+	cmd := exec.CommandContext(ctx, execPath, "--version")
+	if err := cmd.Run(); err != nil {
+		return nil, fmt.Errorf("CLI not available: %w", err)
+	}
+
+	switch provider {
+	case "opencode":
+		return fetchOpenCodeModels(ctx, execPath)
+	case "kimi":
+		return fetchKimiModels(ctx, execPath)
+	}
+	return nil, nil
+}
+
+func fetchOpenCodeModels(ctx context.Context, execPath string) ([]ModelInfo, error) {
+	cmd := exec.CommandContext(ctx, execPath, "models")
+	output, err := cmd.Output()
+	if err != nil {
+		return nil, fmt.Errorf("failed to run opencode models: %w", err)
+	}
+
+	var models []ModelInfo
+	lines := strings.Split(string(output), "\n")
+	for _, line := range lines {
+		line = strings.TrimSpace(line)
+		if line == "" {
+			continue
+		}
+		// Parse model names like "opencode/claude-sonnet-4" or "volcengine-plan/kimi-k2.5"
+		modelName := strings.TrimPrefix(line, "opencode/")
+		modelName = strings.TrimPrefix(modelName, "opencode-go/")
+		modelName = strings.TrimPrefix(modelName, "volcengine-plan/")
+
+		// Format model name for display
+		displayName := formatModelName(modelName)
+
+		models = append(models, ModelInfo{
+			ID:          line,
+			Name:        displayName,
+			Description: line,
+		})
+	}
+
+	if len(models) == 0 {
+		return nil, fmt.Errorf("no models found in output")
+	}
+	return models, nil
+}
+
+func formatModelName(name string) string {
+	// Convert "claude-sonnet-4" to "Claude Sonnet 4"
+	name = strings.ReplaceAll(name, "-", " ")
+	words := strings.Fields(name)
+	for i, word := range words {
+		if i == 0 {
+			word = strings.ToUpper(word[:1]) + word[1:]
+		}
+		words[i] = word
+	}
+	return strings.Join(words, " ")
+}
+
+func fetchKimiModels(ctx context.Context, execPath string) ([]ModelInfo, error) {
+	// Kimi CLI doesn't have "models" command, but it auto-refreshes models from API
+	// Use known Kimi models from Moonshot
+	return []ModelInfo{
+		{ID: "kimi-k2.6", Name: "Kimi K2.6", Description: "Moonshot - Latest K2 series"},
+		{ID: "kimi-k2.5", Name: "Kimi K2.5", Description: "Moonshot - Previous K2"},
+		{ID: "kimi-k2.5-code-preview", Name: "Kimi K2.5 Code Preview", Description: "Moonshot - Code optimized"},
+		{ID: "kimi-for-coding", Name: "Kimi for Coding", Description: "Moonshot - Coding optimized"},
+		{ID: "moonshot-v1-8k", Name: "Moonshot v1 8K", Description: "Moonshot - Legacy model"},
+	}, nil
+}
+
+// UpdateAgentRuntime updates runtime metadata (e.g., API key).
+func (h *Handler) UpdateAgentRuntime(w http.ResponseWriter, r *http.Request) {
+	runtimeID := chi.URLParam(r, "runtimeId")
+	workspaceID := resolveWorkspaceID(r)
+
+	if _, ok := h.workspaceMember(w, r, workspaceID); !ok {
+		return
+	}
+
+	var req struct {
+		Metadata map[string]any `json:"metadata"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeError(w, http.StatusBadRequest, "invalid request body")
+		return
+	}
+
+	if req.Metadata == nil {
+		writeError(w, http.StatusBadRequest, "metadata is required")
+		return
+	}
+
+	metadataJSON, err := json.Marshal(req.Metadata)
+	if err != nil {
+		writeError(w, http.StatusInternalServerError, "failed to marshal metadata")
+		return
+	}
+
+	rt, err := h.Queries.UpdateAgentRuntimeMetadata(r.Context(), db.UpdateAgentRuntimeMetadataParams{
+		ID:          parseUUID(runtimeID),
+		Metadata:    metadataJSON,
+		WorkspaceID: parseUUID(workspaceID),
+	})
+	if err != nil {
+		writeError(w, http.StatusInternalServerError, "failed to update runtime: "+err.Error())
+		return
+	}
+
+	writeJSON(w, http.StatusOK, runtimeToResponse(rt))
 }

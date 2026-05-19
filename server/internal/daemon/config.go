@@ -30,7 +30,7 @@ type Config struct {
 	RuntimeName        string
 	CLIVersion         string                // multica CLI version (e.g. "0.1.13")
 	Profile            string                // profile name (empty = default)
-	Agents             map[string]AgentEntry // "claude" -> entry, "codex" -> entry, "opencode" -> entry, "openclaw" -> entry, "hermes" -> entry
+	Agents             map[string]AgentEntry // "opencode" -> entry, "openclaw" -> entry, "hermes" -> entry, "kimi" -> entry
 	WorkspacesRoot     string                // base path for execution envs (default: ~/multica_workspaces)
 	KeepEnvAfterTask   bool                  // preserve env after task for debugging
 	HealthPort         int                   // local HTTP port for health checks (default: 19514)
@@ -38,6 +38,7 @@ type Config struct {
 	PollInterval       time.Duration
 	HeartbeatInterval  time.Duration
 	AgentTimeout       time.Duration
+	EncryptionKey      string // master key for decrypting stored API keys (64 hex chars)
 }
 
 // Overrides allows CLI flags to override environment variables and defaults.
@@ -71,20 +72,6 @@ func LoadConfig(overrides Overrides) (Config, error) {
 
 	// Probe available agent CLIs
 	agents := map[string]AgentEntry{}
-	claudePath := envOrDefault("MULTICA_CLAUDE_PATH", "claude")
-	if _, err := exec.LookPath(claudePath); err == nil {
-		agents["claude"] = AgentEntry{
-			Path:  claudePath,
-			Model: strings.TrimSpace(os.Getenv("MULTICA_CLAUDE_MODEL")),
-		}
-	}
-	codexPath := envOrDefault("MULTICA_CODEX_PATH", "codex")
-	if _, err := exec.LookPath(codexPath); err == nil {
-		agents["codex"] = AgentEntry{
-			Path:  codexPath,
-			Model: strings.TrimSpace(os.Getenv("MULTICA_CODEX_MODEL")),
-		}
-	}
 	opencodePath := envOrDefault("MULTICA_OPENCODE_PATH", "opencode")
 	if _, err := exec.LookPath(opencodePath); err == nil {
 		agents["opencode"] = AgentEntry{
@@ -113,29 +100,8 @@ func LoadConfig(overrides Overrides) (Config, error) {
 			Model: strings.TrimSpace(os.Getenv("MULTICA_KIMI_MODEL")),
 		}
 	}
-	traePath := envOrDefault("MULTICA_TRAE_PATH", "traecli")
-	if _, err := exec.LookPath(traePath); err == nil {
-		agents["trae"] = AgentEntry{
-			Path:  traePath,
-			Model: strings.TrimSpace(os.Getenv("MULTICA_TRAE_MODEL")),
-		}
-	}
-	clawPath := envOrDefault("MULTICA_CLAW_PATH", "claw")
-	if _, err := exec.LookPath(clawPath); err == nil {
-		agents["claw"] = AgentEntry{
-			Path:  clawPath,
-			Model: strings.TrimSpace(os.Getenv("MULTICA_CLAW_MODEL")),
-		}
-	}
-	codebuddyPath := envOrDefault("MULTICA_CODEBUDDY_PATH", "codebuddy")
-	if _, err := exec.LookPath(codebuddyPath); err == nil {
-		agents["codebuddy"] = AgentEntry{
-			Path:  codebuddyPath,
-			Model: strings.TrimSpace(os.Getenv("MULTICA_CODEBUDDY_MODEL")),
-		}
-	}
 	if len(agents) == 0 {
-		return Config{}, fmt.Errorf("no agent CLI found: install claude, codex, opencode, openclaw, hermes, kimi, trae, claw, or codebuddy and ensure it is on PATH")
+		return Config{}, fmt.Errorf("no agent CLI found: install opencode, openclaw, hermes, or kimi and ensure it is on PATH")
 	}
 
 	// Host info
@@ -231,6 +197,9 @@ func LoadConfig(overrides Overrides) (Config, error) {
 	// Keep env after task: env > default (false)
 	keepEnv := os.Getenv("MULTICA_KEEP_ENV_AFTER_TASK") == "true" || os.Getenv("MULTICA_KEEP_ENV_AFTER_TASK") == "1"
 
+	// Encryption key for decrypting stored API keys
+	encryptionKey := os.Getenv("MULTICA_ENCRYPTION_KEY")
+
 	return Config{
 		ServerBaseURL:      serverBaseURL,
 		DaemonID:           daemonID,
@@ -245,6 +214,7 @@ func LoadConfig(overrides Overrides) (Config, error) {
 		PollInterval:       pollInterval,
 		HeartbeatInterval:  heartbeatInterval,
 		AgentTimeout:       agentTimeout,
+		EncryptionKey:      encryptionKey,
 	}, nil
 }
 

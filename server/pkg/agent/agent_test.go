@@ -5,25 +5,14 @@ import (
 	"testing"
 )
 
-func TestNewReturnsClaudeBackend(t *testing.T) {
+func TestNewReturnsOpenCodeBackend(t *testing.T) {
 	t.Parallel()
-	b, err := New("claude", Config{ExecutablePath: "/nonexistent/claude"})
+	b, err := New("opencode", Config{ExecutablePath: "/nonexistent/opencode"})
 	if err != nil {
-		t.Fatalf("New(claude) error: %v", err)
+		t.Fatalf("New(opencode) error: %v", err)
 	}
-	if _, ok := b.(*claudeBackend); !ok {
-		t.Fatalf("expected *claudeBackend, got %T", b)
-	}
-}
-
-func TestNewReturnsCodexBackend(t *testing.T) {
-	t.Parallel()
-	b, err := New("codex", Config{ExecutablePath: "/nonexistent/codex"})
-	if err != nil {
-		t.Fatalf("New(codex) error: %v", err)
-	}
-	if _, ok := b.(*codexBackend); !ok {
-		t.Fatalf("expected *codexBackend, got %T", b)
+	if _, ok := b.(*opencodeBackend); !ok {
+		t.Fatalf("expected *opencodeBackend, got %T", b)
 	}
 }
 
@@ -37,9 +26,9 @@ func TestNewRejectsUnknownType(t *testing.T) {
 
 func TestNewDefaultsLogger(t *testing.T) {
 	t.Parallel()
-	b, _ := New("claude", Config{})
-	cb := b.(*claudeBackend)
-	if cb.cfg.Logger == nil {
+	b, _ := New("opencode", Config{})
+	ob := b.(*opencodeBackend)
+	if ob.cfg.Logger == nil {
 		t.Fatal("expected non-nil logger")
 	}
 }

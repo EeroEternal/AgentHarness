@@ -38,9 +38,10 @@ func isWorkspaceNotFoundError(err error) bool {
 
 // Client handles HTTP communication with the Multica server daemon API.
 type Client struct {
-	baseURL string
-	token   string
-	client  *http.Client
+	baseURL       string
+	token         string
+	encryptionKey string
+	client        *http.Client
 }
 
 // NewClient creates a new daemon API client.
@@ -59,6 +60,11 @@ func (c *Client) SetToken(token string) {
 // Token returns the current auth token.
 func (c *Client) Token() string {
 	return c.token
+}
+
+// SetEncryptionKey sets the master encryption key for decrypting API keys.
+func (c *Client) SetEncryptionKey(key string) {
+	c.encryptionKey = key
 }
 
 func (c *Client) ClaimTask(ctx context.Context, runtimeID string) (*Task, error) {
@@ -183,6 +189,16 @@ func (c *Client) ReportUpdateResult(ctx context.Context, runtimeID, updateID str
 	return c.postJSON(ctx, fmt.Sprintf("/api/daemon/runtimes/%s/update/%s/result", runtimeID, updateID), result, nil)
 }
 
+// GetEffectiveAPIKeys returns the merged (agent overrides workspace) API keys
+// for the given agent, with values in plaintext.
+func (c *Client) GetEffectiveAPIKeys(ctx context.Context, agentID string) (map[string]string, error) {
+	keys := make(map[string]string)
+	if err := c.getJSON(ctx, fmt.Sprintf("/api/daemon/agents/%s/effective-api-keys", agentID), &keys); err != nil {
+		return nil, err
+	}
+	return keys, nil
+}
+
 // WorkspaceInfo holds minimal workspace metadata returned by the API.
 type WorkspaceInfo struct {
 	ID   string `json:"id"`
@@ -261,6 +277,9 @@ func (c *Client) getJSON(ctx context.Context, path string, respBody any) error {
 	}
 	if c.token != "" {
 		req.Header.Set("Authorization", "Bearer "+c.token)
+	}
+	if c.encryptionKey != "" {
+		req.Header.Set("X-Encryption-Key", c.encryptionKey)
 	}
 
 	resp, err := c.client.Do(req)

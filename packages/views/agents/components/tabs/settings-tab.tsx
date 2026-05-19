@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Cloud,
   Monitor,
@@ -13,6 +13,7 @@ import {
   Sparkles,
   Settings2,
   ListTodo,
+  Cpu,
 } from "lucide-react";
 import type { Agent, AgentVisibility, RuntimeDevice } from "@multica/core/types";
 import {
@@ -30,6 +31,13 @@ import { ActorAvatar } from "../../../common/actor-avatar";
 import { useTranslation } from "@multica/core";
 import { cn } from "@multica/ui/lib/utils";
 
+
+interface ModelInfo {
+  id: string;
+  name: string;
+  description?: string;
+}
+
 export function SettingsTab({
   agent,
   runtimes,
@@ -46,11 +54,41 @@ export function SettingsTab({
   const [maxTasks, setMaxTasks] = useState(agent.max_concurrent_tasks);
   const [selectedRuntimeId, setSelectedRuntimeId] = useState(agent.runtime_id);
   const [runtimeOpen, setRuntimeOpen] = useState(false);
+  
+  // Model selection state
+  const [selectedModel, setSelectedModel] = useState<string>(
+    (agent.runtime_config?.model as string) || ""
+  );
+  const [availableModels, setAvailableModels] = useState<ModelInfo[]>([]);
+  const [modelsLoading, setModelsLoading] = useState(false);
+  const [modelOpen, setModelOpen] = useState(false);
+
+  
   const [saving, setSaving] = useState(false);
   const { upload, uploading } = useFileUpload(api);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const selectedRuntime = runtimes.find((d) => d.id === selectedRuntimeId) ?? null;
+
+  // Fetch available models when runtime changes
+  useEffect(() => {
+    if (selectedRuntimeId) {
+      setModelsLoading(true);
+      api.getRuntimeModels(selectedRuntimeId)
+        .then((data) => {
+          setAvailableModels(data.models);
+          // If no model is selected, auto-select the first one
+          const firstModel = data.models[0];
+          if (!selectedModel && firstModel) {
+            setSelectedModel(firstModel.id);
+          }
+        })
+        .catch(() => {
+          toast.error(t("agents.failedToLoadModels", "Failed to load available models"));
+        })
+        .finally(() => setModelsLoading(false));
+    }
+  }, [selectedRuntimeId]);
 
   const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -71,7 +109,8 @@ export function SettingsTab({
     description !== (agent.description ?? "") ||
     visibility !== agent.visibility ||
     maxTasks !== agent.max_concurrent_tasks ||
-    selectedRuntimeId !== agent.runtime_id;
+    selectedRuntimeId !== agent.runtime_id ||
+    selectedModel !== (agent.runtime_config?.model as string);
 
   const handleSave = async () => {
     if (!name.trim()) {
@@ -86,6 +125,10 @@ export function SettingsTab({
         visibility,
         max_concurrent_tasks: maxTasks,
         runtime_id: selectedRuntimeId,
+        runtime_config: {
+          ...agent.runtime_config,
+          model: selectedModel,
+        },
       });
       toast.success(t("agents.settingsSaved", "Settings saved"));
     } catch {
@@ -94,6 +137,8 @@ export function SettingsTab({
       setSaving(false);
     }
   };
+
+  const selectedModelInfo = availableModels.find((m) => m.id === selectedModel) ?? null;
 
   return (
     <div className="space-y-6 max-w-2xl">
@@ -331,6 +376,84 @@ export function SettingsTab({
           </PopoverContent>
         </Popover>
       </div>
+
+      {/* Model Selection */}
+      {selectedRuntime && (
+        <div className="space-y-4 p-4 rounded-xl border bg-background">
+          <div className="flex items-center gap-2">
+            <Cpu className="h-4 w-4 text-muted-foreground" />
+            <h4 className="text-sm font-semibold">{t("common.model", "Model")}</h4>
+          </div>
+          <Popover open={modelOpen} onOpenChange={setModelOpen}>
+            <PopoverTrigger
+              disabled={modelsLoading || availableModels.length === 0}
+              className="flex w-full items-center gap-3 rounded-xl border border-border bg-background p-4 text-left text-sm transition-colors hover:bg-muted/30 disabled:pointer-events-none disabled:opacity-50 cursor-pointer"
+            >
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                <Cpu className="h-4 w-4 text-primary" />
+              </div>
+              <div className="min-w-0 flex-1">
+                {modelsLoading ? (
+                  <div className="flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span className="text-sm text-muted-foreground">{t("agents.loadingModels", "Loading models...")}</span>
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-semibold truncate">
+                        {selectedModelInfo?.name ?? t("agents.selectModel", "Select a model")}
+                      </span>
+                    </div>
+                    {selectedModelInfo?.description && (
+                      <div className="text-xs text-muted-foreground truncate mt-0.5">
+                        {selectedModelInfo.description}
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+              <ChevronDown className={cn(
+                "h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200",
+                modelOpen ? "rotate-180" : ""
+              )} />
+            </PopoverTrigger>
+            <PopoverContent align="start" className="w-[var(--anchor-width)] p-2 max-h-64 overflow-y-auto">
+              {availableModels.map((model) => (
+                <button
+                  key={model.id}
+                  onClick={() => {
+                    setSelectedModel(model.id);
+                    setModelOpen(false);
+                  }}
+                  className={cn(
+                    "flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-sm transition-colors mb-1 cursor-pointer",
+                    model.id === selectedModel ? "bg-primary/5 border border-primary/20" : "hover:bg-muted/50 border border-transparent"
+                  )}
+                >
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                    <Cpu className="h-4 w-4 text-primary" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-semibold truncate">{model.name}</span>
+                    </div>
+                    {model.description && (
+                      <div className="text-xs text-muted-foreground truncate">{model.description}</div>
+                    )}
+                  </div>
+                  <span
+                    className={cn(
+                      "h-2.5 w-2.5 shrink-0 rounded-full",
+                      model.id === selectedModel ? "bg-primary" : "bg-muted-foreground/20"
+                    )}
+                  />
+                </button>
+              ))}
+            </PopoverContent>
+          </Popover>
+        </div>
+      )}
 
       {/* Save Button */}
       <div className="flex items-center justify-between pt-2">
